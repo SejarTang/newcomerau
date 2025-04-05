@@ -1,119 +1,150 @@
 <template>
-    <!-- 主导航栏容器 -->
-    <nav class="navbar">
-      <!-- 左侧部分：包含 Logo 和网站名称 -->
-      <div class="navbar-left">
-        <div class="navbar-brand">
-          <!-- 网站图标（Logo），位于 assets 文件夹下 -->
-          <img src="../assets/immigrant.jpeg" alt="Website Symbol" class="navbar-logo" />
-  
-          <!-- 网站名称链接，点击跳转回首页 -->
-          <router-link to="/">NewcomerAU</router-link>
-        </div>
-      </div>
-  
-      <!-- 中间部分：导航菜单项列表 -->
-      <ul class="navbar-menu">
-        <!-- 每一项通过 router-link 组件进行页面跳转 -->
-        <li><router-link to="/">Home</router-link></li>
-        <li><router-link to="/epic">Epic</router-link></li>
-        <li><router-link to="/about">About</router-link></li>
-      </ul>
-    </nav>
-  </template>
-  
-  <script setup>
-  </script>
-  
-  <style scoped>
-  /* 主导航栏整体样式 */
+  <nav class="navbar" :class="{ 'scrolled': isScrolled }" ref="navbar">
+    <div class="navbar-brand">
+      <img src="../assets/immigrant.jpeg" alt="Website Symbol" class="navbar-logo" />
+      <router-link to="/" class="brand-text">NewcomerAU</router-link>
+    </div>
+    <ul class="navbar-menu">
+      <li><router-link to="/" class="nav-link">Home</router-link></li>
+      <li><router-link to="/epic" class="nav-link">Epic</router-link></li>
+      <li><router-link to="/about" class="nav-link">About</router-link></li>
+    </ul>
+  </nav>
+</template>
+
+<script setup>
+import { ref, watch, onUnmounted } from 'vue';
+import { useRoute } from 'vue-router';
+
+const isScrolled = ref(false);
+const route = useRoute();
+
+const handleScroll = () => {
+  isScrolled.value = window.scrollY > 30;
+};
+
+const updateScrollListener = (path) => {
+  if (path === '/') {
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+  } else {
+    window.removeEventListener('scroll', handleScroll);
+    isScrolled.value = true;
+  }
+};
+
+watch(() => route.path, (newPath) => {
+  updateScrollListener(newPath);
+}, { immediate: true });
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll);
+});
+</script>
+
+<style scoped>
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background-color: rgba(255, 255, 255, 0);
+  transition: all 0.3s ease;
+}
+
+.navbar.scrolled {
+  background-color: rgba(255, 255, 255, 0.98);
+  padding: 0.8rem 2rem;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.navbar-logo {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.brand-text {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: white;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.navbar.scrolled .brand-text {
+  color: #1a1a1a;
+}
+
+.navbar-menu {
+  display: flex;
+  gap: 1.2rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-link {
+  padding: 0.6rem 1.2rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  color: white;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.nav-link:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+.navbar.scrolled .nav-link {
+  color: #1a1a1a;
+  background: rgba(0, 116, 204, 0.08);
+  border-color: rgba(0, 116, 204, 0.15);
+}
+
+.navbar.scrolled .nav-link:hover {
+  background: rgba(0, 116, 204, 0.15);
+}
+
+@media (max-width: 768px) {
   .navbar {
-    background-color: #0074cc; /* 导航栏背景色：深蓝 */
-    padding: 1rem 2rem; /* 上下1rem，左右2rem 的内边距 */
-    display: flex; /* 使用 Flex 布局横向排列内容 */
-    justify-content: center; /* 居中对齐导航内容 */
-    align-items: center; /* 垂直方向居中对齐 */
-    flex-wrap: wrap; /* 当屏幕窄时允许换行 */
+    padding: 0.8rem 1.5rem;
+    flex-direction: column;
+    align-items: flex-start;
   }
-  
-  /* 左侧区域（Logo 和名称）布局样式 */
-  .navbar-left {
-    display: flex;
-    align-items: center;
-    margin-right: 2rem; /* 让左侧与中间有空间 */
-  }
-  
-  /* 网站图标样式 */
-  .navbar-logo {
-    width: 40px;
-    height: 40px;
-    margin-right: 6px; /* 图标和文字之间的间距 */
-    border-radius: 50%; /* 使图标变为圆形 */
-    object-fit: cover; /* 保持图像比例裁剪填充 */
-  }
-  
-  /* 网站名称链接样式 */
-  .navbar-brand a {
-    font-size: 1.5rem;
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    transition: all 0.3s ease;
-  }
-  
-  .navbar-brand a:hover {
-    color: #ffcc33;
-    text-decoration: underline;
-    cursor: pointer;
-  }
-  
-  /* 导航菜单整体样式 */
+
   .navbar-menu {
-    list-style: none;
-    display: flex;
-    gap: 1.5rem;
-    margin: 0;
-    padding: 0;
-    align-items: center;
-    justify-content: center; /* 保证菜单居中 */
+    margin-top: 1rem;
+    flex-direction: column;
+    width: 100%;
   }
-  
-  /* 每个菜单链接的样式（加框、圆角、内边距） */
-  .navbar-menu li a {
-    color: white;
-    text-decoration: none;
-    font-size: 1.2rem;
-    padding: 0.5rem 1rem;
-    border: 2px solid white;
-    border-radius: 8px;
-    transition: all 0.3s ease;
+
+  .nav-link {
+    width: 100%;
+    text-align: left;
+    padding: 0.8rem;
   }
-  
-  /* 鼠标悬停或获得焦点时的样式变化 */
-  .navbar-menu li a:hover,
-  .navbar-menu li a:focus {
-    color: #0074cc;
-    background-color: #ffcc33;
-    transform: scale(1.05);
-    outline: none;
+
+  .navbar.scrolled {
+    padding: 0.6rem 1.5rem;
   }
-  
-  /* 当屏幕宽度小于 768px 时启用 */
-  @media (max-width: 768px) {
-    .navbar {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-  
-    .navbar-menu {
-      flex-direction: column;
-      align-items: flex-start;
-      width: 100%;
-      margin-top: 1rem;
-    }
-  
-    .navbar-menu li {
-      margin: 0.5rem 0;
-    }
-  }
-  </style>
+}
+</style>
