@@ -347,7 +347,7 @@ const goToSlide = (index) => {
 }
 
 .card-hover {
-  background: #5d5d5d;
+  background: #a4d6ff;
   color: #ffffff;
   transform: translateY(-4px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);

@@ -1,6 +1,6 @@
 <template>
     <div class="game-container" :class="{ fade: isRestarting }">
-      <h2 class="game-title">🇦🇺 Aussie Slang Match Game</h2>
+      <h2 class="game-title">AU Aussie Slang Match Game</h2>
       <div class="status-bar">
         <p>Time Remaining: {{ timer }} seconds</p >
         <p>Score: {{ score }} / {{ slangList.length }}</p >
