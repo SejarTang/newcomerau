@@ -1,11 +1,12 @@
-<script setup>
-</script>
-
 <template>
-  <main>
+  <div id="app">
+    <AllHeader />
     <router-view />
-  </main>
+    <AllFooter />
+  </div>
 </template>
 
-<style scoped>
-</style>
+<script setup>
+import AllHeader from './components/AllHeader.vue'
+import AllFooter from './components/AllFooter.vue'
+</script>

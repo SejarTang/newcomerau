@@ -1,20 +1,19 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-
 const slides = ref([
   {
-    title: "Innovative Design",
-    description: "Experience cutting-edge technology with sleek aesthetics",
+    title: "Information 1",
+    description: "content......",
     bgColor: "rgba(245, 245, 247, 0.8)"
   },
   {
-    title: "Premium Performance",
-    description: "Powerful features for professional workflows",
+    title: "Information 2",
+    description: "content......",
     bgColor: "rgba(245, 245, 247, 0.8)"
   },
   {
-    title: "Eco-Friendly",
-    description: "Made with 100% recycled materials",
+    title: "Information 3",
+    description: "content......",
     bgColor: "rgba(245, 245, 247, 0.8)"
   }
 ]);
@@ -51,63 +50,71 @@ const goToSlide = (index) => {
 </script>
 
 <template>
-  <div class="home">
-    <div class="carousel-container">
-      <div class="carousel-track" :style="{ transform: `translateX(-${currentSlide * 100}%)` }">
-        <div 
-          v-for="(slide, index) in slides" 
-          :key="index"
-          class="carousel-slide"
-          @mouseenter="autoPlay = false"
-          @mouseleave="autoPlay = true"
-        >
+  <div class="home-container">
+    <div class="video-wrapper">
+      <video autoplay muted loop playsinline class="bg-video">
+        <source src="@/assets/house_1.mp4" type="video/mp4" />
+      </video>
+    </div>
+
+    <div class="content-section">
+      <div class="carousel-container">
+        <div class="carousel-track" :style="{ transform: `translateX(-${currentSlide * 100}%)` }">
           <div 
-            class="card" 
-            :class="{ active: currentSlide === index }"
-            :style="{ backgroundColor: slide.bgColor }"
+            v-for="(slide, index) in slides" 
+            :key="index"
+            class="carousel-slide"
+            @mouseenter="autoPlay = false"
+            @mouseleave="autoPlay = true"
           >
-            <div class="card-content">
-              <h2 class="card-title">{{ slide.title }}</h2>
-              <p class="card-description">{{ slide.description }}</p>
-              <button class="btn btn-dark">Learn More</button>
+            <div 
+              class="card" 
+              :class="{ active: currentSlide === index }"
+              :style="{ backgroundColor: slide.bgColor }"
+            >
+              <div class="card-content">
+                <h2 class="card-title">{{ slide.title }}</h2>
+                <p class="card-description">{{ slide.description }}</p>
+                <button class="btn btn-dark">Learn More</button>
+              </div>
             </div>
           </div>
         </div>
+
+        <button class="carousel-control prev" @click="prevSlide">
+          <i class="bi bi-chevron-left"></i>
+        </button>
+        <button class="carousel-control next" @click="nextSlide">
+          <i class="bi bi-chevron-right"></i>
+        </button>
+
+        <div class="indicators">
+          <button 
+            v-for="(_, index) in slides"
+            :key="index"
+            class="indicator" 
+            :class="{ active: currentSlide === index }"
+            @click="goToSlide(index)"
+          ></button>
+        </div>
       </div>
 
-      <button class="carousel-control prev" @click="prevSlide">
-        <i class="bi bi-chevron-left"></i>
-      </button>
-      <button class="carousel-control next" @click="nextSlide">
-        <i class="bi bi-chevron-right"></i>
-      </button>
-
-      <div class="indicators">
-        <button 
-          v-for="(_, index) in slides"
-          :key="index"
-          class="indicator" 
-          :class="{ active: currentSlide === index }"
-          @click="goToSlide(index)"
-        ></button>
-      </div>
-    </div>
-
-    <div class="cards-section">
-      <div class="cards-wrapper">
-        <div 
-          v-for="(card, index) in cards"
-          :key="index"
-          class="card-item"
-          @mouseover="hoverIndex = index"
-          @mouseleave="hoverIndex = -1"
-        >
+      <div class="cards-section">
+        <div class="cards-wrapper">
           <div 
-            class="grid-card"
-            :class="{ 'card-hover': hoverIndex === index }"
+            v-for="(card, index) in cards"
+            :key="index"
+            class="card-item"
+            @mouseover="hoverIndex = index"
+            @mouseleave="hoverIndex = -1"
           >
-            <h3>{{ card.title }}</h3>
-            <p>{{ card.content }}</p>
+            <div 
+              class="grid-card"
+              :class="{ 'card-hover': hoverIndex === index }"
+            >
+              <h3>{{ card.title }}</h3>
+              <p>{{ card.content }}</p>
+            </div>
           </div>
         </div>
       </div>
@@ -116,10 +123,34 @@ const goToSlide = (index) => {
 </template>
 
 <style scoped>
-.home {
-  padding: 4rem 0;
+.home-container {
+  position: relative;
   background-color: #fff6f5eb;
   min-height: 100vh;
+  overflow: visible;
+}
+
+.video-wrapper {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.bg-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.8;
+}
+
+.content-section {
+  position: relative;
+  z-index: 1;
+  padding: 4rem 0;
 }
 
 .carousel-container {
@@ -155,10 +186,10 @@ const goToSlide = (index) => {
 .card::after {
   content: '';
   position: absolute;
-  top: -0%;
-  left: -0%;
-  right: -0%;
-  bottom: -0%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   z-index: 0;
   width: 100%;
   height: 100%;
@@ -221,6 +252,7 @@ const goToSlide = (index) => {
   font-size: 1.5rem;
   backdrop-filter: blur(5px);
   transition: all 0.3s;
+  z-index: 2;
 }
 
 .carousel-control:hover {
@@ -242,6 +274,7 @@ const goToSlide = (index) => {
   transform: translateX(-50%);
   display: flex;
   gap: 0.5rem;
+  z-index: 2;
 }
 
 .indicator {
@@ -310,6 +343,10 @@ const goToSlide = (index) => {
   
   .cards-section {
     padding: 2rem 1rem;
+  }
+  
+  .video-wrapper {
+    height: 50vh;
   }
 }
 </style>
