@@ -2,11 +2,15 @@
   <div class="chart-container">
     <div ref="pieChart" class="chart"></div>
   </div>
+  <div>
+    <SlangGame />
+  </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue';
 import * as echarts from 'echarts';
+import SlangGame from '../components/SlangGameComponent.vue';
 
 const pieChart = ref(null);
 const total = 685274 + 367159 + 320758 + 295281 + 239033;
