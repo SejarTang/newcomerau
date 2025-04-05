@@ -18,10 +18,33 @@ const slides = ref([
   }
 ]);
 
-const cards = ref(new Array(6).fill({
-  title: 'Card Title',
-  content: 'Card content text goes here...'
-}));
+const cards = ref([
+  {
+    title: 'Where People Like You Live',
+    content: '......',
+    link: '/epic'
+  },
+  {
+    title: 'How Melbourne Moves',
+    content: '......'
+  },
+  {
+    title: 'Your First Free Services',
+    content: '......'
+  },
+  {
+    title: 'What Locals Love Most',
+    content: '......'
+  },
+  {
+    title: 'Costs You Should Know',
+    content: '......'
+  },
+  {
+    title: '...',
+    content: '......'
+  }
+]);
 
 const currentSlide = ref(0);
 const autoPlay = ref(true);
@@ -114,6 +137,12 @@ const goToSlide = (index) => {
             >
               <h3>{{ card.title }}</h3>
               <p>{{ card.content }}</p>
+              <router-link 
+                :to="card.link" 
+                class="card-link"
+              >
+                Learn More
+              </router-link>
             </div>
           </div>
         </div>
@@ -322,6 +351,25 @@ const goToSlide = (index) => {
   color: #ffffff;
   transform: translateY(-4px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.card-link {
+  display: inline-block;
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  color: rgba(0, 0, 0, 0.7);
+  position: relative;
+}
+
+.card-item:hover .card-link {
+  color: white;
+}
+
+.card-link:hover {
+  color: #ffe390 !important;
 }
 
 @media (max-width: 768px) {
