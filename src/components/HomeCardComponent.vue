@@ -19,22 +19,16 @@ const slides = ref([
   }
 ]);
 
-const cards = ref(new Array(6).fill({
-  title: 'Card Title',
-  content: 'Card content text goes here...'
-}));
-
 const currentSlide = ref(0);
 const autoPlay = ref(true);
-const hoverIndex = ref(-1);
 
+// Automatic carousel rotation
 onMounted(() => {
-  const interval = setInterval(() => {
+  setInterval(() => {
     if (autoPlay.value) {
       nextSlide();
     }
   }, 5000);
-  return () => clearInterval(interval);
 });
 
 const nextSlide = () => {
@@ -75,6 +69,7 @@ const goToSlide = (index) => {
         </div>
       </div>
 
+      <!-- Navigation Arrows -->
       <button class="carousel-control prev" @click="prevSlide">
         <i class="bi bi-chevron-left"></i>
       </button>
@@ -82,6 +77,7 @@ const goToSlide = (index) => {
         <i class="bi bi-chevron-right"></i>
       </button>
 
+      <!-- Indicators -->
       <div class="indicators">
         <button 
           v-for="(_, index) in slides"
@@ -90,26 +86,6 @@ const goToSlide = (index) => {
           :class="{ active: currentSlide === index }"
           @click="goToSlide(index)"
         ></button>
-      </div>
-    </div>
-
-    <div class="cards-section">
-      <div class="cards-wrapper">
-        <div 
-          v-for="(card, index) in cards"
-          :key="index"
-          class="card-item"
-          @mouseover="hoverIndex = index"
-          @mouseleave="hoverIndex = -1"
-        >
-          <div 
-            class="grid-card"
-            :class="{ 'card-hover': hoverIndex === index }"
-          >
-            <h3>{{ card.title }}</h3>
-            <p>{{ card.content }}</p>
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -171,7 +147,9 @@ const goToSlide = (index) => {
     rgba(18,188,254,0.15),
     rgba(68,206,123,0.15)
   );
-  filter: blur(30px);
+  filter: 
+    blur(30px);
+    /*drop-shadow(0 0 20px rgba(0,0,0,0.1));*/
   opacity: 0.6;
   transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
@@ -258,39 +236,6 @@ const goToSlide = (index) => {
   transform: scale(1.2);
 }
 
-.cards-section {
-  padding: 4rem 2rem;
-}
-
-.cards-wrapper {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
-}
-
-.card-item {
-  padding: 0 1rem;
-}
-
-.grid-card {
-  background: #fff6f5eb;
-  padding: 1.5rem;
-  border-radius: 8px;
-  min-height: 200px;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(240, 245, 213, 0.1);
-  color: #1d1d1f;
-}
-
-.card-hover {
-  background: #5d5d5d;
-  color: #ffffff;
-  transform: translateY(-4px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
 @media (max-width: 768px) {
   .carousel-slide {
     padding: 0 5%;
@@ -302,14 +247,6 @@ const goToSlide = (index) => {
   
   .card-description {
     font-size: 1rem;
-  }
-
-  .cards-wrapper {
-    grid-template-columns: 1fr;
-  }
-  
-  .cards-section {
-    padding: 2rem 1rem;
   }
 }
 </style>
