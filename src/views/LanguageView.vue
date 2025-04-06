@@ -73,7 +73,7 @@ const options = {
 onMounted(() => {
   const chart = echarts.init(pieChart.value);
   chart.setOption(options);
-  
+
   window.addEventListener('resize', () => {
     chart.resize();
   });

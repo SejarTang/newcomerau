@@ -6,8 +6,9 @@
     </div>
     <ul class="navbar-menu">
       <li><router-link to="/" class="nav-link">Home</router-link></li>
-      <li><router-link to="/epic" class="nav-link">Epic</router-link></li>
-      <li><router-link to="/about" class="nav-link">About</router-link></li>
+      <li><router-link to="/newcomers" class="nav-link">Newcomers</router-link></li>
+      <li><router-link to="/language" class="nav-link">Language</router-link></li>
+
     </ul>
   </nav>
 </template>

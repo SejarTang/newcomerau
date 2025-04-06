@@ -8,8 +8,9 @@
         <div class="footer-section">
           <h1 class="footer-title">NewcomerAU</h1>
           <ul class="footer-links">
-            <li><router-link to="/epic">Epic</router-link></li>
-            <li><router-link to="/about">About</router-link></li>
+            <li><router-link to="/">Home</router-link></li>
+            <li><router-link to="/newcomers">Newcomers</router-link></li>
+            <li><router-link to="/language">Language</router-link></li>
           </ul>
         </div>
       </div>
