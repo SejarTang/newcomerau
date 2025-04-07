@@ -18,7 +18,7 @@
 
   <div class="section" data-aos="fade-up">
     <div class="image-container">
-      <img src="../assets/support-services.jpg" alt="to place a imagine" class="image" />
+      <img src="../assets/support-services.jpg" alt="To place a imagine" class="image" />
     </div>
     <h2>2</h2>
     <ul>
