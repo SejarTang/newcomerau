@@ -1,48 +1,109 @@
+<template>
+  <div class="home-container">
+    <!-- 背景视频 -->
+    <div class="video-wrapper">
+      <video autoplay muted loop playsinline class="bg-video">
+        <source src="@/assets/house_1.mp4" type="video/mp4" />
+      </video>
+    </div>
+
+    <!-- 内容区域 -->
+    <div class="content-section">
+      <!-- 轮播 -->
+      <div class="carousel-container">
+        <div class="carousel-track" :style="{ transform: `translateX(-${currentSlide * 100}%)` }">
+          <div
+            v-for="(slide, index) in slides"
+            :key="index"
+            class="carousel-slide"
+            @mouseenter="autoPlay = false"
+            @mouseleave="autoPlay = true"
+          >
+            <div
+              class="card"
+              :class="{ active: currentSlide === index }"
+              :style="{ backgroundColor: slide.bgColor }"
+            >
+              <div class="card-content">
+                <h2 class="card-title">{{ slide.title }}</h2>
+                <p class="card-description">{{ slide.description }}</p>
+                <button class="btn btn-dark">Learn More</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button class="carousel-control prev" @click="prevSlide">
+          <i class="bi bi-chevron-left"></i>
+        </button>
+        <button class="carousel-control next" @click="nextSlide">
+          <i class="bi bi-chevron-right"></i>
+        </button>
+
+        <div class="indicators">
+          <button
+            v-for="(_, index) in slides"
+            :key="index"
+            class="indicator"
+            :class="{ active: currentSlide === index }"
+            @click="goToSlide(index)"
+          ></button>
+        </div>
+      </div>
+
+      <!-- 卡片区域 -->
+      <div class="cards-section">
+        <div class="cards-row">
+          <div
+            v-for="(card, index) in cards"
+            :key="index"
+            class="card-box"
+            @mouseover="hoverIndex = index"
+            @mouseleave="hoverIndex = -1"
+          >
+            <div class="card-inner" :class="{ 'card-hover': hoverIndex === index }">
+              <img :src="card.image" alt="card image" class="card-img" />
+              <h3 class="card-title">{{ card.title }}</h3>
+              <p class="card-description">{{ card.content }}</p>
+              <router-link :to="card.link" class="learn-more-btn">Learn More</router-link>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+
+
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted } from 'vue'
+
 const slides = ref([
   {
-    title: "Information 1",
-    description: "content......",
-    bgColor: "rgba(245, 245, 247, 0.8)"
+    title: 'Newcomers',
+    description: 'Get to know who the newcomers are in Victoria and their key challenges.',
+    bgColor: 'rgba(245, 245, 247, 0.8)'
   },
   {
-    title: "Information 2",
-    description: "content......",
-    bgColor: "rgba(245, 245, 247, 0.8)"
-  },
-  {
-    title: "Information 3",
-    description: "content......",
-    bgColor: "rgba(245, 245, 247, 0.8)"
+    title: 'Language',
+    description: 'Understand the multilingual landscape and language support for immigrants.',
+    bgColor: 'rgba(245, 245, 247, 0.8)'
   }
-]);
+])
 
 const cards = ref([
   {
-    title: 'Where People Like You Live',
-    content: '......',
-    link: '/epic'
+    title: 'Newcomers',
+    content: 'Explore who the newcomers are in Victoria, where they live, and the challenges they face during settlement.',
+    image: 'https://bookcreator.com/wp-content/uploads/2024/07/Welcoming-Newcomers.png',
+    link: '/newcomers'
   },
   {
-    title: 'How Melbourne Moves',
-    content: '......'
-  },
-  {
-    title: 'Your First Free Services',
-    content: '......'
-  },
-  {
-    title: 'What Locals Love Most',
-    content: '......'
-  },
-  {
-    title: 'Costs You Should Know',
-    content: '......'
-  },
-  {
-    title: '...',
-    content: '......'
+    title: 'Language',
+    content: 'Discover the language support and multilingual communities available to help newcomers settle in Victoria.',
+    image: 'https://www.open.edu/openlearn/fb/2e/fb2ec7240af3a13b9bf351a4a20819588bd6fc8c?response-content-disposition=inline%3Bfilename%3D%22dil_1_OLHP_786x400.jpg%22&response-content-type=image%2Fjpeg&Expires=1743984900&Signature=cCBVo15Icx4QF5ORoG2tECMnbs6IkUsTNEkNdlNB7UML9iFFw-1dZwzooVYKA4TNA--D5J3eEUpHa9HRHOK8XQ6upl76-qsdd8FFYO30tLYIOWY40EifFMy9isHK4DQJm5cjHQMiXegRPaRcJ0axFP-COiun9XyOvRRHRBxRpIGrytecS1kRaCGpbzQqVAaNUv-ib-paeTwqpzmnT4UtlsEA1n0gRJ043gP7KbraHAkgpmkub1rFzASFECUoOvnbVbE4cmmRPBqXT5a7ZtBXOIZtp-NmQuB63f5iJ-Tmax2bbOuA0UwC1Ys-g1rlh-ulNFfGCpfKz46RGVWYRID~1g__&Key-Pair-Id=K87HJKWMK329B',
+    link: '/language'
   }
 ]);
 
@@ -72,84 +133,6 @@ const goToSlide = (index) => {
 };
 </script>
 
-<template>
-  <div class="home-container">
-    <div class="video-wrapper">
-      <video autoplay muted loop playsinline class="bg-video">
-        <source src="@/assets/house_1.mp4" type="video/mp4" />
-      </video>
-    </div>
-
-    <div class="content-section">
-      <div class="carousel-container">
-        <div class="carousel-track" :style="{ transform: `translateX(-${currentSlide * 100}%)` }">
-          <div 
-            v-for="(slide, index) in slides" 
-            :key="index"
-            class="carousel-slide"
-            @mouseenter="autoPlay = false"
-            @mouseleave="autoPlay = true"
-          >
-            <div 
-              class="card" 
-              :class="{ active: currentSlide === index }"
-              :style="{ backgroundColor: slide.bgColor }"
-            >
-              <div class="card-content">
-                <h2 class="card-title">{{ slide.title }}</h2>
-                <p class="card-description">{{ slide.description }}</p>
-                <button class="btn btn-dark">Learn More</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <button class="carousel-control prev" @click="prevSlide">
-          <i class="bi bi-chevron-left"></i>
-        </button>
-        <button class="carousel-control next" @click="nextSlide">
-          <i class="bi bi-chevron-right"></i>
-        </button>
-
-        <div class="indicators">
-          <button 
-            v-for="(_, index) in slides"
-            :key="index"
-            class="indicator" 
-            :class="{ active: currentSlide === index }"
-            @click="goToSlide(index)"
-          ></button>
-        </div>
-      </div>
-
-      <div class="cards-section">
-        <div class="cards-wrapper">
-          <div 
-            v-for="(card, index) in cards"
-            :key="index"
-            class="card-item"
-            @mouseover="hoverIndex = index"
-            @mouseleave="hoverIndex = -1"
-          >
-            <div 
-              class="grid-card"
-              :class="{ 'card-hover': hoverIndex === index }"
-            >
-              <h3>{{ card.title }}</h3>
-              <p>{{ card.content }}</p>
-              <router-link 
-                :to="card.link" 
-                class="card-link"
-              >
-                Learn More
-              </router-link>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</template>
 
 <style scoped>
 .home-container {
@@ -320,79 +303,109 @@ const goToSlide = (index) => {
   transform: scale(1.2);
 }
 
+/* ✅ 卡片样式区域 */
 .cards-section {
   padding: 4rem 2rem;
 }
 
-.cards-wrapper {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+.cards-row {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  flex-wrap: wrap;
   gap: 2rem;
 }
 
-.card-item {
-  padding: 0 1rem;
+.card-box {
+  flex: 1 1 45%;
+  max-width: 45%;
+  display: flex;
+  justify-content: center;
 }
 
-.grid-card {
+.card-inner {
   background: #fff6f5eb;
   padding: 1.5rem;
-  border-radius: 8px;
-  min-height: 200px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  width: 100%;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(240, 245, 213, 0.1);
-  color: #1d1d1f;
+}
+
+.card-img {
+  width: 100%;
+  height: 200px; /* 固定高度确保卡片一致 */
+  object-fit: cover; /* 填满容器并裁剪多余部分 */
+  border-radius: 8px 8px 0 0; /* 上圆角 */
+  display: block;
+}
+
+.card-title {
+  font-size: 1.5rem;
+  margin-bottom: 0.8rem;
+  font-weight: 600;
+}
+
+.card-description {
+  font-size: 1rem;
+  color: #555;
 }
 
 .card-hover {
-  background: #a4d6ff;
-  color: #ffffff;
+  background: #1976d2;
+  color: white;
   transform: translateY(-4px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-.card-link {
+.card-hover .card-description {
+  color: #e0e0e0;
+}
+
+.learn-more-btn {
   display: inline-block;
   margin-top: 1rem;
-  font-size: 0.95rem;
-  font-weight: 500;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  color: rgba(0, 0, 0, 0.7);
-  position: relative;
-}
-
-.card-item:hover .card-link {
+  padding: 0.6rem 1.2rem;
+  background: #1976d2;
   color: white;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background 0.3s ease;
 }
 
-.card-link:hover {
-  color: #ffe390 !important;
+.card-hover .learn-more-btn {
+  background: white;
+  color: #1976d2;
 }
 
+.learn-more-btn:hover {
+  background: #125ea9;
+}
+
+/* ✅ 响应式：移动端一列展示 */
 @media (max-width: 768px) {
   .carousel-slide {
     padding: 0 5%;
   }
-  
+
+  .card-box {
+    max-width: 100%;
+    flex: 1 1 100%;
+  }
+
+  .cards-section {
+    padding: 2rem 1rem;
+  }
+
   .card-title {
     font-size: 1.8rem;
   }
-  
+
   .card-description {
     font-size: 1rem;
   }
 
-  .cards-wrapper {
-    grid-template-columns: 1fr;
-  }
-  
-  .cards-section {
-    padding: 2rem 1rem;
-  }
-  
   .video-wrapper {
     height: 50vh;
   }
