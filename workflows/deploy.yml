@@ -1,0 +1,26 @@
+name: Deploy to AWS EC2
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build Vue.js
+        run: |
+          npm install
+          npm run build
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd /home/ubuntu/newcomerau
+            git pull
+            npm install
+            npm run build
+            pm2 restart all
