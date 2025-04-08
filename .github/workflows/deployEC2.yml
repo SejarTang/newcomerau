@@ -29,22 +29,32 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            sudo apt-get purge -y nodejs npm
-            sudo rm -rf /etc/apt/sources.list.d/nodesource.list
-            sudo rm -rf /usr/lib/node_modules/
-            sudo rm -rf /usr/local/lib/node_modules/
-            sudo rm -rf /usr/bin/node
-            sudo rm -rf /usr/bin/npm
-            curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
-            sudo apt-get update -y
-            sudo apt-get install -y nodejs
-            node -v
-            npm -v
-            cd /home/ubuntu/newcomerau
-            git pull
-            npm cache clean --force
-            rm -rf node_modules
-            npm install --force
-            npm run build
-            sudo npm install -g pm2@latest
-            pm2 restart all
+            # Ensure Nginx is installed
+            if ! command -v nginx &> /dev/null; then
+              sudo apt-get update -y
+              sudo apt-get install -y nginx
+              sudo systemctl start nginx
+              sudo systemctl enable nginx
+            fi
+            # Create the web directory if it doesn't exist
+            sudo mkdir -p /var/www/newcomerau
+            sudo chown ubuntu:ubuntu /var/www/newcomerau
+
+      - name: Copy dist folder to EC2
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          source: "dist/*"
+          target: "/var/www/newcomerau/"
+          strip_components: 1
+
+      - name: Reload Nginx
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            sudo systemctl reload nginx
