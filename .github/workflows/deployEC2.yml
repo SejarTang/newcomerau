@@ -3,15 +3,25 @@ on:
   push:
     branches:
       - main
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'npm'
+
       - name: Build Vue.js
         run: |
-          npm install
+          npm ci
           npm run build
+
       - name: Deploy to EC2
         uses: appleboy/ssh-action@master
         with:
@@ -19,8 +29,16 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
+            curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+            sudo apt-get install -y nodejs
+
+            node -v
+            npm -v
+
             cd /home/ubuntu/newcomerau
             git pull
-            npm install
+
+            npm ci --force
             npm run build
+
             pm2 restart all
