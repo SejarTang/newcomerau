@@ -17,28 +17,34 @@ jobs:
           node-version: '20.x'
           cache: 'npm'
 
-      - name: Build Vue.js
+      - name: Build Project
         run: |
           npm ci
           npm run build
 
-      - name: Deploy to EC2
+      - name: Deploy to EC2 via SSH
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
+            sudo apt-get purge -y nodejs npm
+            sudo rm -rf /etc/apt/sources.list.d/nodesource.list
+            sudo rm -rf /usr/lib/node_modules/
+            sudo rm -rf /usr/local/lib/node_modules/
+            sudo rm -rf /usr/bin/node
+            sudo rm -rf /usr/bin/npm
             curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+            sudo apt-get update -y
             sudo apt-get install -y nodejs
-
             node -v
             npm -v
-
             cd /home/ubuntu/newcomerau
             git pull
-
-            npm ci --force
+            npm cache clean --force
+            rm -rf node_modules
+            npm install --force
             npm run build
-
+            sudo npm install -g pm2@latest
             pm2 restart all
