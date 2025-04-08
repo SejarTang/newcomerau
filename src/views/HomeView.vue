@@ -96,13 +96,13 @@ const cards = ref([
   {
     title: 'Newcomers',
     content: 'Explore who the newcomers are in Victoria, where they live, and the challenges they face during settlement.',
-    image: 'https://bookcreator.com/wp-content/uploads/2024/07/Welcoming-Newcomers.png',
+    image: new URL('../assets/Home_Newcomers.jpg', import.meta.url).href,
     link: '/newcomers'
   },
   {
     title: 'Language',
     content: 'Discover the language support and multilingual communities available to help newcomers settle in Victoria.',
-    image: 'https://www.open.edu/openlearn/fb/2e/fb2ec7240af3a13b9bf351a4a20819588bd6fc8c?response-content-disposition=inline%3Bfilename%3D%22dil_1_OLHP_786x400.jpg%22&response-content-type=image%2Fjpeg&Expires=1743984900&Signature=cCBVo15Icx4QF5ORoG2tECMnbs6IkUsTNEkNdlNB7UML9iFFw-1dZwzooVYKA4TNA--D5J3eEUpHa9HRHOK8XQ6upl76-qsdd8FFYO30tLYIOWY40EifFMy9isHK4DQJm5cjHQMiXegRPaRcJ0axFP-COiun9XyOvRRHRBxRpIGrytecS1kRaCGpbzQqVAaNUv-ib-paeTwqpzmnT4UtlsEA1n0gRJ043gP7KbraHAkgpmkub1rFzASFECUoOvnbVbE4cmmRPBqXT5a7ZtBXOIZtp-NmQuB63f5iJ-Tmax2bbOuA0UwC1Ys-g1rlh-ulNFfGCpfKz46RGVWYRID~1g__&Key-Pair-Id=K87HJKWMK329B',
+    image: new URL('../assets/Home_Newcomers.jpg', import.meta.url).href,
     link: '/language'
   }
 ]);
@@ -303,7 +303,7 @@ const goToSlide = (index) => {
   transform: scale(1.2);
 }
 
-/* ✅ 卡片样式区域 */
+/* 卡片样式区域 */
 .cards-section {
   padding: 4rem 2rem;
 }
@@ -353,13 +353,13 @@ const goToSlide = (index) => {
 }
 
 .card-hover {
-  background: #1976d2;
+  background: #96d3ff;
   color: white;
   transform: translateY(-4px);
 }
 
 .card-hover .card-description {
-  color: #e0e0e0;
+  color: #ffffff;
 }
 
 .learn-more-btn {
@@ -376,14 +376,14 @@ const goToSlide = (index) => {
 
 .card-hover .learn-more-btn {
   background: white;
-  color: #1976d2;
+  color: #000000;
 }
 
 .learn-more-btn:hover {
-  background: #125ea9;
+  background: #ffffae;
 }
 
-/* ✅ 响应式：移动端一列展示 */
+/* 响应式：移动端一列展示 */
 @media (max-width: 768px) {
   .carousel-slide {
     padding: 0 5%;
