@@ -1,15 +1,14 @@
 <template>
   <div class="home-container">
-    <!-- 背景视频 -->
+    <!-- Background Video -->
     <div class="video-wrapper">
       <video autoplay muted loop playsinline class="bg-video">
         <source src="@/assets/house_1.mp4" type="video/mp4" />
       </video>
     </div>
 
-    <!-- 内容区域 -->
+
     <div class="content-section">
-      <!-- 轮播 -->
       <div class="carousel-container">
         <div class="carousel-track" :style="{ transform: `translateX(-${currentSlide * 100}%)` }">
           <div
@@ -26,8 +25,6 @@
             >
               <div class="card-content">
                 <h2 class="card-title">{{ slide.title }}</h2>
-                <p class="card-description">{{ slide.description }}</p>
-                <button class="btn btn-dark">Learn More</button>
               </div>
             </div>
           </div>
@@ -51,7 +48,6 @@
         </div>
       </div>
 
-      <!-- 卡片区域 -->
       <div class="cards-section">
         <div class="cards-row">
           <div
@@ -65,7 +61,6 @@
               <img :src="card.image" alt="card image" class="card-img" />
               <h3 class="card-title">{{ card.title }}</h3>
               <p class="card-description">{{ card.content }}</p>
-              <router-link :to="card.link" class="learn-more-btn">Learn More</router-link>
             </div>
           </div>
         </div>
@@ -74,20 +69,16 @@
   </div>
 </template>
 
-
-
 <script setup>
 import { ref, onMounted } from 'vue'
 
 const slides = ref([
   {
-    title: 'Newcomers',
-    description: 'Get to know who the newcomers are in Victoria and their key challenges.',
+    title: 'The journey of an immigrant is long, but each step brings us closer to our new home.',
     bgColor: 'rgba(245, 245, 247, 0.8)'
   },
   {
-    title: 'Language',
-    description: 'Understand the multilingual landscape and language support for immigrants.',
+    title: 'A true home is not defined by geography, but by the sense of belonging in the heart.',
     bgColor: 'rgba(245, 245, 247, 0.8)'
   }
 ])
@@ -96,13 +87,13 @@ const cards = ref([
   {
     title: 'Newcomers',
     content: 'Explore who the newcomers are in Victoria, where they live, and the challenges they face during settlement.',
-    image: new URL('../assets/Home_Newcomers.jpg', import.meta.url).href,
+    image: new URL('../assets/newComer.jpg', import.meta.url).href,
     link: '/newcomers'
   },
   {
     title: 'Language',
     content: 'Discover the language support and multilingual communities available to help newcomers settle in Victoria.',
-    image: new URL('../assets/Home_Newcomers.jpg', import.meta.url).href,
+    image: new URL('../assets/languageKey.jpg', import.meta.url).href,
     link: '/language'
   }
 ]);
@@ -132,7 +123,6 @@ const goToSlide = (index) => {
   currentSlide.value = index;
 };
 </script>
-
 
 <style scoped>
 .home-container {
@@ -240,9 +230,10 @@ const goToSlide = (index) => {
 }
 
 .card-title {
-  font-size: 2.5rem;
+  font-size: 20vw;
   margin-bottom: 1rem;
   font-weight: 600;
+  text-align: center;
 }
 
 .card-description {
@@ -303,7 +294,6 @@ const goToSlide = (index) => {
   transform: scale(1.2);
 }
 
-/* 卡片样式区域 */
 .cards-section {
   padding: 4rem 2rem;
 }
@@ -335,10 +325,9 @@ const goToSlide = (index) => {
 
 .card-img {
   width: 100%;
-  height: 200px; /* 固定高度确保卡片一致 */
-  object-fit: cover; /* 填满容器并裁剪多余部分 */
-  border-radius: 8px 8px 0 0; /* 上圆角 */
-  display: block;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 8px 8px 0 0;
 }
 
 .card-title {
@@ -383,7 +372,6 @@ const goToSlide = (index) => {
   background: #ffffae;
 }
 
-/* 响应式：移动端一列展示 */
 @media (max-width: 768px) {
   .carousel-slide {
     padding: 0 5%;
