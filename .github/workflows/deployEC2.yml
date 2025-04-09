@@ -1,4 +1,4 @@
-name: Deploy Vue App to AWS EC2
+name: Deploy Vue App to AWS EC2 
 
 on:
   push:
@@ -18,11 +18,17 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Install dependencies and build
-        run: |
-          npm ci
-          npm run build
-          working-directory: client
+      # - name: List files in client (debug)
+      #   run: ls -al
+      #   working-directory: client
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: client
+
+      - name: Build project
+        run: npm run build
+        working-directory: client
 
       - name: Deploy to EC2 via SSH (prepare Nginx and clean up)
         uses: appleboy/ssh-action@master
@@ -31,7 +37,6 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            # Install Nginx if not present
             if ! command -v nginx &> /dev/null; then
               sudo apt-get update -y
               sudo apt-get install -y nginx
@@ -39,7 +44,6 @@ jobs:
               sudo systemctl enable nginx
             fi
 
-            # Prepare deployment directory
             sudo mkdir -p /var/www/newcomerau
             sudo rm -rf /var/www/newcomerau/*
             sudo chown ubuntu:ubuntu /var/www/newcomerau
@@ -50,7 +54,7 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
-          source: "dist/*"
+          source: "client/dist/*"
           target: "/var/www/newcomerau"
 
       - name: Reload Nginx and fix permissions
