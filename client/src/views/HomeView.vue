@@ -7,7 +7,6 @@
       </video>
     </div>
 
-
     <div class="content-section">
       <div class="carousel-container">
         <div class="carousel-track" :style="{ transform: `translateX(-${currentSlide * 100}%)` }">
@@ -50,9 +49,10 @@
 
       <div class="cards-section">
         <div class="cards-row">
-          <div
+          <router-link
             v-for="(card, index) in cards"
             :key="index"
+            :to="card.link"
             class="card-box"
             @mouseover="hoverIndex = index"
             @mouseleave="hoverIndex = -1"
@@ -62,7 +62,7 @@
               <h3 class="card-title">{{ card.title }}</h3>
               <p class="card-description">{{ card.content }}</p>
             </div>
-          </div>
+          </router-link>
         </div>
       </div>
     </div>
