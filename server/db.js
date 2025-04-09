@@ -6,6 +6,10 @@ const pool = new Pool({
   password: 'immi_project',
   database: 'postgres',
   port: 5432,
+  ssl: {
+    rejectUnauthorized: false
+  }
+
 });
 
 module.exports = pool;

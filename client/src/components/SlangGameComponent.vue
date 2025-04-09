@@ -1,6 +1,6 @@
 <template>
   <div v-if="!gameStarted" class="start-screen">
-    <h3>Welcome to Play!</h3>
+    <h3>Welcome to play the Slang Match Game!</h3>
     <button class="start-button" @click="startGame">Start Game</button>
   </div>
 
