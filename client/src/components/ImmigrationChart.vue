@@ -79,11 +79,11 @@ const getChartDataByYear = (year) => {
   const yearData = rawData.find((item) => item.year === year)
   if (!yearData) return { countries: [], values: [] }
 
-  const { year: _, ...countries } = yearData
+  const { year: _/* eslint-disable-line no-unused-vars */, ...countries } = yearData
   const entries = Object.entries(countries)
   const sorted = entries.sort((a, b) => b[1] - a[1])
   const countriesList = sorted.map(([k]) => k)
-  const valuesList = sorted.map(([_, v]) => v)
+  const valuesList = sorted.map(([_, v]) => v)// eslint-disable-line no-unused-vars
 
   return { countries: countriesList, values: valuesList }
 }

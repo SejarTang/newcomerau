@@ -12,20 +12,22 @@
         </p>
       </div>
       <div class="hero-image-container">
-        <img src="../assets/languageKey.jpg" alt="language" class="hero-image" />
+        <img src="../assets/language.jpg" alt="language" class="hero-image" />
       </div>
     </section>
 
     <!-- Language Background Section -->
     <section class="section" data-aos="fade-up">
-      <h2>Overview of the Language Backgrounds of Non-English Speaking Immigrant in Victoria</h2>
-      <p class="lead">
-        In multicultural Victoria, new immigrants come from all over the world, bringing with them a rich diversity of languages and cultures.
-        According to recent data, Mandarin, Arabic, Vietnamese, Cantonese, and Greek are among the most common non-English native languages.
-        The following chart shows the language backgrounds of commonly spoken non-English native languages in Victoria.
-      </p>
-      <div class="chart-container"></div>
-    </section>
+  <h2>Overview of the Language Backgrounds of Non-English Speaking Immigrants in Victoria</h2>
+  <p class="lead">
+    In multicultural Victoria, new immigrants come from all over the world, bringing with them a rich diversity of languages and cultures.
+    According to recent data, Mandarin, Arabic, Vietnamese, Cantonese, and Greek are among the most common non-English native languages.
+    The following chart shows the language backgrounds of commonly spoken non-English native languages in Victoria.
+  </p>
+  <div class="chart-container">
+    <LanguageBackgroundChart />
+  </div>
+</section>
 
     <!-- Challenges Section -->
     <section class="section challenges" data-aos="fade-up">
@@ -130,6 +132,7 @@ import { ref, computed, onMounted } from 'vue'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 import SlangGameComponent from '@/components/SlangGameComponent.vue'
+import LanguageBackgroundChart from '@/components/LanguageBackgroundChart.vue'
 
 
 onMounted(() => {
@@ -431,14 +434,16 @@ const closeQuizCard = () => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 30px;
-  padding: 50px;
+  gap: 20px;
+  padding: 60px;
   background-color: #f9f9f9;
 }
 
+
+
 /* Hero text content style */
 .hero-content {
-  flex: 1;
+  flex: 1.0;
   text-align: left;
 }
 
@@ -458,7 +463,7 @@ const closeQuizCard = () => {
 /* Hero image container style */
 .hero-image-container {
   flex-shrink: 0;
-  border-radius: 12px;
+  border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
 }
@@ -467,7 +472,7 @@ const closeQuizCard = () => {
 .hero-image {
   display: block;
   max-width: 100%;
-  height: auto;
+  height: 300px;
 }
 
 /* Chart container style */
@@ -475,25 +480,13 @@ const closeQuizCard = () => {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 200px;
-  border: 1px dashed #ccc;
-  border-radius: 8px;
-  background-color: #f5f5f5;
-  padding: 20px;
+  min-height: 500px;
+  padding: 50px;
+  background-color: #f7f9fc;
+  border-radius: 16px;
 }
 
-/* Chart placeholder text style */
-.chart-container .placeholder {
-  color: #777;
-  font-style: italic;
-}
 
-/* Chart element style */
-.chart {
-  width: 100%;
-  max-width: 500px;
-  height: auto;
-}
 
 /* Challenge list section style */
 .challenges {
