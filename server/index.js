@@ -7,8 +7,8 @@ const languageRoutes = require('./routes/languages');
 const migrantRoutes = require('./routes/migrants');
 
 app.use(cors());
-app.use('/api/languages', languageRoutes);
-app.use('/api/migrants', migrantRoutes);
+app.use('/api', languageRoutes);
+app.use('/api', migrantRoutes);
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
