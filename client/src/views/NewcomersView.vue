@@ -20,10 +20,12 @@
       <p class="lead">
         Now, let's take a closer look at how immigration has shaped the demographic landscape of
         Victoria over the past two decades. The following chart illustrates the distribution of
-        newcomers to Victoria from the top 10 countries by immigration numbers in the last 20 years.
+        newcomers to Victoria from the top 10 countries by immigration numbers between 2020 and 2023.
         Select a year to view the specific trends and patterns.
       </p>
-      <div class="chart-container"></div>
+      <div class="chart-container">
+        <ImmigrationChart />
+      </div>
     </section>
     <section class="section challenges" data-aos="fade-up">
       <h2>Challenges Faced by New Immigrants</h2>
@@ -93,6 +95,7 @@ import { ref, computed, onMounted } from 'vue'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 import { useRouter } from 'vue-router'
+import ImmigrationChart from '@/components/ImmigrationChart.vue'
 
 onMounted(() => {
   AOS.init({ duration: 600, easing: 'ease-in-out', once: true })
@@ -218,7 +221,7 @@ const navigateTo = (path) => {
   router.push(path)
 }
 
-// Quiz 
+// Quiz
 const showQuizCardModal = ref(false)
 const currentQuizIndex = ref(null)
 const currentQuestionIndex = ref(0)
@@ -354,11 +357,13 @@ const closeQuizCard = () => {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 200px;
+  min-height: 400px;
   border: 1px dashed #ccc;
   border-radius: 8px;
   background-color: #f5f5f5;
   padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Chart placeholder text style */
