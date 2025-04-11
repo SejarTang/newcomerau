@@ -7,7 +7,7 @@ router.get('/languages', async (req, res) => {
     const result = await pool.query('SELECT * FROM top_languages');
     res.json(result.rows);
   } catch (err) {
-    console.error('Languages Error:', err);
+    console.error('Languages API Error:', err);
     res.status(500).json({ error: err.message });
   }
 });
