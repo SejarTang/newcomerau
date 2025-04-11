@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 const pool = require('../db');
 
-router.get('/', async (req, res) => {
+router.get('/migrants', async (req, res) => {
   try {
-    const result = await pool.query('SELECT * FROM migrant');
+    const result = await pool.query('SELECT * FROM migrants');
     res.json(result.rows);
   } catch (err) {
     console.error('Migrants Error:', err);
