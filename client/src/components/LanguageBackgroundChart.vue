@@ -56,40 +56,42 @@ const updateChart = () => {
   yearData.sort((a, b) => b.number_of_non_english_speakers - a.number_of_non_english_speakers)
 
   chartOptions.value = {
-    title: {
-      text: `Language Distribution in ${yearSelected.value}`
-    },
-    tooltip: {
-      trigger: 'axis',
-      axisPointer: {
-        type: 'shadow'
-      }
-    },
-    grid: {
-      left: '8%',
-      right: '5%',
-      bottom: '10%',
-      containLabel: true
-    },
-    xAxis: {
-      type: 'value',
-      name: 'Speakers'
-    },
-    yAxis: {
-      type: 'category',
-      data: yearData.map(d => d.language)
-    },
-    series: [{
+  title: {
+    text: `Language Distribution in ${yearSelected.value}`
+  },
+  tooltip: {
+    trigger: 'axis',
+    axisPointer: { type: 'shadow' }
+  },
+  grid: {
+    left: '8%',
+    right: '5%',
+    bottom: '10%',
+    containLabel: true
+  },
+  xAxis: {
+    type: 'value',
+    name: 'Speakers'
+  },
+  yAxis: {
+    type: 'category',
+    data: yearData.map(d => d.language)
+  },
+  series: [
+    {
       type: 'bar',
       data: yearData.map((d, idx) => ({
         value: d.number_of_non_english_speakers,
         itemStyle: { color: barColors[idx % barColors.length] }
       })),
       barWidth: '60%',
-      animationDelay: (idx) => idx * 100  // Animate one by one
-    }],
-    animationEasing: 'elasticOut',
-    animationDuration: 1000
+      animationDelay: (idx) => idx * 100,           // First load animation
+      animationDelayUpdate: (idx) => idx * 100      // Update animation
+    }
+  ],
+  animationEasing: 'cubicOut',
+  animationDuration: 1000,
+  animationDurationUpdate: 1000
   }
 }
 
