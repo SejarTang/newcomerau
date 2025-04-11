@@ -125,6 +125,10 @@ const goToSlide = (index) => {
 </script>
 
 <style scoped>
+.cards-row a {
+  text-decoration: none;
+}
+
 .home-container {
   position: relative;
   background-color: #fff6f5eb;
