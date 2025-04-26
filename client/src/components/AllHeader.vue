@@ -8,7 +8,7 @@
       <li><router-link to="/" class="nav-link">Home</router-link></li>
       <li><router-link to="/newcomers" class="nav-link">Newcomers</router-link></li>
       <li><router-link to="/language" class="nav-link">Language</router-link></li>
-
+      <li><router-link to="/languagehub" class="nav-link">LanguageHub</router-link></li>
     </ul>
   </nav>
 </template>
