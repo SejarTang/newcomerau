@@ -86,7 +86,7 @@ const slides = ref([
 const cards = ref([
   {
     title: 'Newcomers',
-    content: 'Explore who the newcomers are in Victoria, where they live, and the challenges they face during settlement.',
+    content: 'Explore who the newcomers in Victoria are, where they come from, and the challenges they face during settlement.',
     image: new URL('../assets/newComer.jpg', import.meta.url).href,
     link: '/newcomers'
   },
