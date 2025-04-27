@@ -172,12 +172,16 @@ function startCountdown() {
 
 // End game
 function endGame() {
+  clearInterval(fallingInterval);
+  clearInterval(countdown);
   gameOver.value = true;
+
   if (score.value > bestScore.value) {
     bestScore.value = score.value;
     localStorage.setItem('bestScore', bestScore.value.toString());
   }
 }
+
 
 // Start game
 function startGame() {

@@ -92,11 +92,11 @@
         Getting familiar with these local terms not only helps you understand what Aussies are really saying,
         but also makes your own communication sound more natural and relatable.
       </p>
-      <div style="text-align: center; margin-top: 20px;">
-  <button class="play-game-button" @click="openSlangGame">
-    Ready for a challenge?
-  </button>
-</div>
+      <div class="play-game-container">
+    <button class="play-game-button" @click="openSlangGame">
+      Start the Slang Challenge!
+    </button>
+    </div>
       <SlangGameComponent v-if="showSlangGame" />
     </section>
 
@@ -105,7 +105,8 @@
       <div class="quiz-card">
         <button class="close-button" @click="closeQuizCard">X</button>
         <h3 v-if="currentQuiz">{{ currentQuiz.title }}</h3>
-        <div v-if="currentQuestion" class="quiz-question">
+        <div v-if="currentQuestion && !quizFinished" class="quiz-question">
+
           <p>{{ currentQuestion.question }}</p>
           <div class="quiz-options">
             <button
@@ -767,4 +768,29 @@ a:hover {
 .quiz-results button:hover {
   background-color: #1e7e34;
 }
+
+.play-game-container {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.play-game-button {
+  padding: 16px 32px;
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: white;
+  background: linear-gradient(135deg, #ff7e5f, #feb47b);
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.play-game-button:hover {
+  transform: scale(1.05);
+  background: linear-gradient(135deg, #feb47b, #ff7e5f);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
 </style>

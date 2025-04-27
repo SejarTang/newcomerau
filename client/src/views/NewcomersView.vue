@@ -57,19 +57,14 @@
           </div>
         </div>
       </div>
-      <div class="help-section">
-        <button class="help-button" @click="showHelpList = !showHelpList">Need Help?</button>
-        <ul v-if="showHelpList" class="help-list">
-          <li @click="navigateTo('/language')">Language</li>
-        </ul>
-      </div>
     </section>
 
     <div v-if="showQuizCardModal" class="quiz-card-overlay">
       <div class="quiz-card">
         <button class="close-button" @click="closeQuizCard">X</button>
         <h3 v-if="currentQuiz">{{ currentQuiz.title }}</h3>
-        <div v-if="currentQuestion" class="quiz-question">
+        <div v-if="currentQuestion && !quizFinished" class="quiz-question">
+
           <p>{{ currentQuestion.question }}</p>
           <div class="quiz-options">
             <button
@@ -94,7 +89,6 @@
 import { ref, computed, onMounted } from 'vue'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
-import { useRouter } from 'vue-router'
 import ImmigrationChart from '@/components/ImmigrationChart.vue'
 
 onMounted(() => {
@@ -214,12 +208,7 @@ const resetCard = (index) => {
   }
 }
 
-const showHelpList = ref(false)
-const router = useRouter()
-const navigateTo = (path) => {
-  showHelpList.value = false
-  router.push(path)
-}
+
 
 // Quiz
 const showQuizCardModal = ref(false)
