@@ -30,6 +30,11 @@ const router = createRouter({
       name: 'Languagehub',
       component: () => import('../views/LanguageHubView.vue'),
     },
+    {
+      path: '/healthcare',
+      name: 'Healthcare',
+      component: () => import('../views/HealthcareView.vue'),
+    },
   ],
 })
 

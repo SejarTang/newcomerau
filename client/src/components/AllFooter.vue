@@ -11,6 +11,8 @@
             <li><router-link to="/">Home</router-link></li>
             <li><router-link to="/newcomers">Newcomers</router-link></li>
             <li><router-link to="/language">Language</router-link></li>
+            <li><router-link to="/languagehub">LanguageHub</router-link></li>
+            <li><router-link to="/healthcare">Healthcare</router-link></li>
           </ul>
         </div>
       </div>
