@@ -1,0 +1,30 @@
+[
+  {
+    "word": "english",
+    "phonetic": "/ˈɪŋ.ɡlɪʃ/",
+    "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/english-us.mp3",
+    "meaning": "Spinning or rotary motion given to a ball around the vertical axis, as in billiards or bowling.",
+    "example": "You can't hit it directly, but maybe if you give it some english."
+  },
+  {
+    "word": "words",
+    "phonetic": null,
+    "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/words-us.mp3",
+    "meaning": "The smallest unit of language that has a particular meaning and can be expressed by itself; the smallest discrete, meaningful unit of language. (contrast morpheme.)",
+    "example": null
+  },
+  {
+    "word": "one",
+    "phonetic": "/wan/",
+    "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/one-au.mp3",
+    "meaning": "The digit or figure 1.",
+    "example": null
+  },
+  {
+    "word": "meaning",
+    "phonetic": "/ˈmiːnɪŋ/",
+    "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/meaning-us.mp3",
+    "meaning": "(of words or symbols) The entity, perception, feeling or concept thereby represented or evoked.",
+    "example": null
+  }
+]
