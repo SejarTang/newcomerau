@@ -1,15 +1,18 @@
 <template>
   <div class="home-container">
-    <!-- Background Video -->
+    <!-- Background Video Section -->
     <div class="video-wrapper">
       <video autoplay muted loop playsinline class="bg-video">
         <source src="@/assets/house_1.mp4" type="video/mp4" />
       </video>
     </div>
 
+    <!-- Main Content Section -->
     <div class="content-section">
+      <!-- Carousel Section -->
       <div class="carousel-container">
         <div class="carousel-track" :style="{ transform: `translateX(-${currentSlide * 100}%)` }">
+          <!-- Each Slide -->
           <div
             v-for="(slide, index) in slides"
             :key="index"
@@ -29,6 +32,7 @@
           </div>
         </div>
 
+        <!-- Left and Right Arrow Buttons -->
         <button class="carousel-control prev" @click="prevSlide">
           <i class="bi bi-chevron-left"></i>
         </button>
@@ -36,6 +40,7 @@
           <i class="bi bi-chevron-right"></i>
         </button>
 
+        <!-- Indicator Dots -->
         <div class="indicators">
           <button
             v-for="(_, index) in slides"
@@ -47,6 +52,7 @@
         </div>
       </div>
 
+      <!-- Feature Cards Section -->
       <div class="cards-section">
         <div class="cards-row">
           <router-link
@@ -72,6 +78,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 
+// Carousel slides data
 const slides = ref([
   {
     title: 'The journey of an immigrant is long, but each step brings us closer to our new home.',
@@ -83,63 +90,75 @@ const slides = ref([
   }
 ])
 
+// Cards displayed below carousel
 const cards = ref([
   {
     title: 'Newcomers',
-    content: 'Explore who the newcomers in Victoria are, where they come from, and the challenges they face during settlement.',
+    content: 'Explore who the newcomers in Victoria are, where they come from',
     image: new URL('../assets/newComer.jpg', import.meta.url).href,
     link: '/newcomers'
   },
   {
     title: 'Language',
-    content: 'Discover the language support and multilingual communities available to help newcomers settle in Victoria.',
+    content: 'Explore the language backgrounds of newcomers in Victoria',
     image: new URL('../assets/languageKey.jpg', import.meta.url).href,
     link: '/language'
   },
   {
     title: 'LanguageHub',
-    content: '1',
-    image: new URL('../assets/languageKey.jpg', import.meta.url).href,
+    content: 'LanguageHub offers a variety of language activities to help you improve your English skills',
+    image: new URL('../assets/LanguageHub.jpg', import.meta.url).href,
     link: '/languageHub'
   },
   {
     title: 'Healthcare',
-    content: '2',
-    image: new URL('../assets/languageKey.jpg', import.meta.url).href,
+    content: 'Healthcare offers essential information and resources to help newcomers access medical services',
+    image: new URL('../assets/healthcare_home.jpg', import.meta.url).href,
   }
-]);
+])
 
-const currentSlide = ref(0);
-const autoPlay = ref(true);
-const hoverIndex = ref(-1);
+// Current active slide index
+const currentSlide = ref(0)
 
+// Control autoplay behavior
+const autoPlay = ref(true)
+
+// Track which card is being hovered
+const hoverIndex = ref(-1)
+
+// Auto-slide on interval
 onMounted(() => {
   const interval = setInterval(() => {
     if (autoPlay.value) {
       nextSlide();
     }
-  }, 5000);
+  }, 5000); // Change slide every 5 seconds
   return () => clearInterval(interval);
-});
+})
 
+// Move to next slide
 const nextSlide = () => {
   currentSlide.value = (currentSlide.value + 1) % slides.value.length;
-};
+}
 
+// Move to previous slide
 const prevSlide = () => {
   currentSlide.value = (currentSlide.value - 1 + slides.value.length) % slides.value.length;
-};
+}
 
+// Jump to a specific slide
 const goToSlide = (index) => {
   currentSlide.value = index;
-};
+}
 </script>
 
 <style scoped>
+/* Remove underline for card links */
 .cards-row a {
   text-decoration: none;
 }
 
+/* Home page container with background color */
 .home-container {
   position: relative;
   background-color: #fff6f5eb;
@@ -147,6 +166,7 @@ const goToSlide = (index) => {
   overflow: visible;
 }
 
+/* Background video wrapper */
 .video-wrapper {
   position: relative;
   top: 0;
@@ -157,6 +177,7 @@ const goToSlide = (index) => {
   overflow: hidden;
 }
 
+/* Background video settings */
 .bg-video {
   width: 100%;
   height: 100%;
@@ -164,23 +185,27 @@ const goToSlide = (index) => {
   opacity: 0.8;
 }
 
+/* Section containing carousel and cards */
 .content-section {
   position: relative;
   z-index: 1;
   padding: 4rem 0;
 }
 
+/* Carousel container */
 .carousel-container {
   position: relative;
   overflow: hidden;
   padding: 2rem 0;
 }
 
+/* Track for sliding animation */
 .carousel-track {
   display: flex;
   transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
+/* Single slide */
 .carousel-slide {
   flex: 0 0 100%;
   padding: 0 15%;
@@ -188,6 +213,7 @@ const goToSlide = (index) => {
   transition: opacity 0.3s;
 }
 
+/* Card inside carousel */
 .card {
   border-radius: 30px;
   padding: 3rem;
@@ -200,6 +226,7 @@ const goToSlide = (index) => {
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+/* Colorful glowing shadow effect behind active card */
 .card::after {
   content: '';
   position: absolute;
@@ -224,26 +251,31 @@ const goToSlide = (index) => {
   transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.card.active::after {
-  opacity: 0.8;
-  animation: shadow-breath 3s ease-in-out infinite;
-}
-
+/* Animation breathing effect */
 @keyframes shadow-breath {
   0%, 100% { opacity: 0.8; transform: scale(0.98); }
   50% { opacity: 0.95; transform: scale(1.02); }
 }
 
+/* Highlight active card */
+.card.active::after {
+  opacity: 0.8;
+  animation: shadow-breath 3s ease-in-out infinite;
+}
+
+/* Scale up active card */
 .card.active {
   transform: scale(1);
   opacity: 1;
 }
 
+/* Card content alignment */
 .card-content {
   text-align: center;
   color: #1d1d1f;
 }
 
+/* Card title style */
 .card-title {
   font-size: 20vw;
   margin-bottom: 1rem;
@@ -251,12 +283,14 @@ const goToSlide = (index) => {
   text-align: center;
 }
 
+/* Description under card title */
 .card-description {
   font-size: 1.2rem;
   margin-bottom: 2rem;
   color: #86868b;
 }
 
+/* Left and right navigation buttons */
 .carousel-control {
   position: absolute;
   top: 50%;
@@ -273,18 +307,22 @@ const goToSlide = (index) => {
   z-index: 2;
 }
 
+/* Hover effect on nav buttons */
 .carousel-control:hover {
   background: rgba(255, 255, 255, 0.2);
 }
 
+/* Previous button position */
 .prev {
   left: 2rem;
 }
 
+/* Next button position */
 .next {
   right: 2rem;
 }
 
+/* Small indicator dots at bottom */
 .indicators {
   position: absolute;
   bottom: 0.5rem;
@@ -295,6 +333,7 @@ const goToSlide = (index) => {
   z-index: 2;
 }
 
+/* Indicator style */
 .indicator {
   width: 10px;
   height: 10px;
@@ -304,15 +343,18 @@ const goToSlide = (index) => {
   transition: all 0.3s;
 }
 
+/* Active indicator dot */
 .indicator.active {
   background-color: rgba(255, 255, 255, 0.9);
   transform: scale(1.2);
 }
 
+/* Cards section below the carousel */
 .cards-section {
   padding: 4rem 2rem;
 }
 
+/* Flex layout for card rows */
 .cards-row {
   display: flex;
   justify-content: center;
@@ -321,6 +363,7 @@ const goToSlide = (index) => {
   gap: 2rem;
 }
 
+/* Single card container */
 .card-box {
   flex: 1 1 45%;
   max-width: 45%;
@@ -328,6 +371,7 @@ const goToSlide = (index) => {
   justify-content: center;
 }
 
+/* Inner style of each card */
 .card-inner {
   background: #fff6f5eb;
   padding: 1.5rem;
@@ -338,6 +382,7 @@ const goToSlide = (index) => {
   transition: all 0.3s ease;
 }
 
+/* Card image */
 .card-img {
   width: 100%;
   height: 400px;
@@ -345,27 +390,32 @@ const goToSlide = (index) => {
   border-radius: 8px 8px 0 0;
 }
 
+/* Card title below image */
 .card-title {
   font-size: 1.5rem;
   margin-bottom: 0.8rem;
   font-weight: 600;
 }
 
+/* Card text */
 .card-description {
   font-size: 1rem;
   color: #555;
 }
 
+/* Hover effect on card */
 .card-hover {
   background: #96d3ff;
   color: white;
   transform: translateY(-4px);
 }
 
+/* Text color on hover */
 .card-hover .card-description {
   color: #ffffff;
 }
 
+/* "Learn more" button style */
 .learn-more-btn {
   display: inline-block;
   margin-top: 1rem;
@@ -378,15 +428,18 @@ const goToSlide = (index) => {
   transition: background 0.3s ease;
 }
 
+/* Hover style for learn more button */
 .card-hover .learn-more-btn {
   background: white;
   color: #000000;
 }
 
+/* Hovering on learn more button */
 .learn-more-btn:hover {
   background: #ffffae;
 }
 
+/* Responsive adjustments for tablets and mobiles */
 @media (max-width: 768px) {
   .carousel-slide {
     padding: 0 5%;
@@ -414,3 +467,4 @@ const goToSlide = (index) => {
   }
 }
 </style>
+
