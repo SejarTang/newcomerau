@@ -95,6 +95,17 @@ const cards = ref([
     content: 'Discover the language support and multilingual communities available to help newcomers settle in Victoria.',
     image: new URL('../assets/languageKey.jpg', import.meta.url).href,
     link: '/language'
+  },
+  {
+    title: 'LanguageHub',
+    content: '1',
+    image: new URL('../assets/languageKey.jpg', import.meta.url).href,
+    link: '/languageHub'
+  },
+  {
+    title: 'Healthcare',
+    content: '2',
+    image: new URL('../assets/languageKey.jpg', import.meta.url).href,
   }
 ]);
 
