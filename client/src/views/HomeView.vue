@@ -114,6 +114,7 @@ const cards = ref([
     title: 'Healthcare',
     content: 'Healthcare offers essential information and resources to help newcomers access medical services',
     image: new URL('../assets/healthcare_home.jpg', import.meta.url).href,
+    link: '/healthcare'
   }
 ])
 
