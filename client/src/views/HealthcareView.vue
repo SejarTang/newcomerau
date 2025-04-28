@@ -1,7 +1,14 @@
 <template>
-  <h1>Hi</h1>
+  <div class="healthcare-page">
+    <HealthcareGuidance />
+  </div>
 </template>
 
-<script setup></script>
+<script setup>
 
-<style scoped></style>
+import HealthcareGuidance from '@/components/HealthcareGuidance.vue'
+</script>
+
+<style scoped>
+
+</style>
