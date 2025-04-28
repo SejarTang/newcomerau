@@ -1,30 +1,51 @@
 [
   {
-    "word": "english",
-    "phonetic": "/ˈɪŋ.ɡlɪʃ/",
-    "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/english-us.mp3",
-    "meaning": "Spinning or rotary motion given to a ball around the vertical axis, as in billiards or bowling.",
-    "example": "You can't hit it directly, but maybe if you give it some english."
+    "word": "beware",
+    "phonetic": "/biˈwɛə(ɹ)/",
+    "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/beware-us.mp3",
+    "meaning": "(defective) To use caution, pay attention to (used both with and without of).",
+    "example": null
   },
   {
-    "word": "words",
+    "word": "livestock",
     "phonetic": null,
-    "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/words-us.mp3",
-    "meaning": "The smallest unit of language that has a particular meaning and can be expressed by itself; the smallest discrete, meaningful unit of language. (contrast morpheme.)",
+    "audio": null,
+    "meaning": "Farm animals; animals domesticated for cultivation.",
     "example": null
   },
   {
-    "word": "one",
-    "phonetic": "/wan/",
-    "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/one-au.mp3",
-    "meaning": "The digit or figure 1.",
+    "word": "area",
+    "phonetic": "/ˈæɹ.i.ə/",
+    "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/area-us.mp3",
+    "meaning": "A measure of the extent of a surface; it is measured in square units.",
     "example": null
   },
   {
-    "word": "meaning",
-    "phonetic": "/ˈmiːnɪŋ/",
-    "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/meaning-us.mp3",
-    "meaning": "(of words or symbols) The entity, perception, feeling or concept thereby represented or evoked.",
+    "word": "members",
+    "phonetic": "/ˈmɛmbɚz/",
+    "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/members-us.mp3",
+    "meaning": "One who officially belongs to a group.",
+    "example": null
+  },
+  {
+    "word": "general",
+    "phonetic": "/ˈd͡ʒɛnəɹəl/",
+    "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/general-us.mp3",
+    "meaning": "A general fact or proposition; a generality.",
+    "example": "We have dealt with the generals; now let us turn to the particulars."
+  },
+  {
+    "word": "public",
+    "phonetic": "/ˈpʌblɪk/",
+    "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/public-us.mp3",
+    "meaning": "The people in general, regardless of membership of any particular group.",
+    "example": "Members of the public may not proceed beyond this point."
+  },
+  {
+    "word": "enter",
+    "phonetic": "/ˈɛntə(ɹ)/",
+    "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/enter-uk.mp3",
+    "meaning": "The \"Enter\" key on a computer keyboard.",
     "example": null
   }
 ]
