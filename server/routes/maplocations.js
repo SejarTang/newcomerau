@@ -26,8 +26,8 @@ router.get('/maplocations', async (req, res) => {
     const hospitals = await db.query(hospitalsQuery);
 
     // Hospital_type type
-    const privateHospitals = hospitals.rows.filter(h => h.hos_type === 'Private Hospital');
-    const publicHospitals = hospitals.rows.filter(h => h.hos_type === 'Public Hospital');
+    const privateHospitals = hospitals.rows.filter(h => h.hos_type === 'PRIVATE');
+    const publicHospitals = hospitals.rows.filter(h => h.hos_type === 'PUBLIC');
 
     res.json({
       clinics: clinics.rows,
