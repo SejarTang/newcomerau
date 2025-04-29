@@ -2,6 +2,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'element-plus/dist/index.css';
 import 'aos/dist/aos.css';
+import 'leaflet/dist/leaflet.css';
 
 
 import { createApp } from 'vue'
