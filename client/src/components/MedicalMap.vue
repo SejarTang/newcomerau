@@ -30,7 +30,7 @@
   
   const fetchData = async () => {
     // const res = await axios.get('/api/map-locations');
-    const res = await axios.get('https://newcomerau.me/api/map-locations');
+    const res = await axios.get('https://newcomerau.me/api/maplocations');
 
     clinics.value = res.data.clinics;
     privateHospitals.value = res.data.privateHospitals;

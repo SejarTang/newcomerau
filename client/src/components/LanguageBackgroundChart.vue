@@ -53,7 +53,7 @@ const fetchData = async () => {
 // Update chart based on selected year
 const updateChart = () => {
   const yearData = allData.value.filter(d => d.year == yearSelected.value)
-  yearData.sort((a, b) => b.number_of_non_english_speakers - a.number_of_non_english_speakers)
+  yearData.sort((a, b) => b.number_of_non_english_speaker - a.number_of_non_english_speaker)
 
   chartOptions.value = {
   title: {
@@ -81,7 +81,7 @@ const updateChart = () => {
     {
       type: 'bar',
       data: yearData.map((d, idx) => ({
-        value: d.number_of_non_english_speakers,
+        value: d.number_of_non_english_speaker,
         itemStyle: { color: barColors[idx % barColors.length] }
       })),
       barWidth: '60%',

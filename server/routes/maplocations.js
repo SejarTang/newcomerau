@@ -1,10 +1,10 @@
-// routes/map.js
+// routes/maplocations.js
 const express = require('express');
 const router = express.Router();
 const db = require('../db');
 
 // get map locations
-router.get('/map-locations', async (req, res) => {
+router.get('/maplocations', async (req, res) => {
   try {
     // Clinics 
     const clinicsQuery = `

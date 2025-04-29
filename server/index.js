@@ -6,7 +6,7 @@ const port = 3001;
 const languageRoutes = require('./routes/languages');
 const migrantRoutes = require('./routes/migrants');
 const ocrRoutes = require('./routes/ocr');
-const mapRoutes = require('./routes/map');
+const mapRoutes = require('./routes/maplocations');
 
 
 
