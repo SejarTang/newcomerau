@@ -94,7 +94,7 @@ defineExpose({ receivePreset });
 
 <style scoped>
 .chatbot {
-  width: 400px;
+  width: 880px;
   height: 600px;
   border: 1px solid #ddd;
   display: flex;

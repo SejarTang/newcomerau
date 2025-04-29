@@ -1,17 +1,30 @@
 <template>
   <div class="upload-ocr-card">
     <h2 class="intro-title">OCR Analysis - Discover Everyday Words Around You!</h2>
-    <p class="intro-description">Upload or select an image to recognize words and learn their meanings, pronunciations, and examples!</p>
+    <p class="intro-description">
+      Upload or select an image to recognize words<br>
+      and learn their meanings, pronunciations, and examples!
+    </p>
 
     <div class="preset-container">
+
       <div class="preset-images">
-        <img v-for="(img, idx) in presetImages.slice(0, 3)" :key="'left-'+idx" :src="img" @click="selectPreset(img)" class="preset-image" />
+        <img
+          v-for="(img, idx) in presetImages.slice(0, 3)"
+          :key="'left-'+idx"
+          :src="img"
+          @click="selectPreset(img)"
+          class="preset-image"
+        />
       </div>
+
 
       <div class="upload-area">
         <div class="preview-box">
           <img v-if="previewUrl" :src="previewUrl" class="preview-image" />
-          <div v-else class="preview-placeholder">Your uploaded image will appear here.</div>
+          <div v-else class="preview-placeholder">
+            Your uploaded image will appear here.
+          </div>
         </div>
 
         <label class="file-upload">
@@ -23,21 +36,41 @@
           {{ loading ? 'Analyzing...' : 'Upload and Recognize' }}
         </button>
 
+
+        <div v-if="loading" class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-fill" :style="{ width: progress + '%' }"></div>
+          </div>
+          <div class="progress-text">{{ Math.floor(progress) }}%</div>
+        </div>
+
+
         <div v-if="loading" class="loading-text">
           Analyzing image, please wait...
         </div>
       </div>
 
+
       <div class="preset-images">
-        <img v-for="(img, idx) in presetImages.slice(3, 6)" :key="'right-'+idx" :src="img" @click="selectPreset(img)" class="preset-image" />
+        <img
+          v-for="(img, idx) in presetImages.slice(3, 6)"
+          :key="'right-'+idx"
+          :src="img"
+          @click="selectPreset(img)"
+          class="preset-image"
+        />
       </div>
     </div>
+
 
     <div v-if="words.length" class="result-area">
       <h3>Recognized Words:</h3>
       <ul>
         <li v-for="(item, index) in words" :key="index">
-          <div><strong>{{ item.word }}</strong> <span v-if="item.phonetic">({{ item.phonetic }})</span></div>
+          <div>
+            <strong>{{ item.word }}</strong>
+            <span v-if="item.phonetic">({{ item.phonetic }})</span>
+          </div>
           <div v-if="item.meaning">Meaning: {{ item.meaning }}</div>
           <div v-if="item.example">Example: {{ item.example }}</div>
           <div v-if="item.audio">
@@ -54,9 +87,11 @@ import { ref } from 'vue';
 import axios from 'axios';
 
 const selectedImage = ref(null);
-const previewUrl = ref('');
-const words = ref([]);
-const loading = ref(false);
+const previewUrl    = ref('');
+const words         = ref([]);
+const loading       = ref(false);
+const progress      = ref(0);
+let   timerId       = null;
 
 const presetImages = [
   new URL('@/assets/ocr/ocrtest1.png', import.meta.url).href,
@@ -69,7 +104,7 @@ const presetImages = [
 
 function handleFileChange(event) {
   selectedImage.value = event.target.files[0];
-  previewUrl.value = URL.createObjectURL(selectedImage.value);
+  previewUrl.value    = URL.createObjectURL(selectedImage.value);
 }
 
 async function uploadImage() {
@@ -77,7 +112,17 @@ async function uploadImage() {
     alert('Please select an image first!');
     return;
   }
+
+
   loading.value = true;
+  progress.value = 0;
+  if (timerId) clearInterval(timerId);
+  timerId = setInterval(() => {
+    if (progress.value < 90) {
+      progress.value += Math.random() * 10;
+    }
+  }, 300);
+
   const formData = new FormData();
   formData.append('image', selectedImage.value);
 
@@ -90,7 +135,12 @@ async function uploadImage() {
     console.error('Upload or recognition failed:', error);
     alert('Upload or recognition failed. Please try again later.');
   } finally {
-    loading.value = false;
+    progress.value = 100;
+    clearInterval(timerId);
+    setTimeout(() => {
+      loading.value = false;
+      progress.value = 0;
+    }, 500);
   }
 }
 
@@ -107,38 +157,50 @@ function selectPreset(imageUrl) {
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Open+Sans:wght@300;400&display=swap');
+
 .upload-ocr-card {
-  margin-top: 100px;
-  margin-bottom: 50px;
+  margin: 100px auto 50px;
   padding: 30px;
   background: #ffffff;
   border-radius: 16px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-  max-width: 900px;
-  margin-left: auto;
-  margin-right: auto;
+  max-width: 1200px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  background: linear-gradient(180deg, #f9fbfd, #ffffff);
 }
+
 
 .intro-title {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 10px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: #2c7a83;
+  margin-bottom: 8px;
+  position: relative;
+  display: inline-block;
 }
 
+
+
 .intro-description {
-  font-size: 16px;
-  color: #666;
-  margin-bottom: 30px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 18px;
+  color: #555;
   text-align: center;
+  line-height: 1.5;
+  max-width: 700px;
+  margin-bottom: 30px;
 }
 
 .preset-container {
   display: flex;
   justify-content: center;
   gap: 40px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .preset-images {
@@ -148,17 +210,17 @@ function selectPreset(imageUrl) {
 }
 
 .preset-image {
-  width: 100px;
-  height: 100px;
+  width: 200px;
+  height: 200px;
   object-fit: cover;
   border-radius: 12px;
   cursor: pointer;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  transition: transform 0.3s;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
-
 .preset-image:hover {
   transform: scale(1.05);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
 }
 
 .upload-area {
@@ -169,14 +231,22 @@ function selectPreset(imageUrl) {
 }
 
 .preview-box {
-  width: 250px;
-  height: 250px;
-  background: #eee;
+  width: 500px;
+  height: 500px;
+  background: #f0f4f8;
   border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  border: 2px dashed #ccddef;
+}
+.preview-placeholder {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+  color: #888;
+  text-align: center;
+  padding: 20px;
 }
 
 .preview-image {
@@ -185,50 +255,96 @@ function selectPreset(imageUrl) {
   object-fit: contain;
 }
 
-.preview-placeholder {
-  color: #777;
-  font-size: 14px;
-  padding: 10px;
-  text-align: center;
-}
-
 .file-upload {
   display: inline-block;
-  padding: 8px 16px;
+  padding: 10px 20px;
   background-color: #3498db;
   color: white;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
   border-radius: 8px;
   cursor: pointer;
-  margin-top: 10px;
-  font-size: 14px;
+  position: relative;
+  overflow: hidden;
 }
-
 .file-upload input[type="file"] {
-  display: none;
+  position: absolute;
+  left:0; top:0; width:100%; height:100%;
+  opacity:0; cursor: pointer;
 }
 
-button {
-  padding: 8px 16px;
+.upload-area button {
+  padding: 10px 24px;
   background-color: #42b983;
   color: white;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
   border: none;
   border-radius: 8px;
   cursor: pointer;
+  transition: background 0.3s;
 }
-
-button:disabled {
+.upload-area button:disabled {
   background-color: #ccc;
   cursor: not-allowed;
 }
+.upload-area button:not(:disabled):hover {
+  background-color: #37a76f;
+}
+
+
+.progress-container {
+  width: 100%;
+  max-width: 500px;
+  margin-top: 10px;
+  text-align: center;
+}
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+.progress-fill {
+  height: 100%;
+  background: #42b983;
+  transition: width 0.3s ease;
+}
+.progress-text {
+  font-size: 14px;
+  color: #555;
+}
 
 .loading-text {
-  margin-top: 10px;
-  font-weight: bold;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
   color: #42b983;
+  font-weight: 600;
 }
 
 .result-area {
   margin-top: 30px;
+  width: 100%;
+  max-width: 800px;
   text-align: left;
+}
+.result-area h3 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 22px;
+  color: #2c7a83;
+  margin-bottom: 12px;
+}
+.result-area ul {
+  list-style: none;
+  padding: 0;
+}
+.result-area li {
+  background: #f7fcff;
+  border: 1px solid #def0f4;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 10px;
 }
 </style>

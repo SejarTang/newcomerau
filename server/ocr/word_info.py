@@ -10,7 +10,7 @@ def get_word_info(word):
     try:
         response = requests.get(url)
         if response.status_code == 404:
-            print(f"Word not found, skipped: {word}")
+
             return None  # Skip if the word is not found
 
         response.raise_for_status()
@@ -44,7 +44,7 @@ def get_word_info(word):
         }
 
     except requests.exceptions.RequestException as e:
-        print(f"Request failed for word: {word} - {e}")
+
         return None
 
 def batch_get_word_info(word_list):

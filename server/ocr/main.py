@@ -14,16 +14,16 @@ from word_filter import clean_and_select_words
 from word_info import batch_get_word_info
 
 def main(image_path):
-    print(f"Recognizing text from image: {image_path}")
+
     full_text = extract_text_from_image(image_path)
-    print("\nOCR Result:")
-    print(full_text)
 
-    print("\nFiltering words...")
+
+
+
     filtered_words = clean_and_select_words(full_text)
-    print(f"Filtered words (Total {len(filtered_words)}):\n", filtered_words)
 
-    print("\nFetching word definitions and pronunciations...")
+
+
     word_infos = batch_get_word_info(filtered_words)
 
     # Save the result as a JSON file
@@ -31,7 +31,7 @@ def main(image_path):
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(word_infos, f, ensure_ascii=False, indent=2)
     
-    print(f"Word information saved to {output_path}")
+
 
     return word_infos
 
