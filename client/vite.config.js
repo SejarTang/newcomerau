@@ -17,8 +17,9 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:3001',  // backend server URL
-        changeOrigin: true
+        target: 'https://newcomerau.me',
+        changeOrigin: true,
+        secure: false,
       }
     }
   }
