@@ -1,4 +1,4 @@
-const express = require('express'); 
+const express = require('express');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
@@ -29,7 +29,13 @@ router.post('/upload', upload.single('image'), (req, res) => {
   const imagePath = path.join(uploadDir, 'latest.jpg');  // Path to the uploaded image
   const scriptPath = path.resolve(__dirname, '../ocr/main.py');  // Path to the Python OCR script
 
-  const command = `python "${scriptPath}" "${imagePath}"`;
+  // Auto-switch between EC2 virtualenv and local python
+  const isProd = process.env.NODE_ENV === 'production';
+  const pythonExec = isProd
+    ? '/home/ubuntu/backend/ocr/venv/bin/python'  // EC2 path to virtualenv python
+    : 'python3';  // Local python3 binary
+
+  const command = `${pythonExec} "${scriptPath}" "${imagePath}"`;
   console.log('Executing command:', command);
 
   // Execute the Python script for OCR processing
