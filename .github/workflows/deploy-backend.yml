@@ -23,18 +23,18 @@ jobs:
 
       - name: Copy server/ folder to EC2
         run: |
-          ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_HOST }} "rm -rf ~/backend"
-          scp -r ./backend ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/
+          ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_HOST }} "rm -rf ~/server"
+          scp -r ./server ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/
 
       - name: Install dependencies and restart backend
         run: |
           ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
-            cd ~/backend
+            cd ~/server
             npm install
 
             # Kill old server if running
             pkill -f "node index.js" || true
 
             # Run backend in background with logs
-            nohup node index.js > ~/backend.log 2>&1 &
+            nohup node index.js > ~/server.log 2>&1 &
           EOF
