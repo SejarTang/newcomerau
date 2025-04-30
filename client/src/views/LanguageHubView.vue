@@ -7,8 +7,18 @@
   </div>
 </template>
 
-<script setup>
-import SpeakingView from '@/components/SpeakingView.vue'
-import ReadList from '@/components/ReadList.vue'
-import OCR from '@/components/UploadOCR.vue'
+<script>
+import SpeakingView from '@/components/SpeakingView.vue';
+import ReadList from '@/components/ReadList.vue';
+import OCR from '@/components/UploadOCR.vue';
+
+export default {
+components: {
+  SpeakingView,
+  OCR,
+  ReadList,
+},
+};
+
+
 </script>
