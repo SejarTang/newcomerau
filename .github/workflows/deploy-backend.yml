@@ -46,9 +46,8 @@ jobs:
             python3 -m venv venv
             source venv/bin/activate
 
-            echo "Installing Python dependencies (split for memory efficiency)..."
+            echo "Installing Python dependencies"
             pip install easyocr opencv-python requests
-            pip install torch torchvision
 
             echo "Cleaning temporary pip files..."
             sudo rm -rf /tmp/pip-* /tmp/tmp* /tmp/build* /tmp/easyocr*
