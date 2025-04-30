@@ -33,7 +33,7 @@ router.post('/upload', upload.single('image'), (req, res) => {
   const isProd = process.env.NODE_ENV === 'production';
   const pythonExec = isProd
     ? '/home/ubuntu/backend/ocr/venv/bin/python'  // EC2 path to virtualenv python
-    : 'python3';  // Local python3 binary
+    : 'python3';  // Local python3 library
 
   const command = `${pythonExec} "${scriptPath}" "${imagePath}"`;
   console.log('Executing command:', command);
