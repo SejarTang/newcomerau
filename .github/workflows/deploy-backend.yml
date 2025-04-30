@@ -21,16 +21,13 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
 
-      - name: Deploy server/ folder to EC2 (upload to backend/)
+      - name: Deploy server/ folder to EC2 (sync to ~/backend/)
         run: |
-          set -e
-          cd $GITHUB_WORKSPACE
-
-          echo "Removing old backend on EC2..."
-          ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_HOST }} "rm -rf ~/backend"
-
-          echo "Uploading new backend files..."
-          scp -r ./server ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/backend
+          rsync -av --delete \
+            --exclude 'ocr/venv' \
+            --exclude 'ocr/uploads' \
+            --exclude 'logs' \
+            ./server/ ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/backend/
 
       - name: Restart backend and clean temporary files
         run: |
