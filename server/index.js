@@ -5,6 +5,7 @@ const port = 3001;
 
 const languageRoutes = require('./routes/languages');
 const migrantRoutes = require('./routes/migrants');
+const diseaseRoutes = require('./routes/disease');
 const ocrRoutes = require('./routes/ocr');
 const mapRoutes = require('./routes/maplocations');
 
@@ -32,6 +33,7 @@ app.use(cors(corsOptions));
 // Define API routes
 app.use('/api', languageRoutes);
 app.use('/api', migrantRoutes);
+app.use('/api', diseaseRoutes);
 app.use('/api', ocrRoutes);
 app.use('/api', mapRoutes);
 
