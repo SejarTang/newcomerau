@@ -45,7 +45,13 @@ jobs:
             cd ~/backend/ocr
             python3 -m venv venv
             source venv/bin/activate
-            pip install easyocr opencv-python requests torch torchvision
+
+            echo "Installing Python dependencies (split for memory efficiency)..."
+            pip install easyocr opencv-python requests
+            pip install torch torchvision
+
+            echo "Cleaning temporary pip files..."
+            sudo rm -rf /tmp/pip-* /tmp/tmp* /tmp/build* /tmp/easyocr*
 
             echo "Restarting backend with PM2 in production mode..."
             cd ~/backend
