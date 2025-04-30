@@ -9,7 +9,7 @@ on:
 
 jobs:
   deploy-backend:
-    name: Deploy Node.js Backend
+    name: Deploy Node.js Backend with OCR Support
     runs-on: ubuntu-latest
 
     steps:
@@ -26,23 +26,31 @@ jobs:
           set -e
           cd $GITHUB_WORKSPACE
 
-          # Remove old backend folder
+          echo "Removing old backend on EC2..."
           ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_HOST }} "rm -rf ~/backend"
 
-          # Copy local server folder into backend directory
+          echo "Uploading new backend files..."
           scp -r ./server ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/backend
 
       - name: Install backend dependencies and restart server
         run: |
-          set -e
           ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
+            set -e
+
+            echo "Installing Node.js dependencies..."
             cd ~/backend
-            echo "Installing backend dependencies..."
             npm install
 
-            echo "Killing old Node server if running..."
-            pkill -f "node index.js" || true
+            echo "Setting up Python virtual environment..."
+            cd ~/backend/ocr
+            python3 -m venv venv
+            source venv/bin/activate
+            pip install easyocr opencv-python requests torch torchvision
 
-            echo "Starting new Node server..."
-            nohup node index.js > ~/server.log 2>&1 &
+            echo "Restarting backend with PM2 in production mode..."
+            cd ~/backend
+            pm2 restart ecosystem.config.js --env production || pm2 start index.js --name backend --env production
+
+            echo "Saving PM2 state..."
+            pm2 save
           EOF
