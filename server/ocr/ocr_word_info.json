@@ -1,0 +1,30 @@
+[
+  {
+    "word": "save",
+    "phonetic": "/seɪv/",
+    "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/save-us.mp3",
+    "meaning": "In various sports, a block that prevents an opponent from scoring.",
+    "example": "The goaltender made a great save."
+  },
+  {
+    "word": "per",
+    "phonetic": "/pɝ/",
+    "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/per-us.mp3",
+    "meaning": "For each.",
+    "example": "$2.50 per dozen"
+  },
+  {
+    "word": "coco",
+    "phonetic": "/ˈkoʊ.koʊ/",
+    "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/coco-us.mp3",
+    "meaning": "Coconut palm.",
+    "example": null
+  },
+  {
+    "word": "pops",
+    "phonetic": null,
+    "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/pops-uk.mp3",
+    "meaning": "(usually as a form of address) Father, dad.",
+    "example": "Hey, pops, I'm home."
+  }
+]
