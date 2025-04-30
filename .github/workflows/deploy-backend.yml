@@ -23,7 +23,7 @@ jobs:
 
       - name: Deploy server/ folder to EC2 (sync to ~/backend/)
         run: |
-          rsync -av --delete \
+          rsync -av \
             --exclude 'ocr/venv' \
             --exclude 'ocr/uploads' \
             --exclude 'logs' \
