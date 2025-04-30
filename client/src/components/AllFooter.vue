@@ -13,8 +13,6 @@
             <li><router-link to="/language">Language</router-link></li>
             <li><router-link to="/languagehub">LanguageHub</router-link></li>
             <li><router-link to="/healthcare">Healthcare</router-link></li>
-            <li><router-link to="/chatbot">Chatbot</router-link></li>
-            <li><router-link to="/speaking">Speaking</router-link></li>
           </ul>
         </div>
       </div>

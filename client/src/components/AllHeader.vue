@@ -10,8 +10,6 @@
       <li><router-link to="/language" class="nav-link">Language</router-link></li>
       <li><router-link to="/languagehub" class="nav-link">LanguageHub</router-link></li>
       <li><router-link to="/healthcare" class="nav-link">Healthcare</router-link></li>
-      <li><router-link to="/chatbot" class="nav-link">Chatbot</router-link></li>
-      <li><router-link to="/speaking" class="nav-link">Speaking</router-link></li>
 
     </ul>
   </nav>

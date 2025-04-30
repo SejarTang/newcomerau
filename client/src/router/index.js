@@ -35,15 +35,6 @@ const router = createRouter({
       name: 'Healthcare',
       component: () => import('../views/HealthcareView.vue'),
     },
-    {
-      path: '/chatbot', name: 'Chatbot', component: () => import('@/views/ChatbotView.vue')
-    },
-    {
-      path: '/speaking',
-      name: 'Speaking',
-      component: () => import('../views/SpeakingView.vue')
-    },
-
   ],
 })
 
