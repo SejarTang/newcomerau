@@ -32,7 +32,7 @@ jobs:
           echo "Uploading new backend files..."
           scp -r ./server ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/backend
 
-      - name: Install backend dependencies and restart server
+      - name: Restart backend and clean temporary files
         run: |
           ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
             set -e
@@ -41,13 +41,8 @@ jobs:
             cd ~/backend
             npm install
 
-            echo "Setting up Python virtual environment..."
-            cd ~/backend/ocr
-            python3 -m venv venv
-            source venv/bin/activate
-
-            echo "Installing Python dependencies"
-            pip install easyocr opencv-python requests
+            echo "Activating Python venv..."
+            source ./ocr/venv/bin/activate
 
             echo "Cleaning temporary pip files..."
             sudo rm -rf /tmp/pip-* /tmp/tmp* /tmp/build* /tmp/easyocr*
