@@ -27,6 +27,7 @@ jobs:
             --exclude 'ocr/venv' \
             --exclude 'ocr/uploads' \
             --exclude 'logs' \
+            -e "ssh -o StrictHostKeyChecking=no" \
             ./server/ ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/backend/
 
       - name: Restart backend and clean temporary files
@@ -45,7 +46,6 @@ jobs:
             sudo rm -rf /tmp/pip-* /tmp/tmp* /tmp/build* /tmp/easyocr*
 
             echo "Restarting backend with PM2 in production mode..."
-            cd ~/backend
             pm2 restart ecosystem.config.js --env production || pm2 start index.js --name backend --env production
 
             echo "Saving PM2 state..."
