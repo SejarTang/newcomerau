@@ -29,7 +29,7 @@ router.post('/upload', upload.single('image'), (req, res) => {
   const imagePath = path.join(uploadDir, 'latest.jpg');  // Path to the uploaded image
   const scriptPath = path.resolve(__dirname, '../ocr/main.py');  // Path to the Python OCR script
 
-  // Auto-switch between EC2 virtualenv and local python lib
+  // Auto-switch between EC2 virtualenv and local python library
   const isProd = process.env.NODE_ENV === 'production';
   const pythonExec = isProd
     ? '/home/ubuntu/backend/ocr/venv/bin/python'  // EC2 path to virtualenv python
