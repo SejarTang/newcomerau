@@ -1,15 +1,15 @@
-name: Deploy Frontend to EC2
+name: Deploy iteration1 Frontend to EC2
 
 on:
   push:
     branches:
-      - main  #  active branch name
+      - iteration1
     paths:
       - 'client/**'
 
 jobs:
   deploy-frontend:
-    name: Deploy Vue Frontend to EC2
+    name: Deploy iteration1 to EC2
     runs-on: ubuntu-latest
 
     steps:
@@ -21,20 +21,21 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
 
-      - name: Copy client folder to EC2
+      - name: Copy frontend project to EC2
         run: |
           ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_HOST }} "rm -rf ~/client"
           scp -r ./client ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/
 
-      - name: Build on EC2 and deploy
+      - name: Build and deploy to /iteration1
         run: |
           ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
             cd ~/client
             npm install
             npm run build
 
-            sudo rm -rf /var/www/newcomerau/*
-            sudo cp -r dist/* /var/www/newcomerau/
-            sudo chown -R www-data:www-data /var/www/newcomerau
+            sudo mkdir -p /var/www/newcomerau/iteration1
+            sudo rm -rf /var/www/newcomerau/iteration1/*
+            sudo cp -r dist/* /var/www/newcomerau/iteration1/
+            sudo chmod -R 755 /var/www/newcomerau/iteration1
             sudo systemctl reload nginx
           EOF
