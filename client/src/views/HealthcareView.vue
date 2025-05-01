@@ -16,5 +16,4 @@ import DiseaseChart from '@/components/DiseaseChart.vue'
 </script>
 
 <style scoped>
-
 </style>

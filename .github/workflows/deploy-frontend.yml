@@ -3,7 +3,10 @@ name: Deploy Frontend to EC2
 on:
   push:
     branches:
-      - main  #  active branch name
+      - main
+      - iteration1
+      - iteration2
+      - iteration3
     paths:
       - 'client/**'
 
@@ -28,13 +31,21 @@ jobs:
 
       - name: Build on EC2 and deploy
         run: |
-          ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
+          ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_HOST }} << EOF
             cd ~/client
             npm install
             npm run build
 
-            sudo rm -rf /var/www/newcomerau/*
-            sudo cp -r dist/* /var/www/newcomerau/
-            sudo chown -R www-data:www-data /var/www/newcomerau
+            BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
+            if [ "$BRANCH_NAME" = "main" ]; then
+              TARGET_DIR="/var/www/newcomerau/main"
+            else
+              TARGET_DIR="/var/www/newcomerau/$BRANCH_NAME"
+            fi
+
+            sudo mkdir -p \$TARGET_DIR
+            sudo rm -rf \$TARGET_DIR/*
+            sudo cp -r dist/* \$TARGET_DIR/
+            sudo chown -R www-data:www-data \$TARGET_DIR
             sudo systemctl reload nginx
           EOF
