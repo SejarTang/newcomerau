@@ -1,4 +1,4 @@
-<template> 
+<template>
     <div class="chart-section">
       <!-- Description section -->
       <p class="description-text">
@@ -6,16 +6,16 @@
         Depression and arthritis are also widespread. While serious diseases like diabetes
         and cancer are less common, they still pose major health risks.
       </p>
-  
+
       <!-- Chart section -->
       <h2 class="chart-title">Prevalence of Health Conditions in Australia</h2>
-  
+
       <div v-if="isLoading" class="loading-text">Loading chart data...</div>
-  
+
       <v-chart v-else class="chart" :option="chartOptions" autoresize />
     </div>
   </template>
-  
+
   <script setup>
   import { ref, onMounted } from 'vue'
   import axios from 'axios'
@@ -24,25 +24,25 @@
   import { CanvasRenderer } from 'echarts/renderers'
   import { BarChart } from 'echarts/charts'
   import { TitleComponent, TooltipComponent, GridComponent, DatasetComponent, LegendComponent } from 'echarts/components'
-  
+
   use([CanvasRenderer, BarChart, TitleComponent, TooltipComponent, GridComponent, DatasetComponent, LegendComponent])
-  
+
   const chartOptions = ref({})
   const isLoading = ref(true)
   const barColors = [
     '#76D7C4', '#F7DC6F', '#BB8FCE', '#F1948A',
     '#85C1E9', '#AAB7B8', '#A3E4D7', '#F8C471'
   ]
-  
+
   // Fetch disease data from backend API
   const fetchData = async () => {
     try {
       const response = await axios.get('https://newcomerau.me/api/disease')
       const data = response.data
-  
+
       // Sort diseases by percentage in descending order
       data.sort((a, b) => b.percent - a.percent)
-  
+
       // Configure chart options
       chartOptions.value = {
         title: {
@@ -90,10 +90,10 @@
       isLoading.value = false
     }
   }
-  
+
   onMounted(fetchData)
   </script>
-  
+
   <style scoped>
   .chart-section {
     width: 100%;
@@ -104,7 +104,7 @@
     border-radius: 16px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
   }
-  
+
   .description-text {
     font-size: 1.1rem;
     line-height: 1.6;
@@ -115,19 +115,19 @@
     margin-left: auto;
     margin-right: auto;
   }
-  
+
   .chart-title {
     font-size: 1.8rem;
     color: #2c3e50;
     margin-bottom: 30px;
     text-align: center;
   }
-  
+
   .chart {
     width: 100%;
     height: 600px;
   }
-  
+
   .loading-text {
     text-align: center;
     font-size: 1.3rem;
@@ -135,4 +135,3 @@
     color: #888;
   }
   </style>
-  
