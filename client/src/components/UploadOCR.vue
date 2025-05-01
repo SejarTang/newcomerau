@@ -97,7 +97,7 @@ const presetImages = [
   new URL('@/assets/ocr/ocrtest1.png', import.meta.url).href,
   new URL('@/assets/ocr/ocrtest2.png', import.meta.url).href,
   new URL('@/assets/ocr/ocrtest3.png', import.meta.url).href,
-  new URL('@/assets/ocr/ocrtest4.png', import.meta.url).href,
+  new URL('@/assets/ocr/ocrtest4.jpg', import.meta.url).href,
   new URL('@/assets/ocr/ocrtest5.png', import.meta.url).href,
   new URL('@/assets/ocr/ocrtest6.png', import.meta.url).href,
 ];

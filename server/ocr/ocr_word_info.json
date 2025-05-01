@@ -1,254 +1,30 @@
 [
   {
-    "word": "starters",
+    "word": "clearance",
     "phonetic": null,
     "audio": null,
-    "meaning": "Someone who starts something.",
-    "example": "a starter on a journey"
+    "meaning": "The act of clearing or something (such as a space) cleared",
+    "example": null
   },
   {
-    "word": "pasta",
+    "word": "save",
+    "phonetic": "/seɪv/",
+    "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/save-us.mp3",
+    "meaning": "In various sports, a block that prevents an opponent from scoring.",
+    "example": "The goaltender made a great save."
+  },
+  {
+    "word": "koala",
     "phonetic": null,
     "audio": null,
-    "meaning": "Dough made from wheat and water and sometimes mixed with egg and formed into various shapes; often sold in dried form and typically boiled for eating.",
+    "meaning": "A tree-dwelling marsupial, Phascolarctos cinereus, that resembles a small bear with a broad head, large ears and sharp claws, mainly found in eastern Australia.",
     "example": null
   },
   {
-    "word": "sandwiches",
-    "phonetic": null,
-    "audio": null,
-    "meaning": "A dish or foodstuff where two or more slices of bread serve as the wrapper or container of some other food.",
-    "example": null
-  },
-  {
-    "word": "salmon",
-    "phonetic": "/ˈsælmən/",
-    "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/salmon-us.mp3",
-    "meaning": "One of several species of fish, typically of the Salmoninae subfamily, brownish above with silvery sides and delicate pinkish-orange flesh; they ascend rivers to spawn.",
-    "example": null
-  },
-  {
-    "word": "u",
-    "phonetic": null,
-    "audio": null,
-    "meaning": "The name of the Latin-script letter U.",
-    "example": null
-  },
-  {
-    "word": "f",
-    "phonetic": null,
-    "audio": null,
-    "meaning": "Used to profess respect for a deceased person, or for something that has been lost.",
-    "example": null
-  },
-  {
-    "word": "ta",
-    "phonetic": "/tɑː/",
-    "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/ta-1-au.mp3",
-    "meaning": "Thanks.",
-    "example": "Ta for the cup of tea."
-  },
-  {
-    "word": "la",
-    "phonetic": "/lɑː/",
-    "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/la-us.mp3",
-    "meaning": "A syllable used in solfège to represent the sixth note of a major scale.",
-    "example": null
-  },
-  {
-    "word": "k",
-    "phonetic": null,
-    "audio": null,
-    "meaning": "A kilobyte (more formally KB or kB).",
-    "example": null
-  },
-  {
-    "word": "tn",
-    "phonetic": null,
-    "audio": null,
-    "meaning": "A statistic formed by a player playing some number of minutes, but recording no stats.",
-    "example": null
-  },
-  {
-    "word": "egg",
-    "phonetic": "/eɪɡ/",
-    "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/egg-us.mp3",
-    "meaning": "An approximately spherical or ellipsoidal body produced by birds, reptiles, insects and other animals, housing the embryo during its development.",
-    "example": null
-  },
-  {
-    "word": "crepes",
-    "phonetic": null,
-    "audio": null,
-    "meaning": "A flat round pancake-like pastry from Lower Brittany, made with wheat.",
-    "example": null
-  },
-  {
-    "word": "tomato",
-    "phonetic": "[tʰə̥ˈmɐːtʰɐʉ]",
-    "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/tomato-au.mp3",
-    "meaning": "A widely cultivated plant, Solanum lycopersicum, having edible fruit.",
-    "example": null
-  },
-  {
-    "word": "cheese",
-    "phonetic": "/t͡ʃiz/",
-    "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/cheese-us.mp3",
-    "meaning": "A dairy product made from curdled or cultured milk.",
-    "example": null
-  },
-  {
-    "word": "potato",
-    "phonetic": null,
-    "audio": null,
-    "meaning": "The tuber of a plant, Solanum tuberosum, eaten as a starchy vegetable, particularly in the Americas and Europe; this plant.",
-    "example": null
-  },
-  {
-    "word": "ole",
-    "phonetic": null,
-    "audio": null,
-    "meaning": "An interjection used to stir up excitement.",
-    "example": null
-  },
-  {
-    "word": "e",
-    "phonetic": null,
-    "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/e-uk.mp3",
-    "meaning": "The name of the Latin-script letter E.",
-    "example": null
-  },
-  {
-    "word": "mn",
-    "phonetic": null,
-    "audio": null,
-    "meaning": "(long and short scales) The cardinal number 1,000,000: 106; a thousand thousand.",
-    "example": null
-  },
-  {
-    "word": "salad",
-    "phonetic": "/ˈsæləd/",
-    "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/salad-us.mp3",
-    "meaning": "A food made primarily of a mixture of raw or cold ingredients, typically vegetables, usually served with a dressing such as vinegar or mayonnaise.",
-    "example": null
-  },
-  {
-    "word": "black",
-    "phonetic": "/blak/",
-    "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/black-uk.mp3",
-    "meaning": "The colour/color perceived in the absence of light, but also when no light is reflected, but rather absorbed.",
-    "example": null
-  },
-  {
-    "word": "pepper",
-    "phonetic": "/ˈpɛpə/",
-    "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/pepper-uk.mp3",
-    "meaning": "A plant of the family Piperaceae.",
-    "example": null
-  },
-  {
-    "word": "l",
-    "phonetic": null,
-    "audio": null,
-    "meaning": "Litre, liter",
-    "example": null
-  },
-  {
-    "word": "dessert",
-    "phonetic": "/dɪˈzɝt/",
-    "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/dessert-us.mp3",
-    "meaning": "A sweet confection served as the last course of a meal",
-    "example": null
-  },
-  {
-    "word": "drinks",
-    "phonetic": "/dɹɪŋks/",
-    "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/drinks-au.mp3",
-    "meaning": "To consume (a liquid) through the mouth.",
-    "example": "He drank the water I gave him."
-  },
-  {
-    "word": "ice",
-    "phonetic": "/aɪs/",
-    "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/ice-us.mp3",
-    "meaning": "Water in frozen (solid) form.",
-    "example": null
-  },
-  {
-    "word": "cream",
-    "phonetic": "/kɹiːm/",
-    "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/cream-us.mp3",
-    "meaning": "The butterfat/milkfat part of milk which rises to the top; this part when separated from the remainder.",
-    "example": "Take 100 ml of cream and 50 grams of sugar…"
-  },
-  {
-    "word": "orange",
-    "phonetic": null,
-    "audio": null,
-    "meaning": "An evergreen tree of the genus Citrus such as Citrus sinensis.",
-    "example": null
-  },
-  {
-    "word": "juice",
-    "phonetic": "/d͡ʒus/",
-    "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/juice-1-us.mp3",
-    "meaning": "A liquid from a plant, especially fruit.",
-    "example": "Squeeze the orange and some juice will come out."
-  },
-  {
-    "word": "fet",
-    "phonetic": "/fɛt/",
-    "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/fet-au.mp3",
-    "meaning": "To fetch",
-    "example": null
-  },
-  {
-    "word": "cake",
-    "phonetic": "/keɪk/",
-    "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/cake-1-uk.mp3",
-    "meaning": "A rich, sweet dessert food, typically made of flour, sugar and eggs and baked in an oven, and often covered in icing.",
-    "example": null
-  },
-  {
-    "word": "soda",
-    "phonetic": null,
-    "audio": null,
-    "meaning": "Sodium bicarbonate (usually baking soda).",
-    "example": null
-  },
-  {
-    "word": "water",
-    "phonetic": "/ˈwɔːtə/",
-    "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/water-uk.mp3",
-    "meaning": "A substance (of molecular formula H₂O) found at room temperature and pressure as a clear liquid; it is present naturally as rain, and found in rivers, lakes and seas; its solid form is ice and its gaseous form is steam.",
-    "example": "By the action of electricity, the water was resolved into its two parts, oxygen and hydrogen."
-  },
-  {
-    "word": "coffee",
-    "phonetic": "/ˈkɒ.fi/",
-    "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/coffee-uk.mp3",
-    "meaning": "A beverage made by infusing the beans of the coffee plant in hot water.",
-    "example": null
-  },
-  {
-    "word": "cup",
-    "phonetic": "/kʌp/",
-    "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/cup-uk.mp3",
-    "meaning": "A concave vessel for drinking from, usually made of opaque material (as opposed to a glass) and with a handle.",
-    "example": "Pour the tea into the cup."
-  },
-  {
-    "word": "cakes",
-    "phonetic": "/keɪks/",
-    "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/cakes-us.mp3",
-    "meaning": "A rich, sweet dessert food, typically made of flour, sugar and eggs and baked in an oven, and often covered in icing.",
-    "example": null
-  },
-  {
-    "word": "lemon",
-    "phonetic": "/ˈlɛmən/",
-    "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/lemon-uk.mp3",
-    "meaning": "A yellowish citrus fruit.",
+    "word": "statue",
+    "phonetic": "/ˈstætʃu/",
+    "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/statue-us.mp3",
+    "meaning": "A three-dimensional work of art, usually representing a person or animal, usually created by sculpting, carving, molding, or casting.",
     "example": null
   }
 ]
