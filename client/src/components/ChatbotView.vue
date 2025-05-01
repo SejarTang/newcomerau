@@ -166,8 +166,8 @@ function sendPreset(q) {
 /* Page background and padding */
 .chatbot-page {
   padding: 100px 20px 20px;
-  background: #f5f7fa;
-  min-height: 100vh;
+  background: #ffffff;
+  min-height: 80vh;
 }
 
 /* Intro text styling */

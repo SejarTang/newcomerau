@@ -227,9 +227,9 @@ function goBack() {
 /* Full page background */
 .healthcare-page {
   width: 100%;
-  min-height: 100vh;
+  min-height: 70vh;
   padding: 100px 20px 40px;
-  background-color: #f9fbfd;
+  background-color: #ffffff;
   box-sizing: border-box;
 }
 
