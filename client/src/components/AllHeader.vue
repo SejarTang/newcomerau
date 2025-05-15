@@ -1,68 +1,75 @@
 <template>
-  <!-- Navigation bar wrapper. It gets an extra 'scrolled' class when user scrolls down -->
   <nav class="navbar" :class="{ 'scrolled': isScrolled }" ref="navbar">
-    <!-- Logo + Brand name section -->
     <div class="navbar-brand">
       <img src="../assets/immigrant.jpeg" alt="Website Symbol" class="navbar-logo" />
-      <!-- Clicking this brand name takes you to the homepage -->
       <router-link to="/" class="brand-text">NewcomerAU</router-link>
     </div>
 
-    <!-- Navigation links -->
     <ul class="navbar-menu">
       <li><router-link to="/" class="nav-link">Home</router-link></li>
       <li><router-link to="/newcomers" class="nav-link">Newcomers</router-link></li>
-      <li><router-link to="/language" class="nav-link">Language</router-link></li>
-      <li><router-link to="/languagehub" class="nav-link">LanguageHub</router-link></li>
-      <li><router-link to="/healthcare" class="nav-link">Healthcare</router-link></li>
       <li><router-link to="/education" class="nav-link">Education</router-link></li>
+      <li><router-link to="/healthcare" class="nav-link">Healthcare</router-link></li>
+
+      <!-- Language dropdown -->
+      <li class="dropdown">
+        <router-link to="/language" class="nav-link">Language ▼</router-link>
+        <ul class="dropdown-menu">
+          <li><router-link to="/language" class="dropdown-item">Language Overview</router-link></li>
+          <li><router-link to="/languagehub" class="dropdown-item">Language Hub</router-link></li>
+        </ul>
+      </li>
+
+      <!-- Cultural Integration dropdown -->
+      <li class="dropdown">
+        <router-link to="/integration" class="nav-link">Cultural Integration ▼</router-link>
+        <ul class="dropdown-menu">
+          <li><router-link to="/integration/holidays" class="dropdown-item">Public holiday</router-link></li>
+          <li><router-link to="/integration/history" class="dropdown-item">Holiday Culture</router-link></li>
+          <li><router-link to="/integration/quiz" class="dropdown-item">Cultural Integration Quiz</router-link></li>
+          <li><router-link to="/integration/more-holidays" class="dropdown-item">Other Celebrated Holidays</router-link></li>
+        </ul>
+      </li>
     </ul>
   </nav>
 </template>
-
 
 <script setup>
 import { ref, watch, onUnmounted } from 'vue';
 import { useRoute } from 'vue-router';
 
-// A reactive flag to determine if the user has scrolled past 30px
 const isScrolled = ref(false);
-
-// Get the current route so we can respond to path changes
 const route = useRoute();
 
-// This function checks how far the user has scrolled and updates the flag
+// Detect if the window is scrolled past a threshold
 const handleScroll = () => {
   isScrolled.value = window.scrollY > 30;
 };
 
-// Add or remove scroll listener depending on the current route
+// Add or remove scroll event listener based on route
 const updateScrollListener = (path) => {
   if (path === '/') {
-    // On homepage: enable scroll effect
     window.addEventListener('scroll', handleScroll);
-    handleScroll(); // call once to update initial state
+    handleScroll();
   } else {
-    // On other pages: disable scroll effect and force navbar to show as "scrolled"
     window.removeEventListener('scroll', handleScroll);
     isScrolled.value = true;
   }
 };
 
-// Watch route changes and update the scroll listener accordingly
+// Watch route change to update scroll behavior
 watch(() => route.path, (newPath) => {
   updateScrollListener(newPath);
-}, { immediate: true }); // run immediately when component loads
+}, { immediate: true });
 
-// Clean up the event listener when the component is destroyed
+// Cleanup on component unmount
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll);
 });
 </script>
 
-
 <style scoped>
-/* Basic navbar layout: fixed to top, full width, transparent by default */
+/* Navigation bar container */
 .navbar {
   position: fixed;
   top: 0;
@@ -75,23 +82,23 @@ onUnmounted(() => {
   padding: 1rem 2rem;
   background-color: rgba(255, 255, 255, 0);
   transition: all 0.3s ease;
+  overflow: visible;
 }
 
-/* Navbar appearance after scroll */
+/* Navbar style when scrolled */
 .navbar.scrolled {
   background-color: rgba(255, 255, 255, 0.98);
   padding: 0.8rem 2rem;
-  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1); /* subtle bottom shadow */
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
 }
 
-/* Brand section: logo + text */
+/* Brand section */
 .navbar-brand {
   display: flex;
   align-items: center;
   gap: 0.8rem;
 }
 
-/* Logo styling: circle image */
 .navbar-logo {
   width: 32px;
   height: 32px;
@@ -100,7 +107,6 @@ onUnmounted(() => {
   transition: transform 0.3s ease;
 }
 
-/* Brand text (NewcomerAU) appearance */
 .brand-text {
   font-size: 1.3rem;
   font-weight: 600;
@@ -109,12 +115,11 @@ onUnmounted(() => {
   transition: all 0.3s ease;
 }
 
-/* Brand text turns dark when scrolled */
 .navbar.scrolled .brand-text {
   color: #1a1a1a;
 }
 
-/* Main menu container */
+/* Top-level menu container */
 .navbar-menu {
   display: flex;
   gap: 1.2rem;
@@ -123,7 +128,7 @@ onUnmounted(() => {
   padding: 0;
 }
 
-/* Each navigation link styling */
+/* Menu links */
 .nav-link {
   padding: 0.6rem 1.2rem;
   font-size: 0.95rem;
@@ -136,13 +141,11 @@ onUnmounted(() => {
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-/* Hover effect for navigation links */
 .nav-link:hover {
   background: rgba(255, 255, 255, 0.2);
   transform: translateY(-1px);
 }
 
-/* Link styling when navbar is scrolled (light mode) */
 .navbar.scrolled .nav-link {
   color: #1a1a1a;
   background: rgba(0, 116, 204, 0.08);
@@ -153,12 +156,64 @@ onUnmounted(() => {
   background: rgba(0, 116, 204, 0.15);
 }
 
-/* Responsive styling for smaller screens */
+/* Dropdown container */
+.dropdown {
+  position: relative;
+}
+
+/* Dropdown menu styling */
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 200px;
+  padding: 0.5rem 0;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12), 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 2000;
+  text-align: center;
+}
+
+/* Show dropdown on hover */
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+/* Dropdown menu item */
+.dropdown-item {
+  display: block;
+  padding: 0.6rem 1rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: white;
+   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+/* Hover effect for dropdown item */
+.navbar .dropdown-item:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  color: #00b2ff;
+  transform: translateY(-1px);
+}
+
+/* Responsive layout adjustments */
 @media (max-width: 768px) {
-  .navbar {
-    padding: 0.8rem 1.5rem;
-    flex-direction: column;
-    align-items: flex-start;
+  .dropdown-menu {
+    position: static;
+    transform: none;
+    box-shadow: none;
+    padding-left: 1rem;
+    background: rgba(30, 30, 30, 0.85); /* dark translucent background */
+    backdrop-filter: blur(8px);         /* glass effect */
+    border-radius: 12px;
+    margin-top: 0.5rem;
   }
 
   .navbar-menu {
@@ -175,6 +230,15 @@ onUnmounted(() => {
 
   .navbar.scrolled {
     padding: 0.6rem 1.5rem;
+  }
+
+  .dropdown-menu {
+    position: static;
+    transform: none;
+    box-shadow: none;
+    padding-left: 1rem;
+    background: transparent;
+    backdrop-filter: none;
   }
 }
 </style>

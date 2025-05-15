@@ -11,7 +11,7 @@ const router = createRouter({
       return {
         el: to.hash,
         behavior: 'smooth',
-        top: 80, // Add offset for fixed header
+        top: 80,
       }
     }
     return {
@@ -49,6 +49,31 @@ const router = createRouter({
       path: '/education',
       name: 'Education',
       component: () => import('../views/EducationView.vue'),
+    },
+
+    {
+      path: '/integration',
+      redirect: '/integration/holidays',
+    },
+    {
+      path: '/integration/holidays',
+      name: 'Holidays',
+      component: () => import('../views/HolidaysView.vue'),
+    },
+    {
+      path: '/integration/history',
+      name: 'History',
+      component: () => import('../views/HistoryView.vue'),
+    },
+    {
+      path: '/integration/quiz',
+      name: 'CultureQuiz',
+      component: () => import('../views/CultureQuizView.vue'),
+    },
+    {
+      path: '/integration/more-holidays',
+      name: 'MoreHolidays',
+      component: () => import('../views/MoreHolidaysView.vue'),
     },
   ],
 })
