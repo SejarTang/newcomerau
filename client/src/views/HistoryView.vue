@@ -1,12 +1,12 @@
 <template>
   <div class="page-container">
-    <!-- 页面说明 -->
+    <!-- Introductory description about public holidays -->
     <p class="page-description">
       Understanding public holidays is a great way for newcomers to connect with the local community.
-      This page introduces major public holidays celebrated in Victoria, Australia, and how locals observe them.
+      This page introduces the public holidays celebrated in Victoria, Australia, and how locals observe them.
     </p>
 
-    <!-- 正常卡片网格 -->
+    <!-- Grid of regular holiday cards -->
     <div class="card-grid">
       <div
         class="card"
@@ -20,7 +20,7 @@
       </div>
     </div>
 
-    <!-- 特别卡片区域 -->
+    <!-- Highlighted featured holiday card -->
     <div
       class="featured-card"
       :style="{ backgroundImage: `url(${featuredHoliday.image})` }"
@@ -31,7 +31,6 @@
     </div>
   </div>
 </template>
-
 
 <script setup>
 const holidays = [
@@ -58,21 +57,24 @@ const featuredHoliday = {
 </script>
 
 <style scoped>
+/* Container for the entire page */
 .page-container {
   padding: 24px 16px;
   max-width: 1500px;
-  margin: 0 auto;
+  margin: 100px auto 0 auto;
 }
 
+/* Introductory paragraph style */
 .page-description {
   font-size: 1.5rem;
   color: #333;
   margin-bottom: 32px;
   line-height: 1.6;
   font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
-  text-align: center; /* ✅ 新增：居中文本 */
+  text-align: center;
 }
 
+/* Grid layout for holiday cards */
 .card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
@@ -80,7 +82,7 @@ const featuredHoliday = {
   justify-content: center;
 }
 
-/* 卡片样式 */
+/* Base styles for both regular and featured cards */
 .card,
 .featured-card {
   background-size: cover;
@@ -98,19 +100,19 @@ const featuredHoliday = {
   transition: transform 0.4s ease;
 }
 
-/* 普通卡片 */
+/* Specific height for regular cards */
 .card {
   height: 500px;
 }
 
-/* Featured 卡片加宽 */
+/* Featured card styling (larger and centered) */
 .featured-card {
   margin: 48px auto 0;
   max-width: 1000px;
   height: 520px;
 }
 
-/* 遮罩 */
+/* Gradient overlay at the bottom of cards */
 .card::before,
 .featured-card::before {
   content: "";
@@ -123,13 +125,13 @@ const featuredHoliday = {
   z-index: 0;
 }
 
-/* Hover 效果 */
+/* Zoom effect on hover */
 .card:hover,
 .featured-card:hover {
   transform: scale(1.05);
 }
 
-/* 上移内容 */
+/* Slide up title and date on hover */
 .card:hover .card-title,
 .card:hover .card-date,
 .featured-card:hover .card-title,
@@ -137,14 +139,14 @@ const featuredHoliday = {
   transform: translateY(-80px);
 }
 
-/* 文本层级提升 */
+/* Ensure text and buttons are above the gradient */
 .card-title,
 .card-date,
 .learn-more {
   z-index: 1;
 }
 
-/* 标题样式 */
+/* Title style */
 .card-title {
   color: white;
   font-size: 2rem;
@@ -154,7 +156,7 @@ const featuredHoliday = {
   transform: translateY(0);
 }
 
-/* 日期样式 */
+/* Date style */
 .card-date {
   color: white;
   font-size: 1.5rem;
@@ -165,7 +167,7 @@ const featuredHoliday = {
   transform: translateY(0);
 }
 
-/* Learn More 按钮 */
+/* Learn More button styling */
 .learn-more {
   margin-top: 12px;
   padding: 10px 24px;
@@ -186,12 +188,14 @@ const featuredHoliday = {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
+/* Show Learn More button on card hover */
 .card:hover .learn-more,
 .featured-card:hover .learn-more {
   opacity: 1;
   transform: translateY(0);
 }
 
+/* Learn More button hover effects */
 .learn-more:hover {
   background-color: #1f2937;
   color: white;
