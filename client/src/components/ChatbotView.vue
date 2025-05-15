@@ -83,9 +83,9 @@ import { ref } from 'vue';
 
 // === Gemini API Configuration ===
 // Replace with your actual API key if needed
-const API_KEY = 'AIzaSyC8rIwKzh7J5DlL0XiWuKG-dzYQzclg5xI';
+//const API_KEY = 'AIzaSyC8rIwKzh7J5DlL0XiWuKG-dzYQzclg5xI';
 // Endpoint to call Gemini model for content generation
-const ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
+//const ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
 
 // Preset question lists for left and right panels
 const presetQuestions = ref([
@@ -125,17 +125,21 @@ async function handleSend() {
 
   try {
     // Call Gemini API with prompt including userText
-    const response = await fetch(ENDPOINT, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        contents: [
-          { parts: [
-              { text: `You are a simple and friendly health assistant. The user describes a health concern. Provide a short, clear, supportive response in easy English. Encourage seeing a doctor if needed. User's message: '${userText}'` }
-            ] }
-        ]
-      })
-    });
+    const response = await fetch('/api/gemini', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      contents: [
+        {
+          parts: [
+            {
+              text: `You are a simple and friendly health assistant. The user describes a health concern. Provide a short, clear, supportive response.\n\n${userText}`
+            }
+          ]
+        }
+      ]
+    })
+  });
     const data = await response.json();
     // Extract generated reply or fallback message
     const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim()
