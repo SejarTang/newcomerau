@@ -9,7 +9,7 @@ on:
 
 jobs:
   deploy-backend:
-    name: Deploy Node.js Backend with OCR Support
+    name: Deploy Node.js Backend
     runs-on: ubuntu-latest
 
     steps:
@@ -24,9 +24,9 @@ jobs:
       - name: Deploy server/ folder to EC2 (sync to ~/backend/)
         run: |
           rsync -av \
-            --exclude 'ocr/venv' \
             --exclude 'ocr/uploads' \
             --exclude 'logs' \
+            --exclude '.env'\
             -e "ssh -o StrictHostKeyChecking=no" \
             ./server/ ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/backend/
 
@@ -39,11 +39,8 @@ jobs:
             cd ~/backend
             npm install
 
-            echo "Activating Python venv..."
-            source ./ocr/venv/bin/activate
-
             echo "Cleaning temporary pip files..."
-            sudo rm -rf /tmp/pip-* /tmp/tmp* /tmp/build* /tmp/easyocr*
+            sudo rm -rf /tmp/pip-* /tmp/tmp* /tmp/build*
 
             echo "Restarting backend with PM2 in production mode..."
             pm2 restart ecosystem.config.js --env production || pm2 start index.js --name backend --env production
