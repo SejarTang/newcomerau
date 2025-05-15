@@ -27,12 +27,11 @@ router.get('/maplocations', async (req, res) => {
 
     // Schools
     const schoolsQuery = `
-      SELECT s.school_code, s.school_type, s.school_name, s.school_address, 
-             s.suburb, s.post_code, s.phone, s.email, s.website,
-             s.language_support, s.facilities, s.programs,
+      SELECT s.provider_id, s.provider_type, s.provider_name, s.provider_address, 
+             s.suburb, s.postcode, s.phone, s.rating,
              g.latitude, g.longitude
       FROM education_provider s
-      JOIN education_provider_location g ON s.school_code = g.school_code
+      JOIN education_provider_location g ON s.provider_id = g.provider_id
     `;
     const schools = await db.query(schoolsQuery);
 
@@ -40,16 +39,11 @@ router.get('/maplocations', async (req, res) => {
     const privateHospitals = hospitals.rows.filter(h => h.hos_type === 'PRIVATE');
     const publicHospitals = hospitals.rows.filter(h => h.hos_type === 'PUBLIC');
 
-    // School type
-    const publicSchools = schools.rows.filter(s => s.school_type === 'PUBLIC');
-    const privateSchools = schools.rows.filter(s => s.school_type === 'PRIVATE');
-    const catholicSchools = schools.rows.filter(s => s.school_type === 'CATHOLIC');
-
     res.json({
       clinics: clinics.rows,
       privateHospitals,
       publicHospitals,
-      schools: [...publicSchools, ...privateSchools, ...catholicSchools]
+      schools: schools.rows
     });
   } catch (error) {
     console.error('Error fetching map locations:', error);
