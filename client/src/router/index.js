@@ -3,7 +3,17 @@ import HomeView from '../views/HomeView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  scrollBehavior() {
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition;
+    }
+    if (to.hash) {
+      return {
+        el: to.hash,
+        behavior: 'smooth',
+        top: 80, // Add offset for fixed header
+      }
+    }
     return {
       top: 0,
       behavior: 'smooth',
@@ -34,6 +44,11 @@ const router = createRouter({
       path: '/healthcare',
       name: 'Healthcare',
       component: () => import('../views/HealthcareView.vue'),
+    },
+    {
+      path: '/education',
+      name: 'Education',
+      component: () => import('../views/EducationView.vue'),
     },
   ],
 })

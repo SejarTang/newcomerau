@@ -19,6 +19,7 @@
             <li><router-link to="/language">Language</router-link></li>
             <li><router-link to="/languagehub">LanguageHub</router-link></li>
             <li><router-link to="/healthcare">Healthcare</router-link></li>
+            <li><router-link to="/education">Education</router-link></li>
           </ul>
         </div>
       </div>
