@@ -81,12 +81,6 @@
 // Import Vue composition API
 import { ref } from 'vue';
 
-// === Gemini API Configuration ===
-// Replace with your actual API key if needed
-//const API_KEY = 'AIzaSyC8rIwKzh7J5DlL0XiWuKG-dzYQzclg5xI';
-// Endpoint to call Gemini model for content generation
-//const ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
-
 // Preset question lists for left and right panels
 const presetQuestions = ref([
   'What should I do if I have a fever?',
