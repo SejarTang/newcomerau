@@ -2,12 +2,13 @@
   <div class="upload-ocr-card">
     <h2 class="intro-title">OCR Analysis - Discover Everyday Words Around You!</h2>
     <p class="intro-description">
-      Upload or select an image to recognize words<br>
-      and learn their meanings, pronunciations, and examples!
+      Upload or select an image to recognize words<br />
+      and learn their meanings, pronunciations, and examples!<br />
+      Please do not upload images more than 1MB.
     </p>
 
+    <!-- Preset Images -->
     <div class="preset-container">
-
       <div class="preset-images">
         <img
           v-for="(img, idx) in presetImages.slice(0, 3)"
@@ -18,13 +19,11 @@
         />
       </div>
 
-
+      <!-- Upload Section -->
       <div class="upload-area">
         <div class="preview-box">
           <img v-if="previewUrl" :src="previewUrl" class="preview-image" />
-          <div v-else class="preview-placeholder">
-            Your uploaded image will appear here.
-          </div>
+          <div v-else class="preview-placeholder">Your uploaded image will appear here.</div>
         </div>
 
         <label class="file-upload">
@@ -36,7 +35,6 @@
           {{ loading ? 'Analyzing...' : 'Upload and Recognize' }}
         </button>
 
-
         <div v-if="loading" class="progress-container">
           <div class="progress-bar">
             <div class="progress-fill" :style="{ width: progress + '%' }"></div>
@@ -44,12 +42,8 @@
           <div class="progress-text">{{ Math.floor(progress) }}%</div>
         </div>
 
-
-        <div v-if="loading" class="loading-text">
-          Analyzing image, please wait...
-        </div>
+        <div v-if="loading" class="loading-text">Analyzing image, please wait...</div>
       </div>
-
 
       <div class="preset-images">
         <img
@@ -62,13 +56,13 @@
       </div>
     </div>
 
-
+    <!-- Result Display -->
     <div v-if="words.length" class="result-area">
       <h3>Recognized Words:</h3>
       <ul>
         <li v-for="(item, index) in words" :key="index">
           <div>
-            <strong>{{ item.word }}</strong>
+            <strong>{{ item.original }}</strong>
             <span v-if="item.phonetic">({{ item.phonetic }})</span>
           </div>
           <div v-if="item.meaning">Meaning: {{ item.meaning }}</div>
@@ -86,13 +80,15 @@
 import { ref } from 'vue';
 import axios from 'axios';
 
+// Reactive states
 const selectedImage = ref(null);
-const previewUrl    = ref('');
-const words         = ref([]);
-const loading       = ref(false);
-const progress      = ref(0);
-let   timerId       = null;
+const previewUrl = ref('');
+const words = ref([]);
+const loading = ref(false);
+const progress = ref(0);
+let timerId = null;
 
+// Local preset images
 const presetImages = [
   new URL('@/assets/ocr/ocrtest1.png', import.meta.url).href,
   new URL('@/assets/ocr/ocrtest2.png', import.meta.url).href,
@@ -102,38 +98,80 @@ const presetImages = [
   new URL('@/assets/ocr/ocrtest6.png', import.meta.url).href,
 ];
 
-function handleFileChange(event) {
-  selectedImage.value = event.target.files[0];
-  previewUrl.value    = URL.createObjectURL(selectedImage.value);
+// Extract valid words from a line of text
+function extractValidWords(line) {
+  return line
+    .split(/[^a-zA-Z]+/)                 // Split on non-letter characters
+    .map(w => w.trim())
+    .filter(w => /^[a-zA-Z]{2,}$/.test(w));  // Keep 2+ letter pure words only
 }
 
+// Query dictionary API for definition, example, audio, etc.
+async function fetchDictionaryInfo(wordObj) {
+  try {
+    const res = await axios.get(`https://api.dictionaryapi.dev/api/v2/entries/en/${wordObj.word}`);
+    const entry = res.data[0];
+    wordObj.phonetic = entry.phonetic || '';
+    wordObj.meaning = entry.meanings?.[0]?.definitions?.[0]?.definition || '';
+    wordObj.example = entry.meanings?.[0]?.definitions?.[0]?.example || '';
+    wordObj.audio = entry.phonetics?.find(p => p.audio)?.audio || '';
+  // eslint-disable-next-line no-unused-vars
+  } catch (err) {
+    console.warn(`No dictionary entry for: ${wordObj.word}`);
+  }
+}
+
+// Process the OCR and dictionary lookup
 async function uploadImage() {
   if (!selectedImage.value) {
     alert('Please select an image first!');
     return;
   }
 
-
   loading.value = true;
   progress.value = 0;
+  words.value = [];
+
   if (timerId) clearInterval(timerId);
   timerId = setInterval(() => {
-    if (progress.value < 90) {
-      progress.value += Math.random() * 10;
-    }
+    if (progress.value < 90) progress.value += Math.random() * 10;
   }, 300);
 
   const formData = new FormData();
-  formData.append('image', selectedImage.value);
+  formData.append('apikey', 'K87654478888957');
+  formData.append('language', 'eng');
+  formData.append('isOverlayRequired', 'false');
+  formData.append('file', selectedImage.value);
 
   try {
-    const response = await axios.post('/api/ocr/upload', formData, {
-      headers: { 'Content-Type': 'multipart/form-data' }
+    const response = await axios.post('https://api.ocr.space/parse/image', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
     });
-    words.value = response.data.words;
-  } catch (error) {
-    console.error('Upload or recognition failed:', error);
-    alert('Upload or recognition failed. Please try again later.');
+
+    const rawText = response.data?.ParsedResults?.[0]?.ParsedText || '';
+    const lines = rawText.split('\n');
+
+    const allWords = [];
+
+    for (const line of lines) {
+      const validWords = extractValidWords(line);
+      for (const w of validWords) {
+        const lowercase = w.toLowerCase();
+        if (!allWords.find(item => item.word === lowercase)) {
+          allWords.push({
+            word: lowercase,
+            original: w
+          });
+        }
+      }
+    }
+
+    words.value = allWords;
+    await Promise.all(words.value.map(fetchDictionaryInfo));
+
+  } catch (err) {
+    console.error('OCR or dictionary lookup failed:', err);
+    alert('Image analysis failed. Please try again later.');
   } finally {
     progress.value = 100;
     clearInterval(timerId);
@@ -144,6 +182,7 @@ async function uploadImage() {
   }
 }
 
+// Upload and process a preset image
 function selectPreset(imageUrl) {
   fetch(imageUrl)
     .then(res => res.blob())
@@ -153,6 +192,12 @@ function selectPreset(imageUrl) {
       uploadImage();
     })
     .catch(err => console.error('Failed to load preset image:', err));
+}
+
+// Handle user file selection
+function handleFileChange(event) {
+  selectedImage.value = event.target.files[0];
+  previewUrl.value = URL.createObjectURL(selectedImage.value);
 }
 </script>
 
