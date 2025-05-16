@@ -64,7 +64,7 @@
           </div>
         </div>
         
-        <p>For more information about school near you in Victoria please visit our <router-link to="/school-map">map</router-link></p>
+        <p>For more information about school near you in Victoria please visit our <router-link to="/healthcare#medical-map">map</router-link></p>
       </div>
 
       <!-- Fees & Support Section -->
