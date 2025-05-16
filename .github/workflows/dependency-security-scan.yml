@@ -10,36 +10,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-
-      - name: Install dependencies
+      - name: Run OWASP Dependency Check via Docker
         run: |
-          npm install --legacy-peer-deps
-          cd server && npm install --legacy-peer-deps
-          cd ../client && npm install --legacy-peer-deps
-
-      - name: Install dependency-check
-        run: |
-          mkdir -p dependency-check
-          curl -L https://github.com/jeremylong/DependencyCheck/releases/download/v8.4.0/dependency-check-8.4.0-release.zip -o dc.zip
-          unzip dc.zip -d dependency-check
-
-      - name: Run OWASP Dependency Check
-        run: |
-          ./dependency-check/dependency-check/bin/dependency-check.sh \
+          mkdir -p odc-data odc-report
+          docker run --rm \
+            --volume ${{ github.workspace }}:/src \
+            --volume ${{ github.workspace }}/odc-data:/usr/share/dependency-check/data \
+            --volume ${{ github.workspace }}/odc-report:/report \
+            owasp/dependency-check \
             --project "OWASP Scan" \
-            --scan ./ \
+            --scan /src \
             --format HTML \
-            --out ./owasp-report
+            --out /report
 
       - name: Upload OWASP Dependency Check Report
         uses: actions/upload-artifact@v4
         with:
           name: dependency-check-report
-          path: ./owasp-report/dependency-check-report.html
+          path: ./odc-report/dependency-check-report.html
