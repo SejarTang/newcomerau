@@ -3,14 +3,15 @@ name: OWASP Dependency Check
 on:
   push:
     branches: [main]
+  workflow_dispatch:
 
 jobs:
   dependency-check:
-    name: Run OWASP Dependency Check
+    name: OWASP Dependency Check
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Set up Node.js
@@ -18,19 +19,22 @@ jobs:
         with:
           node-version: 18
 
-      - name: Install Dependencies
-        run: npm ci
+      - name: Install dependency-check
+        run: |
+          mkdir -p dependency-check
+          curl -L https://github.com/jeremylong/DependencyCheck/releases/download/v8.4.0/dependency-check-8.4.0-release.zip -o dc.zip
+          unzip dc.zip -d dependency-check
 
       - name: Run OWASP Dependency Check
-        uses: dependency-check/Dependency-Check_Action@main
-        with:
-          project: 'NewcomerAU'
-          path: '.'
-          format: 'HTML'
-          out: 'reports'
+        run: |
+          ./dependency-check/dependency-check/bin/dependency-check.sh \
+            --project "OWASP Scan" \
+            --scan ./ \
+            --format HTML \
+            --out ./owasp-report
 
-      - name: Upload Dependency Report
+      - name: Upload OWASP Report
         uses: actions/upload-artifact@v3
         with:
           name: dependency-check-report
-          path: reports
+          path: ./owasp-report/dependency-check-report.html
