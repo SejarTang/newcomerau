@@ -2,22 +2,22 @@ name: OWASP Dependency Check
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
   dependency-check:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Run OWASP Dependency Check via Docker
         run: |
-          mkdir -p odc-data odc-report
           docker run --rm \
             -v ${{ github.workspace }}:/src \
+            -v ${{ github.workspace }}/odc-report:/report \
             owasp/dependency-check \
             --project "OWASP Scan" \
             --scan /src/server/package-lock.json \
@@ -25,6 +25,11 @@ jobs:
             --disableAssembly \
             --format HTML \
             --out /report
+
+      - name: Check if report exists
+        run: |
+          echo "Listing contents of odc-report directory:"
+          ls -lah ./odc-report
 
       - name: Upload OWASP Dependency Check Report
         uses: actions/upload-artifact@v4
