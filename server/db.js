@@ -1,11 +1,12 @@
 const { Pool } = require('pg');
+require('dotenv').config();
 
 const pool = new Pool({
-  user: 'immi_project',
-  host: 'ie-project-db.c5ewi2w0m89v.ap-southeast-2.rds.amazonaws.com',
-  database: 'newcomerau_db',
-  password: 'newcomeraudsbas6',
-  port: 5432,
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASSWORD,
+  port: process.env.DB_PORT,
   ssl: {
     rejectUnauthorized: false
   }
