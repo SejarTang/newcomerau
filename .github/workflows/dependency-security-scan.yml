@@ -35,11 +35,6 @@ jobs:
             --format HTML \
             --out /report
 
-      - name: Check if report exists
-        run: |
-          echo "Listing contents of odc-report directory:"
-          ls -lah ./odc-report
-
       - name: Upload OWASP Dependency Check Report
         uses: actions/upload-artifact@v4
         with:
