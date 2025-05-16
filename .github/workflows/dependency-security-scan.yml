@@ -1,4 +1,4 @@
-name: OWASP Dependency Check
+name: OWASP Dependency Security Scan
 
 on:
   push:
@@ -9,9 +9,18 @@ on:
 jobs:
   dependency-check:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout repository
+      - name: Checkout Repository
         uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Create output directory
+        run: mkdir -p odc-report
 
       - name: Run OWASP Dependency Check via Docker
         run: |
