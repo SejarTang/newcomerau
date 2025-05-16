@@ -24,7 +24,7 @@ jobs:
             --scan /src/client/package-lock.json \
             --disableAssembly \
             --format HTML \
-            --out /src/odc-report
+            --out /report
 
       - name: Upload OWASP Dependency Check Report
         uses: actions/upload-artifact@v4
