@@ -118,7 +118,7 @@ async function handleSend() {
   messages.value.push({ role: 'bot', text: 'Thinking...' });
 
   try {
-    // Call Gemini API with prompt including userText
+    // Call Gemini API proxy route with prompt including userText
     const response = await fetch('/api/gemini', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
