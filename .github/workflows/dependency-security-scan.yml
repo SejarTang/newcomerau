@@ -17,14 +17,14 @@ jobs:
         run: |
           mkdir -p odc-data odc-report
           docker run --rm \
-            --volume ${{ github.workspace }}:/src \
-            --volume ${{ github.workspace }}/odc-data:/usr/share/dependency-check/data \
-            --volume ${{ github.workspace }}/odc-report:/report \
+            -v ${{ github.workspace }}:/src \
             owasp/dependency-check \
             --project "OWASP Scan" \
-            --scan /src \
+            --scan /src/server/package-lock.json \
+            --scan /src/client/package-lock.json \
+            --disableAssembly \
             --format HTML \
-            --out /report
+            --out /src/odc-report
 
       - name: Upload OWASP Dependency Check Report
         uses: actions/upload-artifact@v4
