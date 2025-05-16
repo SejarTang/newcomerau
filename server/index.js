@@ -12,8 +12,6 @@ const ocrRoutes = require('./routes/ocr');
 const mapRoutes = require('./routes/maplocations');
 const geminiRouter = require('./routes/gemini');
 
-
-
 // Allowlist for CORS
 const whitelist = [
   'http://localhost:5173',        // Local dev
@@ -33,8 +31,9 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+app.use(express.json());
 
-// Define API routes
+// Routes
 app.use('/api', languageRoutes);
 app.use('/api', migrantRoutes);
 app.use('/api', diseaseRoutes);
@@ -44,5 +43,5 @@ app.use('/api/gemini', geminiRouter);
 
 // Start server
 app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
+  console.log(`Server running at http://localhost:${port}`);
 });

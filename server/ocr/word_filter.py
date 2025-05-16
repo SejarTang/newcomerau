@@ -2,9 +2,6 @@ import nltk
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 import string
-#nltk.download('punkt')
-#nltk.download('punkt_tab')
-#nltk.download('stopwords')
 
 
 def clean_and_select_words(text):

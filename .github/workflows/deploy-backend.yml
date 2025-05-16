@@ -30,7 +30,7 @@ jobs:
             -e "ssh -o StrictHostKeyChecking=no" \
             ./server/ ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/backend/
 
-      - name: Restart backend and clean temporary files
+      - name: Install dependencies and restart backend
         run: |
           ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
             set -e

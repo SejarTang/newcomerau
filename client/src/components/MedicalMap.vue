@@ -4,12 +4,12 @@
     <div class="top-space"></div>
 
     <!-- Description text above the map -->
-    <div class="description">
-      <h2>Medical Facilities Map</h2>
+    <div id="medical-map" class="description">
+      <h2>Facilities Map</h2>
       <p>
-        This interactive map displays the locations of three types of medical facilities in Melbourne: Clinics, Private Hospitals, and Public Hospitals. 
+        This interactive map displays the locations of medical facilities and education providers in Melbourne. 
         By clicking the buttons below, you can toggle between different facility types and view their locations on the map. 
-        Clicking on a marker will show detailed information such as the facility’s name, address, phone number, rating, services, and opening hours.
+        Clicking on a marker will show detailed information about the facility.
         You can also click the "Go Here" button in each popup to automatically plan a route from your current location to the selected facility, using real street routes.
       </p>
     </div>
@@ -19,6 +19,7 @@
       <button @click="selectedType = 'clinic'">Clinics</button>
       <button @click="selectedType = 'private'">Private Hospitals</button>
       <button @click="selectedType = 'public'">Public Hospitals</button>
+      <button @click="selectedType = 'school'">Schools</button>
     </div>
 
     <!-- Map container -->
@@ -44,12 +45,14 @@ const routeLine = ref(null);
 const clinics = ref([]);
 const privateHospitals = ref([]);
 const publicHospitals = ref([]);
+const schools = ref([]); // New array for education providers
 
 // Marker color by type
 const markerColors = {
   clinic: 'blue',
   private: 'green',
-  public: 'red'
+  public: 'red',
+  school: 'purple' // Add color for schools
 };
 
 // OpenRouteService API key
@@ -61,6 +64,7 @@ const fetchData = async () => {
   clinics.value = res.data.clinics;
   privateHospitals.value = res.data.privateHospitals;
   publicHospitals.value = res.data.publicHospitals;
+  schools.value = res.data.schools; // Add schools data
 };
 
 // Initialize the Leaflet map and get user location
@@ -105,31 +109,45 @@ const addMarkers = (locations, type) => {
     // Build popup content
     const popupContent = document.createElement('div');
     popupContent.style.minWidth = '200px';
-    popupContent.innerHTML = `
-      <h4>${loc.clinic_name || loc.hos_name}</h4>
-      ${loc.clinic_address || loc.hos_address ? `<p><strong>Address:</strong> ${loc.clinic_address || loc.hos_address}</p>` : ''}
-      ${loc.phone ? `<p><strong>Phone:</strong> ${loc.phone}</p>` : ''}
-      ${loc.rating ? `<p><strong>Rating:</strong> ${loc.rating}</p>` : ''}
-      ${
-        loc.service
-          ? `<p><strong>Service:</strong> ${
-              Array.isArray(loc.service)
-                ? loc.service.join(', ')
-                : (typeof loc.service === 'string' && loc.service.startsWith('['))
-                  ? JSON.parse(loc.service.replace(/'/g, '"')).join(', ')
-                  : loc.service
-            }</p>`
-          : ''
-      }
-      ${
-        loc.opening_hours
-          ? `<p><strong>Opening Hours:</strong></p>
-            <div style="padding-left: 10px;">
-              ${loc.opening_hours.split(',').map(day => `<p>${day.trim()}</p>`).join('')}
-            </div>`
-          : ''
-      }
-    `;
+
+    // Different content structure for schools vs medical facilities
+    if (type === 'school') {
+      popupContent.innerHTML = `
+        <h4>${loc.provider_name}</h4>
+        <p><strong>Type:</strong> ${loc.provider_type}</p>
+        <p><strong>Address:</strong> ${loc.provider_address}</p>
+        ${loc.suburb ? `<p><strong>Suburb:</strong> ${loc.suburb}</p>` : ''}
+        ${loc.postcode ? `<p><strong>Postcode:</strong> ${loc.postcode}</p>` : ''}
+        ${loc.phone ? `<p><strong>Phone:</strong> ${loc.phone}</p>` : ''}
+        ${loc.rating ? `<p><strong>Rating:</strong> ${loc.rating}</p>` : ''}
+      `;
+    } else {
+      popupContent.innerHTML = `
+        <h4>${loc.clinic_name || loc.hos_name}</h4>
+        ${loc.clinic_address || loc.hos_address ? `<p><strong>Address:</strong> ${loc.clinic_address || loc.hos_address}</p>` : ''}
+        ${loc.phone ? `<p><strong>Phone:</strong> ${loc.phone}</p>` : ''}
+        ${loc.rating ? `<p><strong>Rating:</strong> ${loc.rating}</p>` : ''}
+        ${
+          loc.service
+            ? `<p><strong>Service:</strong> ${
+                Array.isArray(loc.service)
+                  ? loc.service.join(', ')
+                  : (typeof loc.service === 'string' && loc.service.startsWith('['))
+                    ? JSON.parse(loc.service.replace(/'/g, '"')).join(', ')
+                    : loc.service
+              }</p>`
+            : ''
+        }
+        ${
+          loc.opening_hours
+            ? `<p><strong>Opening Hours:</strong></p>
+              <div style="padding-left: 10px;">
+                ${loc.opening_hours.split(',').map(day => `<p>${day.trim()}</p>`).join('')}
+              </div>`
+            : ''
+        }
+      `;
+    }
 
     // Add Go Here button
     const goButton = document.createElement('button');
@@ -158,6 +176,8 @@ watch(selectedType, (newType) => {
     addMarkers(privateHospitals.value, 'private');
   } else if (newType === 'public') {
     addMarkers(publicHospitals.value, 'public');
+  } else if (newType === 'school') {
+    addMarkers(schools.value, 'school');
   }
 });
 
@@ -219,6 +239,7 @@ onMounted(async () => {
   display: flex;
   justify-content: center;
   gap: 10px;
+  flex-wrap: wrap;
 }
 
 button {
@@ -228,7 +249,9 @@ button {
   color: white;
   border-radius: 5px;
   cursor: pointer;
+  min-width: 120px;
 }
+
 button:hover {
   background-color: #115293;
 }

@@ -6,7 +6,7 @@ const db = require('../db');
 // get map locations
 router.get('/maplocations', async (req, res) => {
   try {
-    // Clinics 
+    // Clinics
     const clinicsQuery = `
       SELECT c.clinic_code, c.clinic_type, c.clinic_name, c.clinic_address, c.suburb, c.post_code, c.phone, c.opening_hours, c.rating, c.service,
              g.latitude, g.longitude
@@ -25,6 +25,16 @@ router.get('/maplocations', async (req, res) => {
     `;
     const hospitals = await db.query(hospitalsQuery);
 
+    // Schools
+    const schoolsQuery = `
+      SELECT s.provider_id, s.provider_type, s.provider_name, s.provider_address,
+             s.suburb, s.postcode, s.phone, s.rating,
+             g.latitude, g.longitude
+      FROM education_provider s
+      JOIN education_provider_location g ON s.provider_id = g.provider_id
+    `;
+    const schools = await db.query(schoolsQuery);
+
     // Hospital_type type
     const privateHospitals = hospitals.rows.filter(h => h.hos_type === 'PRIVATE');
     const publicHospitals = hospitals.rows.filter(h => h.hos_type === 'PUBLIC');
@@ -33,6 +43,7 @@ router.get('/maplocations', async (req, res) => {
       clinics: clinics.rows,
       privateHospitals,
       publicHospitals,
+      schools: schools.rows
     });
   } catch (error) {
     console.error('Error fetching map locations:', error);

@@ -7,6 +7,7 @@ import nltk
 # Download required NLTK resources
 nltk.download('stopwords')
 nltk.download('punkt')
+nltk.download('punkt_tab')
 nltk.download('wordnet')
 
 from ocr_extract import extract_text_from_image

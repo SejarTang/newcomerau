@@ -30,13 +30,14 @@ jobs:
           scp -r ./client ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/
 
       - name: Build on EC2 and deploy
+        env:
+          BRANCH_NAME: ${{ github.ref_name }}
         run: |
           ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_HOST }} << EOF
             cd ~/client
             npm install
             npm run build
 
-            BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
             if [ "$BRANCH_NAME" = "main" ]; then
               TARGET_DIR="/var/www/newcomerau/main"
             else
