@@ -14,12 +14,16 @@
           <h1 class="footer-title">NewcomerAU</h1>
           <!-- Navigation links inside the footer -->
           <ul class="footer-links">
-            <li><router-link to="/">Home</router-link></li>
-            <li><router-link to="/newcomers">Newcomers</router-link></li>
-            <li><router-link to="/language">Language</router-link></li>
-            <li><router-link to="/languagehub">LanguageHub</router-link></li>
-            <li><router-link to="/healthcare">Healthcare</router-link></li>
-            <li><router-link to="/education">Education</router-link></li>
+      <li><router-link to="/" class="nav-link">Home</router-link></li>
+      <li><router-link to="/newcomers" class="nav-link">Newcomers</router-link></li>
+      <li><router-link to="/education" class="nav-link">Education</router-link></li>
+      <li><router-link to="/healthcare" class="nav-link">Healthcare</router-link></li>
+          <li><router-link to="/language" class="dropdown-item">Language Overview</router-link></li>
+          <li><router-link to="/languagehub" class="dropdown-item">Language Hub</router-link></li>
+          <li><router-link to="/integration/holidays" class="dropdown-item">Public holiday</router-link></li>
+          <li><router-link to="/integration/history" class="dropdown-item">Holiday Culture</router-link></li>
+          <li><router-link to="/integration/more-holidays" class="dropdown-item">More Festivals</router-link></li>
+          <li><router-link to="/integration/quiz" class="dropdown-item">Cultural Integration Quiz</router-link></li>
           </ul>
         </div>
       </div>
