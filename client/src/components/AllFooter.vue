@@ -8,26 +8,49 @@
         <div class="footer-image">
           <img src="../assets/immigrant.jpeg" alt="Website Symbol" class="footer-logo" />
         </div>
+
         <!-- Title and navigation links section -->
         <div class="footer-section">
           <!-- Website title -->
           <h1 class="footer-title">NewcomerAU</h1>
+
           <!-- Navigation links inside the footer -->
           <ul class="footer-links">
-      <li><router-link to="/" class="nav-link">Home</router-link></li>
-      <li><router-link to="/newcomers" class="nav-link">Newcomers</router-link></li>
-      <li><router-link to="/education" class="nav-link">Education</router-link></li>
-      <li><router-link to="/healthcare" class="nav-link">Healthcare</router-link></li>
-          <li><router-link to="/language" class="dropdown-item">Language Overview</router-link></li>
-          <li><router-link to="/languagehub" class="dropdown-item">Language Hub</router-link></li>
-          <li><router-link to="/integration/holidays" class="dropdown-item">Public holiday</router-link></li>
-          <li><router-link to="/integration/history" class="dropdown-item">Holiday Culture</router-link></li>
-          <li><router-link to="/integration/more-holidays" class="dropdown-item">More Festivals</router-link></li>
-          <li><router-link to="/integration/quiz" class="dropdown-item">Cultural Integration Quiz</router-link></li>
+            <li>
+              <router-link to="/" class="nav-link" :class="{ 'active-footer-link': route.path === '/' }">Home</router-link>
+            </li>
+            <li>
+              <router-link to="/newcomers" class="nav-link" :class="{ 'active-footer-link': route.path.startsWith('/newcomers') }">Newcomers</router-link>
+            </li>
+            <li>
+              <router-link to="/education" class="nav-link" :class="{ 'active-footer-link': route.path.startsWith('/education') }">Education</router-link>
+            </li>
+            <li>
+              <router-link to="/healthcare" class="nav-link" :class="{ 'active-footer-link': route.path.startsWith('/healthcare') }">Healthcare</router-link>
+            </li>
+            <li>
+              <router-link to="/language" class="dropdown-item" :class="{ 'active-footer-link': route.path.startsWith('/language') }">Language Overview</router-link>
+            </li>
+            <li>
+              <router-link to="/languagehub" class="dropdown-item" :class="{ 'active-footer-link': route.path.startsWith('/languagehub') }">Language Hub</router-link>
+            </li>
+            <li>
+              <router-link to="/integration/holidays" class="dropdown-item" :class="{ 'active-footer-link': route.path.startsWith('/integration/holidays') }">Public holiday</router-link>
+            </li>
+            <li>
+              <router-link to="/integration/history" class="dropdown-item" :class="{ 'active-footer-link': route.path.startsWith('/integration/history') }">Holiday Culture</router-link>
+            </li>
+            <li>
+              <router-link to="/integration/more-holidays" class="dropdown-item" :class="{ 'active-footer-link': route.path.startsWith('/integration/more-holidays') }">More Festivals</router-link>
+            </li>
+            <li>
+              <router-link to="/integration/quiz" class="dropdown-item" :class="{ 'active-footer-link': route.path.startsWith('/integration/quiz') }">Cultural Integration Quiz</router-link>
+            </li>
           </ul>
         </div>
       </div>
     </div>
+
     <!-- Bottom part of the footer with copyright info -->
     <div class="footer-bottom">
       <p>&copy; 2025 TA12. All Rights Reserved.</p>
@@ -36,7 +59,10 @@
 </template>
 
 <script setup>
-// No logic or interactivity is needed here — it's a static footer.
+// Import route to determine which page is active
+import { useRoute } from 'vue-router';
+
+const route = useRoute();
 </script>
 
 <style scoped>
@@ -74,9 +100,9 @@
 .footer-logo {
   width: 60px;
   height: 60px;
-  border-radius: 50%; /* make it a circle */
-  object-fit: cover; /* ensure image covers the space */
-  border: 2px solid #f0f0f0; /* light border for contrast */
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #f0f0f0;
 }
 
 /* Section holding title and navigation links */
@@ -88,7 +114,7 @@
 
 /* Website title style */
 .footer-title {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   font-weight: 700;
   color: #1a1a1a;
 }
@@ -100,31 +126,42 @@
   list-style: none;
   padding: 0;
   margin: 0;
+  flex-wrap: wrap;
 }
 
-/* Style for individual links */
+/* Style for normal footer links */
 .footer-links li a {
   color: #666;
   text-decoration: none;
   font-weight: 500;
+  font-size: 1.3rem;
   transition: all 0.3s ease;
-  padding: 0.5rem;
+  padding: 0.5rem 0.8rem;
   border-radius: 6px;
 }
 
-/* Hover effect on links */
+/* Hover effect for links */
 .footer-links li a:hover {
   color: #0074cc;
   background-color: rgba(0, 116, 204, 0.05);
 }
 
-/* Bottom part of the footer with small text */
+/* Highlight active page link */
+.active-footer-link {
+  color: #0056a3 !important;
+  font-weight: 700;
+  background-color: rgba(0, 116, 204, 0.08);
+  border: 1px solid rgba(0, 116, 204, 0.2);
+  border-radius: 8px;
+}
+
+/* Bottom part of the footer */
 .footer-bottom {
   margin-top: 2rem;
   border-top: 1px solid #ddd;
   text-align: center;
   padding-top: 1.5rem;
-  font-size: 0.9rem;
+  font-size: 1.2rem;
   color: #888;
 }
 
