@@ -239,11 +239,13 @@ onBeforeUnmount(() => {
 
 /* Banner image at top of section */
 .holiday-banner {
-  width: 100%;
-  max-height: 800px;
-  object-fit: cover;
-  margin-bottom: 20px;
-  border-radius: 0;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
 }
 
 /* Holiday section title */
