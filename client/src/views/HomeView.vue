@@ -12,7 +12,6 @@
       <!-- Carousel Section -->
       <div class="carousel-container">
         <div class="carousel-track" :style="{ transform: `translateX(-${currentSlide * 100}%)` }">
-          <!-- Each Slide -->
           <div
             v-for="(slide, index) in slides"
             :key="index"
@@ -31,16 +30,12 @@
             </div>
           </div>
         </div>
-
-        <!-- Left and Right Arrow Buttons -->
         <button class="carousel-control prev" @click="prevSlide">
           <i class="bi bi-chevron-left"></i>
         </button>
         <button class="carousel-control next" @click="nextSlide">
           <i class="bi bi-chevron-right"></i>
         </button>
-
-        <!-- Indicator Dots -->
         <div class="indicators">
           <button
             v-for="(_, index) in slides"
@@ -54,6 +49,7 @@
 
       <!-- Feature Cards Section -->
       <div class="cards-section">
+        <!-- Normal Cards -->
         <div class="cards-row">
           <router-link
             v-for="(card, index) in cards"
@@ -70,6 +66,22 @@
             </div>
           </router-link>
         </div>
+
+        <!-- Special Card -->
+        <div class="cards-row special-card-row">
+          <router-link
+            :to="specialCard.link"
+            class="card-box special-box"
+            @mouseover="hoverIndex = 'special'"
+            @mouseleave="hoverIndex = -1"
+          >
+            <div class="card-inner" :class="{ 'card-hover': hoverIndex === 'special' }">
+              <img :src="specialCard.image" alt="special card image" class="card-img special-img" />
+              <h3 class="card-title">{{ specialCard.title }}</h3>
+              <p class="card-description">{{ specialCard.content }}</p>
+            </div>
+          </router-link>
+        </div>
       </div>
     </div>
   </div>
@@ -78,19 +90,29 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 
-// Carousel slides data
 const slides = ref([
+    {
+    title: 'Welcome to NewcomerAU — Your Companion for Starting a New Life in Victoria',
+    bgColor: 'rgba(245, 245, 247, 0.8)',
+  },
   {
-    title: 'The journey of an immigrant is long, but each step brings us closer to our new home.',
+    title: 'This website is designed to support immigrants and newcomers in Victoria, Australia, by providing clear, helpful, and culturally relevant information to ease their transition into the local community.',
     bgColor: 'rgba(245, 245, 247, 0.8)'
   },
   {
-    title: 'A true home is not defined by geography, but by the sense of belonging in the heart.',
+    title: 'Whether you are exploring who the newcomers are, understanding the local education and healthcare systems, improving your English skills, or learning about cultural festivals — we\'ve got you covered.',
     bgColor: 'rgba(245, 245, 247, 0.8)'
-  }
+  },
+  {
+    title: 'Through interactive features such as quizzes, language activities, and a cultural integration guide, NewcomerAU offers a friendly and practical bridge between your past and your new life in Australia.',
+    bgColor: 'rgba(245, 245, 247, 0.8)'
+  },
+    {
+    title: 'Start discovering. Start belonging!',
+    bgColor: 'rgba(245, 245, 247, 0.8)'
+  },
 ])
 
-// Cards displayed below carousel
 const cards = ref([
   {
     title: 'Newcomers',
@@ -99,61 +121,58 @@ const cards = ref([
     link: '/newcomers'
   },
   {
-    title: 'Language',
-    content: 'Explore the language backgrounds of newcomers in Victoria',
-    image: new URL('../assets/languageKey.jpg', import.meta.url).href,
-    link: '/language'
-  },
-  {
-    title: 'LanguageHub',
-    content: 'LanguageHub offers a variety of language activities to help you improve your English skills',
-    image: new URL('../assets/LanguageHub.jpg', import.meta.url).href,
-    link: '/languageHub'
+    title: 'Education',
+    content: 'Explore the Education System of Victoria',
+    image: new URL('../assets/Edu.jpg', import.meta.url).href,
+    link: '/education'
   },
   {
     title: 'Healthcare',
     content: 'Healthcare offers essential information and resources to help newcomers access medical services',
     image: new URL('../assets/healthcare_home.jpg', import.meta.url).href,
     link: '/healthcare'
+  },
+  {
+    title: 'Language',
+    content: 'Language part offers a variety of language activities to help you improve your English skills',
+    image: new URL('../assets/LanguageKey.jpg', import.meta.url).href,
+    link: '/language'
   }
 ])
 
-// Current active slide index
+const specialCard = {
+  title: 'Cultural Integration',
+  content: 'Discover popular cultural festivals in Victoria and engage with the local community.',
+  image: new URL('../assets/cl.jpg', import.meta.url).href,
+  link: '/integration/holidays'
+}
+
 const currentSlide = ref(0)
-
-// Control autoplay behavior
 const autoPlay = ref(true)
-
-// Track which card is being hovered
 const hoverIndex = ref(-1)
 
-// Auto-slide on interval
 onMounted(() => {
   const interval = setInterval(() => {
-    if (autoPlay.value) {
-      nextSlide();
-    }
-  }, 5000); // Change slide every 5 seconds
-  return () => clearInterval(interval);
+    if (autoPlay.value) nextSlide()
+  }, 6000)
+  return () => clearInterval(interval)
 })
 
-// Move to next slide
 const nextSlide = () => {
-  currentSlide.value = (currentSlide.value + 1) % slides.value.length;
+  currentSlide.value = (currentSlide.value + 1) % slides.value.length
 }
 
-// Move to previous slide
 const prevSlide = () => {
-  currentSlide.value = (currentSlide.value - 1 + slides.value.length) % slides.value.length;
+  currentSlide.value = (currentSlide.value - 1 + slides.value.length) % slides.value.length
 }
 
-// Jump to a specific slide
 const goToSlide = (index) => {
-  currentSlide.value = index;
+  currentSlide.value = index
 }
 </script>
 
 <style scoped>
+
 /* Remove underline for card links */
 .cards-row a {
   text-decoration: none;
@@ -209,9 +228,9 @@ const goToSlide = (index) => {
 /* Single slide */
 .carousel-slide {
   flex: 0 0 100%;
-  padding: 0 15%;
+  padding: 0 5%;
   box-sizing: border-box;
-  transition: opacity 0.3s;
+  transition: opacity 1.8s;
 }
 
 /* Card inside carousel */
@@ -393,14 +412,14 @@ const goToSlide = (index) => {
 
 /* Card title below image */
 .card-title {
-  font-size: 1.5rem;
+  font-size: 2rem;
   margin-bottom: 0.8rem;
   font-weight: 600;
 }
 
 /* Card text */
 .card-description {
-  font-size: 1rem;
+  font-size: 1.5rem;
   color: #555;
 }
 
@@ -440,13 +459,31 @@ const goToSlide = (index) => {
   background: #ffffae;
 }
 
+/* Special card row for better layout control */
+.special-card-row {
+  margin-top: 2rem;
+  justify-content: center;
+}
+
+/* Make the special card larger or different as needed */
+.special-box {
+  flex: 1 1 100%;
+  max-width: 80%;
+}
+
+/* Optionally override image height */
+.special-img {
+  height: 900px;
+}
+
 /* Responsive adjustments for tablets and mobiles */
 @media (max-width: 768px) {
   .carousel-slide {
     padding: 0 5%;
   }
 
-  .card-box {
+  .card-box,
+  .special-box {
     max-width: 100%;
     flex: 1 1 100%;
   }
@@ -466,6 +503,10 @@ const goToSlide = (index) => {
   .video-wrapper {
     height: 50vh;
   }
-}
-</style>
 
+  .special-img {
+    height: 220px;
+  }
+}
+
+</style>
