@@ -232,8 +232,9 @@ const festivals = [
 /* Modal content card */
 .modal-card {
   background: white;
-  border-radius: 20px;
-  max-width: 600px;
+  border-radius: 15px;
+  max-width: 1200px;
+  max-height: 90vh;
   width: 90%;
   padding: 2rem;
   text-align: center;
@@ -243,7 +244,7 @@ const festivals = [
 /* Image inside modal */
 .modal-card img {
   width: 100%;
-  max-height: 300px;
+  max-height: 600px;
   object-fit: cover;
   margin: 1rem 0;
   border-radius: 12px;
@@ -251,8 +252,9 @@ const festivals = [
 
 /* Close button */
 .modal-card button {
-  margin-top: 1rem;
-  padding: 0.6rem 1.2rem;
+  margin-top: 2rem;
+  padding: 1rem 2rem;
+  font-size: 1.5rem;
   background: #2c3e50;
   color: white;
   border: none;
@@ -302,5 +304,24 @@ const festivals = [
 .explore-more-button:hover {
   background-color: #2c6ecf;
   transform: scale(1.05);
+}
+
+.modal-card h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.modal-date {
+  font-size: 1.5rem;
+  color: #666;
+  margin-bottom: 1.5rem;
+}
+
+.modal-description {
+  font-size: 1.5rem;
+  line-height: 1.6;
+  color: #333;
+  margin-top: 1rem;
 }
 </style>
