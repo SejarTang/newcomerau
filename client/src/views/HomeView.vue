@@ -135,7 +135,7 @@ const cards = ref([
   {
     title: 'Language',
     content: 'Language part offers a variety of language activities to help you improve your English skills',
-    image: new URL('../assets/LanguageKey.jpg', import.meta.url).href,
+    image: new URL('../assets/languageKey.jpg', import.meta.url).href,
     link: '/language'
   }
 ])
