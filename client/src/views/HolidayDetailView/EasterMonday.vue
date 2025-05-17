@@ -27,26 +27,33 @@
       <div class="column">
         <h2>Origin</h2>
         <p>
-          1
+          Easter Monday has its origins in Christian tradition,
+          marking the day after Jesus Christ’s resurrection on Easter Sunday.
+          While it is not as ceremonially significant as Good Friday or Easter Sunday,
+          it represents the continuation of Easter celebrations.
+          In Australia—particularly in Victoria—it has evolved into a public holiday focused on family,
+          leisure, and community,
+          serving as the final day of the Easter long weekend.
         </p>
       </div>
       <div class="column">
         <h2>Celebrations in Victoria</h2>
         <ol>
           <li>
-            <strong>Church Services and Sunrise Worship:</strong>
-            Many churches across the state host early morning Easter services or sunrise worship gatherings.
-            These ceremonies often include hymns, scripture readings, and communion to mark the resurrection.
+            <strong>Attending the AFL Easter Monday Clash:</strong>
+           Victorians are passionate about Australian Rules Football.
+           Easter Monday features a major AFL match,
+           often the classic showdown, drawing thousands to stadiums or television screens.
           </li>
           <li>
-            <strong>Easter Egg Hunts:</strong>
-            Widely popular with children, Easter egg hunts take place in public parks, shopping centres, and backyards.
-            Colourful eggs — representing new life — are hidden for kids to find, creating festive joy.
+            <strong>Family Picnics and Short Getaways:</strong>
+            Families make the most of the holiday with picnics in parks, BBQs,
+            or quick trips to regional areas to unwind before the work and school week resumes.
           </li>
           <li>
-            <strong>Melbourne Easter Show:</strong>
-            Victoria hosts events like the Melbourne Easter Show, featuring farm animals,
-            carnival rides, market stalls, food trucks, and family-friendly entertainment.
+            <strong>Visiting the Melbourne Easter Show:</strong>
+            This popular family event includes amusement rides, animal encounters, food stalls,
+            and live entertainment—making it a top attraction on Easter Monday.
           </li>
         </ol>
       </div>
