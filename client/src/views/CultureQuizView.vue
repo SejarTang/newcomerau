@@ -1,61 +1,78 @@
 <template>
   <div class="quiz-container">
-    <div class="quiz-box">
-      <h1 class="quiz-title">Cultural Integration Quiz</h1>
-      <p class="quiz-intro">Welcome to the Australian Cultural Integration Quiz! Discover how well you understand the Australian lifestyle, values, and social customs through the following questions.</p>
+    <div class="quiz-wrapper" :class="{ active: quizStarted }">
 
-      <div v-if="!quizStarted" class="center">
-        <button class="start-btn" @click="quizStarted = true">Start Quiz</button>
+      <!-- Left illustration section -->
+      <div class="quiz-image" :class="{ expanded: quizStarted }">
+        <img src="@/assets/morequiz.jpg" alt="Quiz Illustration" />
       </div>
 
-      <transition name="fade" mode="out-in">
-        <div v-if="quizStarted && !quizCompleted" :key="currentQuestionIndex">
-          <div class="progress-info">Question {{ currentQuestionIndex + 1 }} of {{ questions.length }}</div>
-          <div class="progress-bar">
-            <div class="progress-fill" :style="{ width: progressPercentage + '%' }"></div>
-            <span class="progress-text">{{ progressPercentage }}%</span>
-          </div>
-
-          <h2 class="question-text">{{ currentQuestion.question }}</h2>
-          <ul class="options-list">
-            <li v-for="(option, idx) in currentQuestion.options" :key="idx">
-              <button
-                class="option-btn"
-                @click="selectOption(idx)"
-                :disabled="showFeedback"
-              >
-                {{ option }}
-              </button>
-            </li>
-          </ul>
-
-          <div v-if="showFeedback" class="feedback">
-            <span v-if="isLastAnswerCorrect" class="correct">Correct Answer</span>
-            <span v-else class="incorrect">Wrong Answer</span>
-          </div>
-        </div>
-      </transition>
-
-      <div v-if="quizCompleted" class="results">
-        <h2 class="score-title">Your Score: {{ score }}/{{ questions.length }}</h2>
-        <p class="score-feedback">
-          {{ score >= 8 ? 'You have a great understanding of Australian culture!' : 'Good start! Try again to improve your score.' }}
+      <!-- Right quiz content section -->
+      <div class="quiz-content">
+        <h1 class="quiz-title">Cultural Integration Quiz</h1>
+        <p class="quiz-intro">
+          Welcome to the Australian Cultural Integration Quiz! Discover how well you understand the Australian lifestyle, values, and social customs through the following questions.
         </p>
 
-        <div v-if="incorrectAnswers.length" class="wrong-section">
-          <h3>Questions You Answered Incorrectly:</h3>
-          <ul>
-            <li v-for="(item, idx) in incorrectAnswers" :key="idx" class="wrong-item">
-              <p><strong>Question:</strong> {{ item.question.question }}</p>
-              <p>Your answer: <span class="wrong">{{ item.question.options[item.selected] }}</span></p>
-              <p>Correct answer: <span class="right">{{ item.question.options[item.question.correct] }}</span></p>
-              <p class="explanation">Explanation: {{ item.question.explanation }}</p>
-            </li>
-          </ul>
+        <!-- Start button before quiz begins -->
+        <div v-if="!quizStarted" class="center">
+          <button class="start-btn" @click="quizStarted = true">Start Quiz</button>
         </div>
 
-        <div class="center">
-          <button class="restart-btn" @click="restartQuiz">Restart Quiz</button>
+        <!-- Main quiz flow -->
+        <transition name="fade" mode="out-in">
+          <div v-if="quizStarted && !quizCompleted" :key="currentQuestionIndex">
+            <div class="progress-info">Question {{ currentQuestionIndex + 1 }} of {{ questions.length }}</div>
+            <div class="progress-bar">
+              <div class="progress-fill" :style="{ width: progressPercentage + '%' }"></div>
+              <span class="progress-text">{{ progressPercentage }}%</span>
+            </div>
+
+            <h2 class="question-text">{{ currentQuestion.question }}</h2>
+            <ul class="options-list">
+              <li v-for="(option, idx) in currentQuestion.options" :key="idx">
+                <button
+                  class="option-btn"
+                  @click="selectOption(idx)"
+                  :disabled="showFeedback"
+                >
+                  {{ option }}
+                </button>
+              </li>
+            </ul>
+
+            <!-- Show feedback after answer -->
+            <div v-if="showFeedback" class="feedback">
+              <span v-if="isLastAnswerCorrect" class="correct">Correct Answer</span>
+              <span v-else class="incorrect">Wrong Answer</span>
+            </div>
+          </div>
+        </transition>
+
+        <!-- Final results section -->
+        <div v-if="quizCompleted" class="results">
+          <h2 class="score-title">Your Score: {{ score }}/{{ questions.length }}</h2>
+          <p class="score-feedback">
+            {{ score >= 8 ? 'You have a great understanding of Australian culture!' : 'Good start! Try again to improve your score.' }}
+          </p>
+
+          <!-- Incorrect answer explanations -->
+          <div v-if="incorrectAnswers.length" class="wrong-section">
+            <h3>Questions You Answered Incorrectly:</h3>
+            <ul>
+              <li v-for="(item, idx) in incorrectAnswers" :key="idx" class="wrong-item">
+                <p><strong>Question:</strong> {{ item.question.question }}</p>
+                <p>Your answer: <span class="wrong">{{ item.question.options[item.selected] }}</span></p>
+                <p>Correct answer: <span class="right">{{ item.question.options[item.question.correct] }}</span></p>
+                <p class="explanation">Explanation: {{ item.question.explanation }}</p>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Restart quiz button -->
+          <div class="center">
+            <button class="restart-btn" @click="restartQuiz">Restart Quiz</button>
+          </div>
         </div>
       </div>
     </div>
@@ -65,6 +82,7 @@
 <script setup>
 import { ref, computed } from 'vue'
 
+// State control
 const quizStarted = ref(false)
 const currentQuestionIndex = ref(0)
 const selectedAnswers = ref([])
@@ -72,6 +90,7 @@ const quizCompleted = ref(false)
 const showFeedback = ref(false)
 const isLastAnswerCorrect = ref(false)
 
+// Quiz data
 const questions = [
   {
     question: 'Which of the following is considered a common social etiquette in Australia?',
@@ -135,11 +154,13 @@ const questions = [
   },
 ]
 
+// Computed properties
 const currentQuestion = computed(() => questions[currentQuestionIndex.value])
 const progressPercentage = computed(() =>
   Math.round(((currentQuestionIndex.value + 1) / questions.length) * 100)
 )
 
+// Handle answer selection
 function selectOption(index) {
   const isCorrect = index === currentQuestion.value.correct
   isLastAnswerCorrect.value = isCorrect
@@ -156,17 +177,20 @@ function selectOption(index) {
   }, 1000)
 }
 
+// Calculate final score
 const score = computed(() =>
   selectedAnswers.value.reduce((acc, selected, i) =>
     selected === questions[i].correct ? acc + 1 : acc, 0)
 )
 
+// Identify incorrect answers
 const incorrectAnswers = computed(() =>
   selectedAnswers.value
     .map((selected, i) => ({ question: questions[i], selected }))
     .filter(item => item.selected !== item.question.correct)
 )
 
+// Reset quiz to start again
 function restartQuiz() {
   currentQuestionIndex.value = 0
   selectedAnswers.value = []
@@ -176,59 +200,99 @@ function restartQuiz() {
 </script>
 
 <style scoped>
+/* Container covers full viewport height with gradient background */
 .quiz-container {
   min-height: 100vh;
   background: linear-gradient(to bottom right, #cbe8ff, #ffffff, #c6f6d5);
   display: flex;
   justify-content: center;
-  padding: 60px 20px 40px;
+  align-items: center;
+  padding: 40px 0;
 }
 
-.quiz-box {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(8px);
-  border-radius: 20px;
-  padding: 30px;
-  max-width: 1900px;
+/* Wrapper for both image and quiz content */
+.quiz-wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
   width: 100%;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  margin-top: 20px;
+  padding: 0 40px;
+  align-items: stretch;
 }
 
+/* When quiz starts: adjust layout proportions */
+.quiz-wrapper.active .quiz-image {
+  flex: 0 0 35%;
+}
+
+.quiz-wrapper.active .quiz-content {
+  flex: 0 0 60%;
+}
+
+/* Left-side illustration section */
+.quiz-image {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+  padding: 20px;
+  max-height: 300px;
+  transition: all 0.4s ease;
+}
+
+/* Expand image area vertically when quiz starts */
+.quiz-image.expanded {
+  max-height: none;
+  align-self: stretch;
+}
+
+/* Responsive image styling */
+.quiz-image img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+/* Right-side quiz content area */
+.quiz-content {
+  flex: 2;
+  text-align: center;
+}
+
+/* Quiz main title */
 .quiz-title {
-  font-size: 50px;
+  font-size: 42px;
   font-weight: bold;
-  text-align: center;
   color: #00070d;
+  margin-bottom: 10px;
 }
 
+/* Introduction paragraph */
 .quiz-intro {
-  text-align: center;
-  font-size: 30px;
+  font-size: 24px;
   color: #333;
-  margin-top: 150px;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
 
-.center {
-  text-align: center;
-  margin-top: 20px;
-}
-
+/* Start & Restart buttons */
 .start-btn,
 .restart-btn {
   background-color: #007bff;
   color: white;
   border: none;
-  padding: 20px 100px;
-  font-size: 56px;
+  padding: 16px 40px;
+  font-size: 24px;
   border-radius: 50px;
   cursor: pointer;
-  margin-top: 120px;
-
+  margin-top: 40px;
   animation: breathe 2.5s ease-in-out infinite;
 }
 
+/* Breathing animation for CTA buttons */
 @keyframes breathe {
   0% {
     transform: scale(1);
@@ -244,18 +308,21 @@ function restartQuiz() {
   }
 }
 
+/* Button hover effect */
 .start-btn:hover,
 .restart-btn:hover {
   background-color: #0056b3;
 }
 
+/* Question progress text */
 .progress-info {
-  margin-bottom: 8px;
-  font-size: 50px;
-  color: #666666;
-  margin-top: 80px;
+  margin-top: 40px;
+  margin-bottom: 12px;
+  font-size: 28px;
+  color: #444;
 }
 
+/* Progress bar container */
 .progress-bar {
   background-color: #ddd;
   border-radius: 12px;
@@ -263,14 +330,17 @@ function restartQuiz() {
   position: relative;
   overflow: hidden;
   margin-bottom: 20px;
+  width: 100%;
 }
 
+/* Animated fill for progress bar */
 .progress-fill {
   background: linear-gradient(to right, red, orange, green);
   height: 100%;
   transition: width 0.5s ease-out;
 }
 
+/* Percentage text overlay on progress bar */
 .progress-text {
   position: absolute;
   width: 100%;
@@ -280,43 +350,49 @@ function restartQuiz() {
   line-height: 24px;
 }
 
+/* Question text style */
 .question-text {
-  font-size: 50px;
-  font-weight: 600;
+  font-size: 28px;
+  font-weight: bold;
   margin-top: 30px;
-  margin-bottom: 10px;
+  margin-bottom: 30px;
 }
 
+/* Answer option list */
 .options-list {
   list-style: none;
   padding: 0;
-  margin-top: 30px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
+/* Answer button */
 .option-btn {
   width: 100%;
-  font-size: 36px;
-  padding: 10px 14px;
-  margin-bottom: 10px;
-  border: 1px solid #aaa;
+  font-size: 20px;
+  padding: 14px 20px;
+  border: 1px solid #ccc;
   border-radius: 8px;
   background-color: white;
   cursor: pointer;
-  transition: background 0.3s;
-  text-align: center;
+  transition: background 0.3s ease;
 }
 
+/* Hover state for option button */
 .option-btn:hover {
-  background-color: #f0f0f0;
+  background-color: #f2f2f2;
 }
 
+/* Feedback text after answering */
 .feedback {
   margin-top: 15px;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold;
-  text-align: center;
 }
 
+/* Feedback colors */
 .correct {
   color: green;
 }
@@ -325,32 +401,39 @@ function restartQuiz() {
   color: red;
 }
 
+/* Final result section */
 .results {
   text-align: center;
 }
 
+/* Score title */
 .score-title {
-  font-size: 22px;
+  font-size: 28px;
   color: green;
 }
 
+/* Score feedback message */
 .score-feedback {
   color: #555;
+  font-size: 20px;
 }
 
+/* Section for showing incorrect answers */
 .wrong-section {
-  margin-top: 20px;
+  margin-top: 30px;
   text-align: left;
 }
 
+/* Incorrect answer item box */
 .wrong-item {
   background: #ffe6e6;
   padding: 15px;
   border: 1px solid #ffcccc;
   border-radius: 10px;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 }
 
+/* Styling for wrong and correct answers */
 .wrong {
   color: red;
 }
@@ -359,12 +442,14 @@ function restartQuiz() {
   color: green;
 }
 
+/* Explanation for each question */
 .explanation {
   margin-top: 6px;
   color: #444;
   font-style: italic;
 }
 
+/* Fade transition for question animation */
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.4s;
@@ -373,5 +458,24 @@ function restartQuiz() {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+/* Responsive layout for mobile screens */
+@media (max-width: 900px) {
+  .quiz-wrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .quiz-wrapper.active .quiz-image,
+  .quiz-wrapper.active .quiz-content {
+    flex: unset;
+    width: 100%;
+  }
+
+  .quiz-image {
+    max-height: none;
+    margin-bottom: 20px;
+  }
 }
 </style>

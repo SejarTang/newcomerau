@@ -43,7 +43,7 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 
 function goToHolidayCulture() {
-  router.push('/integration/quiz')
+  router.push('/integration/more-holidays')
 }
 
 const holidays = [
