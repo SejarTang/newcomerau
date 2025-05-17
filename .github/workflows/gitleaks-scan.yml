@@ -22,8 +22,6 @@ jobs:
 
       - name: Run Gitleaks scan
         run: |
-         - name: Run Gitleaks scan
-        run: |
            mkdir -p gitleaks-report
            gitleaks detect --source=. --no-git \
           --report-format=json \
