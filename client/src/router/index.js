@@ -67,16 +67,17 @@ const router = createRouter({
       name: 'History',
       component: () => import('../views/HistoryView.vue'),
     },
+      {
+      path: '/integration/more-holidays',
+      name: 'MoreHolidays',
+      component: () => import('../views/MoreHolidaysView.vue'),
+    },
     {
       path: '/integration/quiz',
       name: 'CultureQuiz',
       component: () => import('../views/CultureQuizView.vue'),
     },
-    {
-      path: '/integration/more-holidays',
-      name: 'MoreHolidays',
-      component: () => import('../views/MoreHolidaysView.vue'),
-    },
+
 
     // Holiday detail pages
     {

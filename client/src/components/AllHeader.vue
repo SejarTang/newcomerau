@@ -26,8 +26,9 @@
         <ul class="dropdown-menu">
           <li><router-link to="/integration/holidays" class="dropdown-item">Public holiday</router-link></li>
           <li><router-link to="/integration/history" class="dropdown-item">Holiday Culture</router-link></li>
+          <li><router-link to="/integration/more-holidays" class="dropdown-item">More Festivals</router-link></li>
           <li><router-link to="/integration/quiz" class="dropdown-item">Cultural Integration Quiz</router-link></li>
-          <li><router-link to="/integration/more-holidays" class="dropdown-item">Other Celebrated Holidays</router-link></li>
+
         </ul>
       </li>
     </ul>
