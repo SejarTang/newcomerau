@@ -30,9 +30,22 @@
       <router-link class="learn-more" :to="featuredHoliday.link">Learn More</router-link>
     </div>
   </div>
+
+    <!-- Explore More Button -->
+<div class="explore-more-wrapper">
+  <button class="explore-more-button" @click="goToHolidayCulture">Explore More</button>
+</div>
 </template>
 
 <script setup>
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+function goToHolidayCulture() {
+  router.push('/integration/quiz')
+}
+
 const holidays = [
   { name: "New Year's Day", date: "Wednesday 1 January", image: new URL('@/assets/holidays/new-years-day.jpg', import.meta.url).href, link: "/holidays/new-years-day" },
   { name: "Australia Day", date: "Monday 27 January", image: new URL('@/assets/holidays/australia-day.jpg', import.meta.url).href, link: "/holidays/australia-day" },
@@ -199,5 +212,30 @@ const featuredHoliday = {
 .learn-more:hover {
   background-color: #1f2937;
   color: white;
+}
+
+.explore-more-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 40px 0;
+}
+
+.explore-more-button {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background-color: #3a91e7;
+  color: white;
+  font-size: 1.2em;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.explore-more-button:hover {
+  background-color: #2c6ecf;
+  transform: scale(1.05);
 }
 </style>
