@@ -24,9 +24,9 @@ jobs:
         run: |
            mkdir -p gitleaks-report
            gitleaks detect --source=. --no-git \
-          --report-format=json \
-          --report-path=gitleaks-report/gitleaks-report.json \
-          --verbose || true
+             --report-format=json \
+             --report-path=gitleaks-report/gitleaks-report.json \
+             --verbose || true
 
 
       - name: Upload Gitleaks Scan Report
