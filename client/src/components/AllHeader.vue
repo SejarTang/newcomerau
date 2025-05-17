@@ -13,7 +13,13 @@
 
       <!-- Language dropdown -->
       <li class="dropdown">
-        <router-link to="/language" class="nav-link">Language ▼</router-link>
+        <router-link
+          to="/language"
+          class="nav-link"
+          :class="{ 'router-link-active': isLanguageActive }"
+        >
+          Language ▼
+        </router-link>
         <ul class="dropdown-menu">
           <li><router-link to="/language" class="dropdown-item">Language Overview</router-link></li>
           <li><router-link to="/languagehub" class="dropdown-item">Language Hub</router-link></li>
@@ -22,13 +28,18 @@
 
       <!-- Cultural Integration dropdown -->
       <li class="dropdown">
-        <router-link to="/integration" class="nav-link">Cultural Integration ▼</router-link>
+        <router-link
+          to="/integration"
+          class="nav-link"
+          :class="{ 'router-link-active': isIntegrationActive }"
+        >
+          Cultural Integration ▼
+        </router-link>
         <ul class="dropdown-menu">
           <li><router-link to="/integration/holidays" class="dropdown-item">Public holiday</router-link></li>
           <li><router-link to="/integration/history" class="dropdown-item">Holiday Culture</router-link></li>
           <li><router-link to="/integration/more-holidays" class="dropdown-item">More Festivals</router-link></li>
           <li><router-link to="/integration/quiz" class="dropdown-item">Cultural Integration Quiz</router-link></li>
-
         </ul>
       </li>
     </ul>
@@ -36,11 +47,17 @@
 </template>
 
 <script setup>
-import { ref, watch, onUnmounted } from 'vue';
+import { ref, watch, computed, onUnmounted } from 'vue';
 import { useRoute } from 'vue-router';
 
 const isScrolled = ref(false);
 const route = useRoute();
+
+// Detect if current path belongs to Language section
+const isLanguageActive = computed(() => route.path.startsWith('/language'));
+
+// Detect if current path belongs to Cultural Integration section
+const isIntegrationActive = computed(() => route.path.startsWith('/integration'));
 
 // Detect if the window is scrolled past a threshold
 const handleScroll = () => {
@@ -80,7 +97,7 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1.5rem 3rem;
+  padding: 1.2rem 2rem;
   background-color: rgba(255, 255, 255, 0);
   transition: all 0.3s ease;
   overflow: visible;
@@ -131,7 +148,7 @@ onUnmounted(() => {
 
 /* Menu links */
 .nav-link {
-  padding: 0.8rem 1.5rem;
+  padding: 0.8rem 1.2rem;
   font-size: 1.2rem;
   font-weight: 500;
   text-decoration: none;
@@ -172,8 +189,8 @@ onUnmounted(() => {
   min-width: 200px;
   padding: 0.5rem 0;
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.9); /* 更清晰、可读 */
-  backdrop-filter: blur(8px); /* 模糊保留 */
+  background: rgba(255, 255, 255, 0.9); /* clearer and readable */
+  backdrop-filter: blur(8px);           /* glassmorphism blur */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   z-index: 2000;
   text-align: center;
@@ -190,8 +207,8 @@ onUnmounted(() => {
   padding: 0.8rem 1.2rem;
   font-size: 1.1rem;
   font-weight: 600;
-  color: #1a1a1a; /* 深色字体，确保可读性 */
-  text-shadow: none; /* 移除模糊阴影 */
+  color: #1a1a1a;
+  text-shadow: none;
   border-radius: 8px;
   text-decoration: none;
   transition: all 0.25s ease;
@@ -210,8 +227,8 @@ onUnmounted(() => {
     transform: none;
     box-shadow: none;
     padding-left: 1rem;
-    background: rgba(30, 30, 30, 0.85); /* dark translucent background */
-    backdrop-filter: blur(8px);         /* glass effect */
+    background: rgba(30, 30, 30, 0.85);
+    backdrop-filter: blur(8px);
     border-radius: 12px;
     margin-top: 0.5rem;
   }
@@ -242,6 +259,7 @@ onUnmounted(() => {
   }
 }
 
+/* Active link highlighting */
 .nav-link.router-link-active {
   color: #0056a3 !important;
   font-weight: 700;
@@ -253,5 +271,4 @@ onUnmounted(() => {
   transform: scale(1.12);
   transition: all 0.3s ease;
 }
-
 </style>
