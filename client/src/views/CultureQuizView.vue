@@ -204,7 +204,7 @@ function restartQuiz() {
 
 .quiz-intro {
   text-align: center;
-  font-size: 50px;
+  font-size: 30px;
   color: #333;
   margin-top: 150px;
   margin-bottom: 20px;
