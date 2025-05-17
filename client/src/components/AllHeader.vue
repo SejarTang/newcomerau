@@ -80,7 +80,7 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem 2rem;
+  padding: 1.5rem 3rem;
   background-color: rgba(255, 255, 255, 0);
   transition: all 0.3s ease;
   overflow: visible;
@@ -89,7 +89,7 @@ onUnmounted(() => {
 /* Navbar style when scrolled */
 .navbar.scrolled {
   background-color: rgba(255, 255, 255, 0.98);
-  padding: 0.8rem 2rem;
+  padding: 1.2rem 3rem;
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
 }
 
@@ -101,15 +101,15 @@ onUnmounted(() => {
 }
 
 .navbar-logo {
-  width: 32px;
-  height: 32px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   object-fit: cover;
   transition: transform 0.3s ease;
 }
 
 .brand-text {
-  font-size: 1.3rem;
+  font-size: 2rem;
   font-weight: 600;
   color: white;
   text-decoration: none;
@@ -131,15 +131,15 @@ onUnmounted(() => {
 
 /* Menu links */
 .nav-link {
-  padding: 0.6rem 1.2rem;
-  font-size: 0.95rem;
+  padding: 0.8rem 1.5rem;
+  font-size: 1.2rem;
   font-weight: 500;
   text-decoration: none;
   border-radius: 8px;
-  transition: all 0.3s ease;
   color: white;
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
 }
 
 .nav-link:hover {
@@ -172,9 +172,9 @@ onUnmounted(() => {
   min-width: 200px;
   padding: 0.5rem 0;
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(12px);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12), 0 4px 12px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.9); /* 更清晰、可读 */
+  backdrop-filter: blur(8px); /* 模糊保留 */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   z-index: 2000;
   text-align: center;
 }
@@ -187,21 +187,20 @@ onUnmounted(() => {
 /* Dropdown menu item */
 .dropdown-item {
   display: block;
-  padding: 0.6rem 1rem;
-  font-size: 0.95rem;
-  font-weight: 500;
-  color: white;
-   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  padding: 0.8rem 1.2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1a1a1a; /* 深色字体，确保可读性 */
+  text-shadow: none; /* 移除模糊阴影 */
   border-radius: 8px;
   text-decoration: none;
   transition: all 0.25s ease;
 }
 
 /* Hover effect for dropdown item */
-.navbar .dropdown-item:hover {
-  background-color: rgba(255, 255, 255, 0.15);
-  color: #00b2ff;
-  transform: translateY(-1px);
+.dropdown-item:hover {
+  background-color: rgba(0, 116, 204, 0.1);
+  color: #0056a3;
 }
 
 /* Responsive layout adjustments */
@@ -242,4 +241,17 @@ onUnmounted(() => {
     backdrop-filter: none;
   }
 }
+
+.nav-link.router-link-active {
+  color: #0056a3 !important;
+  font-weight: 700;
+  font-size: 1.3rem;
+  padding: 0.9rem 1.6rem;
+  background-color: rgba(0, 116, 204, 0.15);
+  border: 2px solid rgba(0, 116, 204, 0.25);
+  border-radius: 10px;
+  transform: scale(1.12);
+  transition: all 0.3s ease;
+}
+
 </style>
