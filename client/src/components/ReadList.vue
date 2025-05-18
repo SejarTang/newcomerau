@@ -45,16 +45,22 @@ import { ref } from 'vue'
 import readingImage from '@/assets/read.png'
 
 // Beginner level
+import fb1 from '@/assets/fb1.jpg'
+import fb2 from '@/assets/fb2.jpg'
 import possumMagic from '@/assets/possumMagic.jpg'
 import diaryOfAWombat from '@/assets/diaryOfAWombat.jpg'
 import areWeThereYet from '@/assets/areWeThereYet.jpg'
 
 // Intermediate level
+import fi1 from '@/assets/fi1.jpg'
+import fi2 from '@/assets/fi2.jpg'
 import theRosieProject from '@/assets/theRosieProject.jpg'
 import breath from '@/assets/breath.jpg'
 import bigLittleLies from '@/assets/bigLittleLies.jpg'
 
 // Advanced level
+import fa1 from '@/assets/fa1.jpg'
+import fa2 from '@/assets/fa2.jpg'
 import theSecretRiver from '@/assets/theSecretRiver.jpg'
 import trueHistoryKellyGang from '@/assets/trueHistoryKellyGang.jpg'
 import darkEmu from '@/assets/darkEmu.jpg'
@@ -64,6 +70,16 @@ const bookLevels = ref([
     title: 'For Beginner English Learners',
     colorClass: 'beginner',
     books: [
+          {
+        title: 'Wombat Stew',
+        author: 'Marcia K. Vaughan',
+        year: 1984,
+        cover: fb1,
+        introduction:
+          "A group of animals concoct a stew to save a wombat—great for learning animals and action verbs.",
+        recommendation:
+          'Repetition and rhythm build early vocabulary naturally',
+      },
       {
         title: 'Possum Magic',
         author: 'Mem Fox',
@@ -94,12 +110,31 @@ const bookLevels = ref([
         recommendation:
           "Great for learning place names and understanding Australia's diverse landscapes.",
       },
+            {
+        title: 'There’s a Hippopotamus on Our Roof Eating Cake',
+        author: 'Hazel Edwards',
+        year: 1980,
+        cover: fb2,
+        introduction:
+          "A whimsical story of a child’s imaginary friend—a hippo on the roof!",
+        recommendation:
+          "Simple present tense and humor make it fun for new readers.",
+      },
     ],
   },
   {
     title: 'For Intermediate English Learners',
     colorClass: 'intermediate',
     books: [
+            {
+        title: 'Tomorrow, When the War Began',
+        author: 'John Marsden',
+        year: 1993,
+        cover: fi1,
+        introduction: 'A gripping teen survival novel set in rural Australia during an invasion.',
+        recommendation:
+          'Encourages reflective reading, with accessible vocabulary and strong dialogue.',
+      },
       {
         title: 'The Rosie Project',
         author: 'Graeme Simsion',
@@ -128,12 +163,33 @@ const bookLevels = ref([
         recommendation:
           'Teaches conversational English through engaging characters and realistic scenarios.',
       },
+            {
+        title: 'Cloudstreet',
+        author: 'Tim Winton',
+        year: 1991,
+        cover: fi2,
+        introduction:
+          'Two working-class families share a house in postwar Perth.',
+        recommendation:
+          'Rich characters, idiomatic English, and insight into Aussie values.',
+      },
+
     ],
   },
   {
     title: 'For Advanced English Learners',
     colorClass: 'advanced',
     books: [
+            {
+        title: 'The Slap',
+        author: 'Christos Tsiolkas',
+        year: 2008,
+        cover: fa1,
+        introduction:
+          'A controversial novel about a man slapping someone else\'s child at a BBQ.',
+        recommendation:
+          "Deep psychological themes, cultural conflict, and modern Australian society",
+      },
       {
         title: 'The Secret River',
         author: 'Kate Grenville',
@@ -163,6 +219,16 @@ const bookLevels = ref([
         recommendation:
           "Essential reading for critical thinkers interested in Australia's true Indigenous history.",
       },
+            {
+        title: 'Carpentaria',
+        author: 'Alexis Wright',
+        year: 2006,
+        cover: fa2,
+        introduction:
+          'A sweeping story of an Indigenous family’s struggle in a fictional Queensland town.',
+        recommendation:
+          "Lyrical, complex, and essential for cultural literacy.",
+      },
     ],
   },
 ])
@@ -171,7 +237,7 @@ const bookLevels = ref([
 <style scoped>
 /* Whole page container */
 .reading-page {
-  max-width: 1100px;
+  max-width: 1900px;
   margin: 0 auto;
   padding: 2rem;
   background: #ffffff;
@@ -181,41 +247,38 @@ const bookLevels = ref([
 /* Intro horizontal layout */
 .intro-section {
   display: flex;
-  width: 80vw;
-  height: 50vh;
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
 }
 
 /* Left side text */
 .intro-text {
-  flex: 0 0 35%;
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex: 1;
+  padding: 2rem 3rem 2rem 0;
 }
 
 /* Intro title */
 .intro-text h1 {
-  font-size: 3rem;
+  font-size: 4rem;
   color: #1a2b49;
   margin-bottom: 2rem;
 }
 
 /* Intro paragraph */
 .intro-text p {
-  font-size: 1.2rem;
+  font-size: 2rem;
   line-height: 1.8;
   color: #555;
 }
 
 /* Right side image */
 .intro-image {
-  flex: 0 0 50%;
+  flex: 0 0 35%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-
 /* Image styles */
 .intro-image img {
   width: 100%;
@@ -230,7 +293,7 @@ const bookLevels = ref([
   text-align: center;
   border-radius: 8px;
   margin: 3.5rem 0 2rem;
-  font-size: 2.2rem;
+  font-size: 3rem;
   font-weight: 1000;
 }
 
@@ -257,8 +320,11 @@ const bookLevels = ref([
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 1rem;
-  margin-bottom: 1rem;
+  gap: 3.9rem;
+  margin-bottom: 2rem;
+  padding: 0 2vw;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 /* Single book block */
@@ -270,7 +336,7 @@ const bookLevels = ref([
 /* Book cover */
 .book-cover {
   width: 100%;
-  height: 240px;
+  height: 280px;
   object-fit: cover;
   border-radius: 6px;
   margin-bottom: 1rem;
@@ -292,14 +358,14 @@ const bookLevels = ref([
 /* Author and published year */
 .book-author,
 .book-year {
-  font-size: 1.1rem;
+  font-size: 1.5rem;
   margin-bottom: 0.5rem;
   color: #555;
 }
 
 /* Introduction */
 .book-intro {
-  font-size: 1rem;
+  font-size: 1.5rem;
   margin-bottom: 0.8rem;
   color: #666;
 }
@@ -307,13 +373,21 @@ const bookLevels = ref([
 /* Recommendation title */
 .recommend-title {
   font-weight: bold;
-  margin-top: 1rem;
+  font-size: 1.5rem;
+  margin-top: 1.5rem;
   color: #1a2b49;
 }
 
 /* Recommendation text */
 .recommend-text {
-  font-size: 1rem;
+  font-size: 1.5rem;
   margin-top: 0.5rem;
 }
+
+.level-header h2 {
+  font-size: 3rem;
+  font-weight: 900;
+  margin: 0;
+}
+
 </style>

@@ -210,7 +210,7 @@ function handleFileChange(event) {
   background: #ffffff;
   border-radius: 16px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-  max-width: 1200px;
+  max-width: 1900px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -220,9 +220,9 @@ function handleFileChange(event) {
 
 .intro-title {
   font-family: 'Montserrat', sans-serif;
-  font-size: 32px;
+  font-size: 50px;
   font-weight: 700;
-  color: #2c7a83;
+  color: #020a0a;
   margin-bottom: 8px;
   position: relative;
   display: inline-block;
@@ -232,12 +232,15 @@ function handleFileChange(event) {
 
 .intro-description {
   font-family: 'Open Sans', sans-serif;
-  font-size: 18px;
+  font-size: 26px;
+  font-weight: 400;
   color: #555;
   text-align: center;
-  line-height: 1.5;
-  max-width: 700px;
+  line-height: 1.8;
+  max-width: 1200px;
+  margin-top: 30px;
   margin-bottom: 30px;
+  letter-spacing: 0.3px;
 }
 
 .preset-container {
@@ -251,12 +254,12 @@ function handleFileChange(event) {
 .preset-images {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 25px;
 }
 
 .preset-image {
-  width: 200px;
-  height: 200px;
+  width: 300px;
+  height: 300px;
   object-fit: cover;
   border-radius: 12px;
   cursor: pointer;
@@ -276,8 +279,8 @@ function handleFileChange(event) {
 }
 
 .preview-box {
-  width: 500px;
-  height: 500px;
+  width: 1000px;
+  height: 950px;
   background: #f0f4f8;
   border-radius: 12px;
   display: flex;
@@ -288,7 +291,7 @@ function handleFileChange(event) {
 }
 .preview-placeholder {
   font-family: 'Open Sans', sans-serif;
-  font-size: 16px;
+  font-size: 50px;
   color: #888;
   text-align: center;
   padding: 20px;
@@ -302,24 +305,34 @@ function handleFileChange(event) {
 
 .file-upload {
   display: inline-block;
-  padding: 10px 20px;
+  padding: 8px 35px;
   background-color: #3498db;
   color: white;
   font-family: 'Montserrat', sans-serif;
   font-weight: 600;
+  font-size: 25px;
   border-radius: 8px;
   cursor: pointer;
   position: relative;
   overflow: hidden;
+  animation: breathe 2.5s ease-in-out infinite;
 }
+
+@keyframes breathe {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.9; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
 .file-upload input[type="file"] {
   position: absolute;
-  left:0; top:0; width:100%; height:100%;
-  opacity:0; cursor: pointer;
+  left: 0; top: 0; width: 100%; height: 100%;
+  opacity: 0;
+  cursor: pointer;
 }
 
 .upload-area button {
-  padding: 10px 24px;
+  padding: 15px 30px;
   background-color: #42b983;
   color: white;
   font-family: 'Montserrat', sans-serif;
