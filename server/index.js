@@ -8,7 +8,16 @@ const port = process.env.PORT || 3001;
 // JSON 解析
 app.use(express.json());
 
-// CORS 设置
+// Import routes
+const languageRoutes = require('./routes/languages');
+const migrantRoutes  = require('./routes/migrants');
+const diseaseRoutes  = require('./routes/disease');
+const mapRoutes      = require('./routes/maplocations');
+const geminiRouter   = require('./routes/gemini');
+const shareRouter    = require('./routes/share');
+const forecastRouter = require('./routes/forecast');
+
+// CORS allowlist
 const whitelist = [
   'http://localhost:5173',
   'https://newcomerau.me'
@@ -22,27 +31,27 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
-// 静态资源目录
+// Static uploads
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// Forecast 路由
-const forecastRouter = require('./routes/forecast');
+// Mount API routes under /api
+app.use('/api', languageRoutes);
+app.use('/api', migrantRoutes);
+app.use('/api', diseaseRoutes);
+app.use('/api', mapRoutes);
+app.use('/api/gemini', geminiRouter);
+
+// shareRouter handles routes like GET /api/hfce-share
+app.use('/api', shareRouter);
+// forecastRouter handles GET /api/forecast-health-share
 app.use('/api', forecastRouter);
 
-// 其他现有路由
-app.use('/api', require('./routes/languages'));
-app.use('/api', require('./routes/migrants'));
-app.use('/api', require('./routes/disease'));
-app.use('/api', require('./routes/maplocations'));
-app.use('/api/gemini', require('./routes/gemini'));
-
-// 全局错误处理
-app.use((err, req, res, next) => {
-  console.error('Unhandled error:', err.stack);
-  res.status(500).json({ error: 'Internal server error' });
+// Error handler must have 4 args to be recognized by Express
+app.use((err, req, res,) => {
+  console.error(err.stack);
+  res.status(500).json({ error: 'error' });
 });
-
-// 启动
+// Start server
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
