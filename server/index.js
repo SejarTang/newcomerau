@@ -2,78 +2,47 @@ const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
 const path = require('path');
-const { spawn } = require('child_process');
 const app = express();
-app.use(express.json());
 const port = process.env.PORT || 3001;
 
-const languageRoutes = require('./routes/languages');
-const migrantRoutes = require('./routes/migrants');
-const diseaseRoutes = require('./routes/disease');
-const mapRoutes = require('./routes/maplocations');
-const geminiRouter = require('./routes/gemini');
+// JSON 解析
+app.use(express.json());
 
-// Allowlist for CORS
+// CORS 设置
 const whitelist = [
-  'http://localhost:5173',        // Local dev
-  'https://newcomerau.me'         // Your deployed frontend
+  'http://localhost:5173',
+  'https://newcomerau.me'
 ];
-
 const corsOptions = {
-  origin: function (origin, callback) {
-    console.log(' Incoming Origin:', origin);
-    if (!origin || whitelist.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
+  origin: (origin, callback) => {
+    if (!origin || whitelist.includes(origin)) callback(null, true);
+    else callback(new Error('Not allowed by CORS'));
   },
   credentials: true
 };
-
 app.use(cors(corsOptions));
-app.use(express.json());
 
+// 静态资源目录
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// Dynamic forecast route
-app.get('/api/forecast-health-share', (req, res) => {
-  const horizon = req.query.horizon_months || '12';
-  const script = path.join(__dirname, 'forecast_service.py');
-  const py = spawn('python', [script, horizon]);
+// Forecast 路由
+const forecastRouter = require('./routes/forecast');
+app.use('/api', forecastRouter);
 
-  let out = '', err = '';
-  py.stdout.on('data', chunk => out += chunk);
-  py.stderr.on('data', chunk => err += chunk.toString());
+// 其他现有路由
+app.use('/api', require('./routes/languages'));
+app.use('/api', require('./routes/migrants'));
+app.use('/api', require('./routes/disease'));
+app.use('/api', require('./routes/maplocations'));
+app.use('/api/gemini', require('./routes/gemini'));
 
-  py.on('close', code => {
-    if (code !== 0) {
-      console.error('Forecast script error:', err);
-      return res.status(500).json({ error: 'Forecast failed' });
-    }
-    try {
-      res.json(JSON.parse(out));
-    } catch (e) {
-      console.error('Invalid JSON from forecast script:', e, out);
-      res.status(500).json({ error: 'Bad response format' });
-    }
-  });
-});
-
-// Existing routes
-app.use('/api', languageRoutes);
-app.use('/api', migrantRoutes);
-app.use('/api', diseaseRoutes);
-app.use('/api', mapRoutes);
-app.use('/api/gemini', geminiRouter);
-
-// Error handler
+// 全局错误处理
 app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ error: 'error' });
+  console.error('Unhandled error:', err.stack);
+  res.status(500).json({ error: 'Internal server error' });
 });
 
-// Start server
+// 启动
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
