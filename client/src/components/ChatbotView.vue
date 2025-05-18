@@ -100,6 +100,14 @@ const messages = ref([
 ]);
 const loading = ref(false);
 
+// Input sanitisation function
+const sanitiseText = (text) => {
+  return text
+    .replace(/[<>&"'`]/g, '')   // Strip potentially dangerous characters
+    .trim()
+    .substring(0, 500);         // Limit input to 500 chars
+};
+
 /**
  * handleSend: send userInput to the API and display response
  */
@@ -112,6 +120,13 @@ async function handleSend() {
   messages.value.push({ role: 'user', text: userText });
   userInput.value = '';
   loading.value = true;
+  const cleanedInput = sanitiseText(userText.value);
+
+  //Sanitise input
+  if (!cleanedInput || cleanedInput.length < 3) {
+    alert('Please enter a valid health concern.');
+    return;
+  }
 
   // Add placeholder for bot response
   const index = messages.value.length;
