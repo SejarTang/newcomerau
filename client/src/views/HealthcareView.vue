@@ -12,6 +12,8 @@
 
     <!-- Chatbot interface to help users find medical resources or ask health questions -->
     <ChatbotView />
+
+    <Predict2/>
   </div>
 </template>
 
@@ -27,6 +29,8 @@ import MedicalMap from '@/components/MedicalMap.vue'
 
 // Import chatbot component for user interaction and help
 import ChatbotView from '@/components/ChatbotView.vue'
+
+import Predict2 from '@/components/HealthShareForcast.vue'
 </script>
 
 <style scoped>

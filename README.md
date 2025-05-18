@@ -45,8 +45,13 @@ npm run lint
 ```sh
 python --version
 npm install express multer
-pip install easyocr
 pip install opencv-python
 pip install requests
 
+
+```
+
+# prediction 2:
+```sh
+pip install prophet pandas psycopg2-binary
 ```
