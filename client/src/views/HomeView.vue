@@ -142,7 +142,7 @@ const cards = ref([
 
 const specialCard = {
   title: 'Cultural Integration',
-  content: 'Discover popular cultural festivals in Victoria and engage with the local community.',
+  content: 'Discover popular cultural festivals in Victoria and engage with the local community',
   image: new URL('../assets/cl.jpg', import.meta.url).href,
   link: '/integration/holidays'
 }
