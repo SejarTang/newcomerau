@@ -30,7 +30,7 @@ import MedicalMap from '@/components/MedicalMap.vue'
 // Import chatbot component for user interaction and help
 import ChatbotView from '@/components/ChatbotView.vue'
 
-import Predict2 from '@/components/HealthShareForcast.vue'
+import Predict2 from '@/components/HealthShareForecast.vue'
 </script>
 
 <style scoped>
