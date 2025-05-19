@@ -108,7 +108,7 @@ const featuredHoliday = {
   justify-content: flex-end;
   align-items: center;
   padding-bottom: 60px;
-  padding-top: 40px;
+  padding-top: 50px;
   border-radius: 15px;
   transition: transform 0.4s ease;
 }

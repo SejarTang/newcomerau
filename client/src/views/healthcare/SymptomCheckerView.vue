@@ -23,9 +23,9 @@ function goToHolidayCulture() {
 
 <style scoped>
 .symptom-checker-view {
-  padding: 20px;
-  max-width: 1600px;
-  margin: 0 auto;
+  width: 100%;
+  padding: 20px 40px;
+  box-sizing: border-box;
 }
 
 .explore-more-wrapper {

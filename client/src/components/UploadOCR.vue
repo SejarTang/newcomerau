@@ -279,7 +279,7 @@ function handleFileChange(event) {
 }
 
 .preview-box {
-  width: 1000px;
+  width: 700px;
   height: 950px;
   background: #f0f4f8;
   border-radius: 12px;

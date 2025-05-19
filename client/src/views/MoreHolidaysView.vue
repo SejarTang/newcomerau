@@ -138,12 +138,10 @@ const festivals = [
 
 <style scoped>
 /* Full page layout with light gradient background */
-.festivals-page {
-  min-height: 100vh;
-  background: linear-gradient(to right, #f9f9f9, #dceeff);
-  padding: 2rem;
-  font-family: 'Segoe UI', sans-serif;
-  padding-top: 110px;
+ .festivals-page {
+  min-width: 1500px;
+  overflow-x: auto;
+  padding-top: 130px
 }
 
 /* Header section: page title and intro text */
@@ -167,7 +165,7 @@ const festivals = [
 /* Responsive grid layout for festival cards */
 .festival-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
 }
 
@@ -233,17 +231,17 @@ const festivals = [
 .modal-card {
   background: white;
   border-radius: 15px;
-  max-width: 1200px;
-  max-height: 90vh;
-  width: 90%;
-  padding: 2rem;
+  max-width: 800px;
+  max-height: 80vh;
+  width: 80%;
+  padding: 1.5rem;
   text-align: center;
   animation: popIn 0.3s ease;
 }
 
 /* Image inside modal */
 .modal-card img {
-  width: 100%;
+  width: 35%;
   max-height: 600px;
   object-fit: cover;
   margin: 1rem 0;
