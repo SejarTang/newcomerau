@@ -127,7 +127,7 @@ const forecastCanvas = ref(null)
 function yearOnly(ds) { return ds.slice(0, 4) }
 
 async function renderHistorical() {
-  const raw = await fetch('/api/hfce-share').then(r => r.json())
+  const raw = await fetch('/api/share').then(r => r.json())
   const labels = raw.map(x => yearOnly(x.ds))
   const values = raw.map(x => x.share)
 
@@ -149,7 +149,7 @@ async function renderHistorical() {
 }
 
 async function renderForecast() {
-  const data = await fetch('/api/forecast-health-share?horizon_months=12').then(r => r.json())
+  const data = await fetch('/api/forecast').then(r => r.json())
   const labels = data.map(x => yearOnly(x.ds))
   const yhat   = data.map(x => x.yhat)
   const lo     = data.map(x => x.yhat_lower)
