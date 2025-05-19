@@ -310,7 +310,7 @@ export default {
   margin: 0 auto;
   padding: 20px;
   font-family: Arial, sans-serif;
-  margin-top: 190px;
+  margin-top: 110px;
 }
 
 .hero-section {
