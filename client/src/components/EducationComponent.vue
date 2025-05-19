@@ -11,9 +11,9 @@
     </div>
 
     <div class="navigation-tabs">
-      <button 
-        v-for="(tab, index) in tabs" 
-        :key="index" 
+      <button
+        v-for="(tab, index) in tabs"
+        :key="index"
         @click="activeTab = tab.id"
         :class="{ active: activeTab === tab.id }"
         class="tab-button"
@@ -28,7 +28,7 @@
       <div v-if="activeTab === 'children'" class="tab-content">
         <h2>For Children</h2>
         <p>Education is compulsory from age 6 to 17 in Australia. Most children start school around age 5 in Foundation/Prep. Schools are free in the public system, and you can choose from government (public), Catholic, or independent (private) schools.</p>
-        
+
         <div class="education-cards">
           <div class="education-card">
             <h3>The Australian education system is broadly structured as follows:</h3>
@@ -40,7 +40,7 @@
             <p>For more information about school near you in Victoria please visit our <router-link to="/healthcare#medical-map">map</router-link></p>
           </div>
         </div>
-        
+
         <p class="highlight-text">Finishing Year 12 earns a certificate that can lead to university or vocational training.</p>
       </div>
 
@@ -48,7 +48,7 @@
       <div v-else-if="activeTab === 'adults'" class="tab-content">
         <h2>Education for Adults and Parents</h2>
         <p>Adults can study English, get job training (VET), or attend university. Courses are available for all skill levels, and some are government-funded or discounted for permanent residents.</p>
-        
+
         <div class="info-cards">
           <div class="info-card">
             <h3>Learn English</h3>
@@ -63,7 +63,7 @@
             <p>Degrees, diplomas, and flexible online options</p>
           </div>
         </div>
-        
+
         <p>For more information about school near you in Victoria please visit our <router-link to="/healthcare#medical-map">map</router-link></p>
       </div>
 
@@ -116,10 +116,10 @@
         <div class="education-system-image">
           <img src="@/assets/education_system.jpg" alt="Australian Education System Pathway" />
         </div>
-        
+
         <h3>Who runs education in Australia</h3>
         <p>Education in Australia is a shared responsibility between the Federal Government and each of the State and Territory Governments. While the Australian Government provides major funding and policy leadership, the States and Territories manage the operation of most education services, especially government schools.</p>
-        
+
         <div class="responsibility-table">
           <div class="table-column">
             <h4>Federal Government (Commonwealth)</h4>
@@ -147,10 +147,10 @@
       <!-- Q&A Section -->
       <div v-else-if="activeTab === 'qa'" class="tab-content">
         <h2>Frequently Asked Questions (FAQ)</h2>
-        
+
         <div class="faq-filter">
-          <button 
-            v-for="(category, index) in faqCategories" 
+          <button
+            v-for="(category, index) in faqCategories"
             :key="index"
             @click="activeFaqCategory = category.id"
             :class="{ active: activeFaqCategory === category.id }"
@@ -159,22 +159,22 @@
             {{ category.name }}
           </button>
         </div>
-        
+
         <div class="faq-list">
-          <div 
-            v-for="(faq, index) in filteredFaqs" 
+          <div
+            v-for="(faq, index) in filteredFaqs"
             :key="index"
             class="faq-item"
           >
-            <div 
-              class="faq-question" 
+            <div
+              class="faq-question"
               @click="toggleFaq(index)"
               :class="{ active: openFaqs.includes(index) }"
             >
               <span>{{ faq.question }}</span>
               <span class="faq-toggle">{{ openFaqs.includes(index) ? '−' : '+' }}</span>
             </div>
-            <div 
+            <div
               class="faq-answer"
               :class="{ active: openFaqs.includes(index) }"
             >
@@ -310,7 +310,7 @@ export default {
   margin: 0 auto;
   padding: 20px;
   font-family: Arial, sans-serif;
-  margin-top: 80px;
+  margin-top: 190px;
 }
 
 .hero-section {
@@ -552,11 +552,11 @@ export default {
   .navigation-tabs {
     flex-direction: column;
   }
-  
+
   .tab-button {
     width: 100%;
   }
-  
+
   .education-cards, .info-cards, .responsibility-table {
     flex-direction: column;
   }
