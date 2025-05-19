@@ -45,6 +45,32 @@ const router = createRouter({
       path: '/healthcare',
       name: 'Healthcare',
       component: () => import('../views/HealthcareView.vue'),
+      children: [
+        {
+          path: '',
+          redirect: '/healthcare/guidance'
+        },
+        {
+          path: 'guidance',
+          name: 'HealthcareGuidance',
+          component: () => import('../views/healthcare/GuidanceView.vue')
+        },
+        {
+          path: 'symptom-checker',
+          name: 'SymptomChecker',
+          component: () => import('../views/healthcare/SymptomCheckerView.vue')
+        },
+        {
+          path: 'medical-map',
+          name: 'MedicalMap',
+          component: () => import('../views/healthcare/MedicalMapView.vue')
+        },
+        {
+          path: 'health-statistics',
+          name: 'HealthStatistics',
+          component: () => import('../views/healthcare/HealthStatisticsView.vue')
+        }
+      ]
     },
     {
       path: '/education',

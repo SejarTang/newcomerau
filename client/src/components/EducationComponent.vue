@@ -77,6 +77,9 @@
           <li>Learning English (AMEP)</li>
           <li>Enrolment translation help</li>
         </ul>
+        <div class="fee-image">
+          <img src="@/assets/fee.png" alt="Education Fees Information" />
+        </div>
       </div>
 
       <!-- Enrolment Steps Section -->
@@ -557,5 +560,16 @@ export default {
   .education-cards, .info-cards, .responsibility-table {
     flex-direction: column;
   }
+}
+
+.fee-image {
+  margin: 30px 0;
+  text-align: center;
+}
+
+.fee-image img {
+  max-width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 </style>

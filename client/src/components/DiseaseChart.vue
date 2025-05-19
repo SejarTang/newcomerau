@@ -54,19 +54,23 @@
           axisPointer: { type: 'shadow' }
         },
         grid: {
-          left: '10%',
+          left: '15%',
           right: '5%',
           bottom: '10%',
           containLabel: true
         },
         xAxis: {
+          type: 'category',
+          data: data.map(d => d.disease),
+          axisLabel: {
+            interval: 0,
+            rotate: 30
+          }
+        },
+        yAxis: {
           type: 'value',
           name: '% of Population',
           max: 100
-        },
-        yAxis: {
-          type: 'category',
-          data: data.map(d => d.disease)
         },
         series: [
           {

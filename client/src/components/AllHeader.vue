@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar" :class="{ 'scrolled': isScrolled }" ref="navbar">
+  <nav class="navbar" :class="{ scrolled: isScrolled }" ref="navbar">
     <div class="navbar-brand">
       <img src="../assets/immigrant.jpeg" alt="Website Symbol" class="navbar-logo" />
       <router-link to="/" class="brand-text">NewcomerAU</router-link>
@@ -9,7 +9,39 @@
       <li><router-link to="/" class="nav-link">Home</router-link></li>
       <li><router-link to="/newcomers" class="nav-link">Newcomers</router-link></li>
       <li><router-link to="/education" class="nav-link">Education</router-link></li>
-      <li><router-link to="/healthcare" class="nav-link">Healthcare</router-link></li>
+
+      <!-- Healthcare dropdown -->
+      <li class="dropdown">
+        <router-link
+          to="/healthcare"
+          class="nav-link"
+          :class="{ 'router-link-active': isHealthcareActive }"
+        >
+          Healthcare ▼
+        </router-link>
+        <ul class="dropdown-menu">
+          <li>
+            <router-link to="/healthcare/guidance" class="dropdown-item"
+              >Healthcare Guidance</router-link
+            >
+          </li>
+          <li>
+            <router-link to="/healthcare/symptom-checker" class="dropdown-item"
+              >Symptom Checker</router-link
+            >
+          </li>
+          <li>
+            <router-link to="/healthcare/medical-map" class="dropdown-item"
+              >Medical Map</router-link
+            >
+          </li>
+          <li>
+            <router-link to="/healthcare/health-statistics" class="dropdown-item"
+              >Health Statistics</router-link
+            >
+          </li>
+        </ul>
+      </li>
 
       <!-- Language dropdown -->
       <li class="dropdown">
@@ -36,10 +68,26 @@
           Cultural Integration ▼
         </router-link>
         <ul class="dropdown-menu">
-          <li><router-link to="/integration/holidays" class="dropdown-item">Public holiday</router-link></li>
-          <li><router-link to="/integration/history" class="dropdown-item">Holiday Culture</router-link></li>
-          <li><router-link to="/integration/more-holidays" class="dropdown-item">More Festivals</router-link></li>
-          <li><router-link to="/integration/quiz" class="dropdown-item">Cultural Integration Quiz</router-link></li>
+          <li>
+            <router-link to="/integration/holidays" class="dropdown-item"
+              >Public holiday</router-link
+            >
+          </li>
+          <li>
+            <router-link to="/integration/history" class="dropdown-item"
+              >Holiday Culture</router-link
+            >
+          </li>
+          <li>
+            <router-link to="/integration/more-holidays" class="dropdown-item"
+              >More Festivals</router-link
+            >
+          </li>
+          <li>
+            <router-link to="/integration/quiz" class="dropdown-item"
+              >Cultural Integration Quiz</router-link
+            >
+          </li>
         </ul>
       </li>
     </ul>
@@ -47,43 +95,50 @@
 </template>
 
 <script setup>
-import { ref, watch, computed, onUnmounted } from 'vue';
-import { useRoute } from 'vue-router';
+import { ref, watch, computed, onUnmounted } from 'vue'
+import { useRoute } from 'vue-router'
 
-const isScrolled = ref(false);
-const route = useRoute();
+const isScrolled = ref(false)
+const route = useRoute()
 
 // Detect if current path belongs to Language section
-const isLanguageActive = computed(() => route.path.startsWith('/language'));
+const isLanguageActive = computed(() => route.path.startsWith('/language'))
+
+// Detect if current path belongs to Healthcare section
+const isHealthcareActive = computed(() => route.path.startsWith('/healthcare'))
 
 // Detect if current path belongs to Cultural Integration section
-const isIntegrationActive = computed(() => route.path.startsWith('/integration'));
+const isIntegrationActive = computed(() => route.path.startsWith('/integration'))
 
 // Detect if the window is scrolled past a threshold
 const handleScroll = () => {
-  isScrolled.value = window.scrollY > 30;
-};
+  isScrolled.value = window.scrollY > 30
+}
 
 // Add or remove scroll event listener based on route
 const updateScrollListener = (path) => {
   if (path === '/') {
-    window.addEventListener('scroll', handleScroll);
-    handleScroll();
+    window.addEventListener('scroll', handleScroll)
+    handleScroll()
   } else {
-    window.removeEventListener('scroll', handleScroll);
-    isScrolled.value = true;
+    window.removeEventListener('scroll', handleScroll)
+    isScrolled.value = true
   }
-};
+}
 
 // Watch route change to update scroll behavior
-watch(() => route.path, (newPath) => {
-  updateScrollListener(newPath);
-}, { immediate: true });
+watch(
+  () => route.path,
+  (newPath) => {
+    updateScrollListener(newPath)
+  },
+  { immediate: true },
+)
 
 // Cleanup on component unmount
 onUnmounted(() => {
-  window.removeEventListener('scroll', handleScroll);
-});
+  window.removeEventListener('scroll', handleScroll)
+})
 </script>
 
 <style scoped>
@@ -190,7 +245,7 @@ onUnmounted(() => {
   padding: 0.5rem 0;
   border-radius: 12px;
   background: rgba(255, 255, 255, 0.9); /* clearer and readable */
-  backdrop-filter: blur(8px);           /* glassmorphism blur */
+  backdrop-filter: blur(8px); /* glassmorphism blur */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   z-index: 2000;
   text-align: center;

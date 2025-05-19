@@ -1,25 +1,16 @@
 <template>
   <!-- Main wrapper for the Healthcare page -->
   <div class="healthcare-page">
-    <!-- Step-by-step healthcare system guidance (interactive Q&A) -->
-    <HealthcareGuidance />
-
-    <!-- Bar chart showing health condition prevalence -->
-    <DiseaseChart />
-
-    <!-- Map showing clinics, public and private hospitals -->
-    <MedicalMap />
-
-    <!-- Chatbot interface to help users find medical resources or ask health questions -->
-    <ChatbotView />
-
-    <Predict2/>
+    <router-view></router-view>
   </div>
 </template>
 
 <script setup>
 // Import component that guides users through Australia's healthcare steps
 import HealthcareGuidance from '@/components/HealthcareGuidance.vue'
+
+// Import Symptom Checker component
+import SymptomChecker from '@/components/SymptomChecker.vue'
 
 // Import data visualization of common diseases using ECharts
 import DiseaseChart from '@/components/DiseaseChart.vue'
@@ -34,4 +25,7 @@ import Predict2 from '@/components/HealthShareForecast.vue'
 </script>
 
 <style scoped>
+.healthcare-page {
+  padding-top: 80px;
+}
 </style>

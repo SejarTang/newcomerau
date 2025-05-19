@@ -26,7 +26,16 @@
               <router-link to="/education" class="nav-link" :class="{ 'active-footer-link': route.path.startsWith('/education') }">Education</router-link>
             </li>
             <li>
-              <router-link to="/healthcare" class="nav-link" :class="{ 'active-footer-link': route.path.startsWith('/healthcare') }">Healthcare</router-link>
+              <router-link to="/healthcare/guidance" class="dropdown-item" :class="{ 'active-footer-link': route.path.startsWith('/healthcare/guidance') }">Healthcare Guidance</router-link>
+            </li>
+            <li>
+              <router-link to="/healthcare/symptom-checker" class="dropdown-item" :class="{ 'active-footer-link': route.path.startsWith('/healthcare/symptom-checker') }">Symptom Checker</router-link>
+            </li>
+            <li>
+              <router-link to="/healthcare/medical-map" class="dropdown-item" :class="{ 'active-footer-link': route.path.startsWith('/healthcare/medical-map') }">Medical Map</router-link>
+            </li>
+            <li>
+              <router-link to="/healthcare/health-statistics" class="dropdown-item" :class="{ 'active-footer-link': route.path.startsWith('/healthcare/health-statistics') }">Health Statistics</router-link>
             </li>
             <li>
               <router-link to="/language" class="dropdown-item" :class="{ 'active-footer-link': route.path.startsWith('/language') }">Language Overview</router-link>
