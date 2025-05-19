@@ -45,10 +45,10 @@
 
       // Configure chart options
       chartOptions.value = {
-        title: {
-          text: 'Prevalence of Health Conditions in Australia',
-          left: 'center'
-        },
+        // title: {
+        //   text: 'Prevalence of Health Conditions in Australia',
+        //   left: 'center'
+        // },
         tooltip: {
           trigger: 'axis',
           axisPointer: { type: 'shadow' }
