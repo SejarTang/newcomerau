@@ -150,7 +150,8 @@ async function renderHistorical() {
 
 async function renderForecast() {
   const data = await fetch('/api/forecast').then(r => r.json())
-  const labels = data.map(x => yearOnly(x.ds))
+
+  const labels = data.map(x => x.ds.slice(0, 7))
   const yhat   = data.map(x => x.yhat)
   const lo     = data.map(x => x.yhat_lower)
   const hi     = data.map(x => x.yhat_upper)
@@ -160,24 +161,65 @@ async function renderForecast() {
     data: {
       labels,
       datasets: [
-        { label: 'Forecast',    data: yhat,  borderColor: '#FF7300', borderWidth: 2, fill: false },
-        { label: 'Lower Bound', data: lo,    borderColor: '#FF7300', borderDash: [5,5], borderWidth: 1, fill: false },
-        { label: 'Upper Bound', data: hi,    borderColor: '#FF7300', borderDash: [5,5], borderWidth: 1, fill: { target: ctx => ctx.datasetIndex - 1, above: 'rgba(255,115,0,0.15)' } }
+        {
+          label: 'Forecast',
+          data: yhat,
+          borderColor: '#FF7300',
+          borderWidth: 2,
+          fill: false,
+          spanGaps: true
+        },
+        {
+          label: 'Lower Bound',
+          data: lo,
+          borderColor: '#FF7300',
+          borderDash: [5,5],
+          borderWidth: 1,
+          fill: false,
+          spanGaps: true
+        },
+        {
+          label: 'Upper Bound',
+          data: hi,
+          borderColor: '#FF7300',
+          borderDash: [5,5],
+          borderWidth: 1,
+          fill: {
+            target: ctx => ctx.datasetIndex - 1,
+            above: 'rgba(255,115,0,0.15)'
+          },
+          spanGaps: true
+        }
       ]
     },
     options: {
       responsive: true,
       scales: {
-        x: { title: { display: true, text: 'Year' } },
-        y: { title: { display: true, text: 'Share (%)' }, suggestedMin: 0 }
+        x: {
+          title: { display: true, text: 'Month' },
+          ticks: { maxRotation: 0, autoSkip: false }  
+        },
+        y: {
+          title: { display: true, text: 'Share (%)' },
+          min: 8,
+          max: 10,
+          ticks: {
+            stepSize: 0.5
+          }
+        }
       },
       plugins: {
         legend: { position: 'top' },
-        tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: ${ctx.parsed.y.toFixed(2)}%` } }
+        tooltip: {
+          callbacks: {
+            label: ctx => `${ctx.dataset.label}: ${ctx.parsed.y?.toFixed(2)}%`
+          }
+        }
       }
     }
   })
 }
+
 
 onMounted(() => {
   renderHistorical()
