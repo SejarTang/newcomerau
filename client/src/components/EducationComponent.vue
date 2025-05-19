@@ -37,7 +37,7 @@
               <li>Secondary school: four years from Years 7 or 8 to 10</li>
               <li>Senior secondary school: two years from Years 11 to 12</li>
             </ol>
-            <p>For more information about school near you in Victoria please visit our <router-link to="/healthcare#medical-map">map</router-link></p>
+            <p>For more information about school near you in Victoria please visit our <router-link to="/healthcare/medical-map">map</router-link></p>
           </div>
         </div>
 
@@ -64,7 +64,7 @@
           </div>
         </div>
 
-        <p>For more information about school near you in Victoria please visit our <router-link to="/healthcare#medical-map">map</router-link></p>
+        <p>For more information about school near you in Victoria please visit our <router-link to="/healthcare/medical-map">map</router-link></p>
       </div>
 
       <!-- Fees & Support Section -->
