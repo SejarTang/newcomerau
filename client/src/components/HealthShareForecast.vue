@@ -18,7 +18,6 @@
           This graph tracks the share of your household’s final consumption spent on medical care and health (HFCE)
           from 1984 through today—and projects it twelve months into the future.
         </p>
-
         <p><strong>Method:</strong> We reconstructed monthly percentages by interpolating official ABS figures for
           “Medical care and health expenses” versus “Total goods and services expenditure,” then validated with
           real data through 2025.</p>
@@ -65,7 +64,7 @@
         <h4>1. Budgeting & Alerts</h4>
         <p><strong>Pre-Allocate Extra Funds</strong><br>
           If the forecast line is climbing, you should set aside at least 2–3 percentage points more than your current
-          medical‐share in your monthly budget.
+          medical-share in your monthly budget.
         </p>
 
         <p><strong>Automate Your Alerts</strong><br>
@@ -82,8 +81,8 @@
 
         <h4>2. Insurance & Payment Strategies</h4>
         <p><strong>Review Private Health Cover</strong><br>
-          If your medical‐share is already above the historical median (~5%), consider boosting your policy limits or
-          adding specialist/chronic‐care riders. If it’s below, avoid over-insuring for services you seldom need.
+          If your medical-share is already above the historical median (~5%), consider boosting your policy limits or
+          adding specialist/chronic-care riders. If it’s below, avoid over-insuring for services you seldom need.
         </p>
 
         <p><strong>Time Your Coverage to Peaks</strong><br>
@@ -113,7 +112,7 @@
         </p>
       </div>
     </div>
-</div>
+  </div>
 </template>
 
 <script setup>
@@ -127,21 +126,23 @@ const forecastCanvas = ref(null)
 function yearOnly(ds) { return ds.slice(0, 4) }
 
 async function renderHistorical() {
-  const raw = await fetch('/api/share').then(r => r.json())
+  const raw    = await fetch('/api/share').then(r => r.json())
   const labels = raw.map(x => yearOnly(x.ds))
-  const values = raw.map(x => x.share)
+  const vals   = raw.map(x => x.share)
 
   new Chart(histCanvas.value.getContext('2d'), {
     type: 'line',
-    data: {
-      labels,
-      datasets: [{ data: values, borderColor: '#333', borderWidth: 2, fill: false, spanGaps: true }]
-    },
+    data: { labels, datasets: [{ data: vals, borderColor: '#333', borderWidth: 2, fill: false, spanGaps: true }] },
     options: {
       responsive: true,
+      maintainAspectRatio: true,
+      aspectRatio: 2,
       scales: {
         x: { title: { display: true, text: 'Year' } },
-        y: { title: { display: true, text: 'Share (%)' }, suggestedMin: 0 }
+        y: {
+          title: { display: true, text: 'Share (%)' },
+          suggestedMin: 0
+        }
       },
       plugins: { legend: { display: false } }
     }
@@ -149,9 +150,8 @@ async function renderHistorical() {
 }
 
 async function renderForecast() {
-  const data = await fetch('/api/forecast').then(r => r.json())
-
-  const labels = data.map(x => x.ds.slice(0, 7))
+  const data   = await fetch('/api/forecast').then(r => r.json())
+  const labels = data.map(x => x.ds.slice(0,7))  // YYYY-MM
   const yhat   = data.map(x => x.yhat)
   const lo     = data.map(x => x.yhat_lower)
   const hi     = data.map(x => x.yhat_upper)
@@ -161,65 +161,34 @@ async function renderForecast() {
     data: {
       labels,
       datasets: [
-        {
-          label: 'Forecast',
-          data: yhat,
-          borderColor: '#FF7300',
-          borderWidth: 2,
-          fill: false,
-          spanGaps: true
-        },
-        {
-          label: 'Lower Bound',
-          data: lo,
-          borderColor: '#FF7300',
-          borderDash: [5,5],
-          borderWidth: 1,
-          fill: false,
-          spanGaps: true
-        },
-        {
-          label: 'Upper Bound',
-          data: hi,
-          borderColor: '#FF7300',
-          borderDash: [5,5],
-          borderWidth: 1,
-          fill: {
-            target: ctx => ctx.datasetIndex - 1,
-            above: 'rgba(255,115,0,0.15)'
-          },
-          spanGaps: true
+        { label: 'Forecast',    data: yhat,  borderColor: '#FF7300', borderWidth: 2, spanGaps: true, fill: false },
+        { label: 'Lower Bound', data: lo,    borderColor: '#FF7300', borderDash: [5,5], borderWidth: 1, spanGaps: true, fill: false },
+        { label: 'Upper Bound', data: hi,    borderColor: '#FF7300', borderDash: [5,5], borderWidth: 1, spanGaps: true,
+          fill: { target: ctx => ctx.datasetIndex - 1, above: 'rgba(255,115,0,0.15)' }
         }
       ]
     },
     options: {
       responsive: true,
+      maintainAspectRatio: true,
+      aspectRatio: 2,
       scales: {
         x: {
           title: { display: true, text: 'Month' },
-          ticks: { maxRotation: 0, autoSkip: false }  
+          ticks: { maxRotation: 0, autoSkip: false }
         },
         y: {
           title: { display: true, text: 'Share (%)' },
-          min: 8,
-          max: 10,
-          ticks: {
-            stepSize: 0.5
-          }
+          min: 8, max: 10, ticks: { stepSize: 0.5 }
         }
       },
       plugins: {
         legend: { position: 'top' },
-        tooltip: {
-          callbacks: {
-            label: ctx => `${ctx.dataset.label}: ${ctx.parsed.y?.toFixed(2)}%`
-          }
-        }
+        tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: ${ctx.parsed.y?.toFixed(2)}%` } }
       }
     }
   })
 }
-
 
 onMounted(() => {
   renderHistorical()
@@ -234,8 +203,15 @@ onMounted(() => {
   box-sizing: border-box;
 }
 
+
 .chart-wrapper {
-  margin-bottom: 40px;
+  max-width: 1000px;
+  margin: 0 auto 40px;
+  aspect-ratio: 2 / 1;
+}
+.chart-wrapper canvas {
+  width: 100% !important;
+  height: 100% !important;
 }
 
 .chart-title {
@@ -245,12 +221,7 @@ onMounted(() => {
   color: #2c3e50;
 }
 
-.chart-wrapper canvas {
-  width: 100% !important;
-  height: 500px !important;
-}
 
-/* Section layout */
 .section {
   display: flex;
   align-items: flex-start;
@@ -260,18 +231,14 @@ onMounted(() => {
 .section--reverse {
   flex-direction: row-reverse;
 }
-
 .section__image img {
   max-width: 300px;
   width: 100%;
-  height: auto;
   border-radius: 8px;
 }
-
 .section__text {
   flex: 1;
 }
-
 .section__text h3 {
   margin-bottom: 16px;
   font-size: 1.6rem;
