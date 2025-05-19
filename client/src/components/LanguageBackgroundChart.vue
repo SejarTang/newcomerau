@@ -56,9 +56,9 @@ const updateChart = () => {
   yearData.sort((a, b) => b.number_of_non_english_speaker - a.number_of_non_english_speaker)
 
   chartOptions.value = {
-  title: {
-    text: `Language Distribution in ${yearSelected.value}`
-  },
+  // title: {
+  //   text: `Language Distribution in ${yearSelected.value}`
+  // },
   tooltip: {
     trigger: 'axis',
     axisPointer: { type: 'shadow' }
@@ -66,12 +66,19 @@ const updateChart = () => {
   grid: {
     left: '8%',
     right: '5%',
-    bottom: '10%',
+    bottom: '15%',
     containLabel: true
   },
   xAxis: {
     type: 'value',
-    name: 'Speakers'
+    name: 'Speakers',
+    nameLocation: 'middle',
+    nameGap: 30,
+    axisLabel: {
+      formatter: function(value) {
+        return value.toLocaleString();
+      }
+    }
   },
   yAxis: {
     type: 'category',
@@ -100,11 +107,12 @@ onMounted(fetchData)
 
 <template>
   <div class="chart-section">
-    <h2 class="chart-title">Immigration Language Trends in Victoria</h2>
-
-    <select v-model="yearSelected" @change="updateChart">
-      <option v-for="year in yearList" :key="year" :value="year">{{ year }}</option>
-    </select>
+    <h2 class="chart-title">
+      Language Distribution in
+      <select v-model="yearSelected" @change="updateChart" class="year-select">
+        <option v-for="year in yearList" :key="year" :value="year">{{ year }}</option>
+      </select>
+    </h2>
 
     <div v-if="isLoading" class="loading-text">Loading chart data...</div>
 
@@ -120,14 +128,26 @@ onMounted(fetchData)
   margin: 0 auto;
   background: #fff;
   border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  box-shadow: none;
 }
 
 .chart-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
   font-size: 1.8rem;
-  text-align: center;
-  margin-bottom: 30px;
   color: #2c3e50;
+  margin-bottom: 30px;
+}
+
+.year-select {
+  padding: 5px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  outline: none;
+  cursor: pointer;
 }
 
 .chart {

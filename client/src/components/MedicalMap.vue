@@ -31,6 +31,7 @@
 import { ref, onMounted, watch } from 'vue';
 import axios from 'axios';
 import L from 'leaflet';
+import locationIcon from '@/assets/locationicon.png';
 
 // Selected type to display
 const selectedType = ref(null);
@@ -58,6 +59,14 @@ const markerColors = {
 // OpenRouteService API key
 const ORS_API_KEY = '5b3ce3597851110001cf62481ccf2b8c2eda4e2988f0bfe478b7dc28';
 
+// Custom icon for user location
+const userLocationIcon = L.icon({
+  iconUrl: locationIcon,
+  iconSize: [32, 32],
+  iconAnchor: [16, 16],
+  popupAnchor: [0, -16]
+});
+
 // Fetch locations from API
 const fetchData = async () => {
   const res = await axios.get('https://newcomerau.me/api/maplocations');
@@ -79,7 +88,10 @@ const initMap = () => {
     navigator.geolocation.getCurrentPosition((position) => {
       const { latitude, longitude } = position.coords;
       userLocation.value = [latitude, longitude];
-      L.marker(userLocation.value).addTo(map.value).bindPopup('Your Location').openPopup();
+      L.marker(userLocation.value, { icon: userLocationIcon })
+        .addTo(map.value)
+        .bindPopup('Your Location')
+        .openPopup();
     });
   }
 };
