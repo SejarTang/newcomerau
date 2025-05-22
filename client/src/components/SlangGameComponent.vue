@@ -1,22 +1,18 @@
 <template>
-  <!-- Show start screen before game begins -->
   <div v-if="!gameStarted" class="start-screen">
     <h3>Welcome to play the Slang Match Game!</h3>
     <button class="start-button" @click="startGame">Start Game</button>
   </div>
 
-  <!-- Game area once started -->
   <div v-else class="game-container" :class="{ fade: isRestarting }">
     <h2 class="game-title">Australia Slang Match Game</h2>
 
-    <!-- Status bar showing time, score, best score -->
     <div class="status-bar">
       <p>⏳ Time Remaining: {{ timer }}s</p>
       <p>🏅 Score: {{ score }} / {{ slangList.length }}</p>
       <p>🏆 Best Score: {{ bestScore }}</p>
     </div>
 
-    <!-- Slang word falling down -->
     <div class="falling-zone">
       <div
         v-if="currentSlang"
@@ -27,7 +23,6 @@
       </div>
     </div>
 
-    <!-- Option buttons -->
     <div class="options">
       <transition-group name="fade" tag="div" class="button-group">
         <button
@@ -44,22 +39,22 @@
       </transition-group>
     </div>
 
-    <!-- Result screen after game over -->
-    <div v-if="gameOver" class="result">
-      <h3>Game Over!</h3>
-      <p>{{ resultMessage }}</p>
-      <p>You got {{ score }} / {{ slangList.length }} correct!</p>
-      <p>Current Best Score: {{ bestScore }}</p>
-      <button class="restart-button" @click="restartGame">Play Again</button>
+    <div v-if="gameOver">
+      <div class="overlay"></div>
+      <div class="result">
+        <h3>Game Over!</h3>
+        <p>{{ resultMessage }}</p>
+        <p>You got {{ score }} / {{ slangList.length }} correct!</p>
+        <p>Current Best Score: {{ bestScore }}</p>
+        <button class="restart-button" @click="restartGame">Play Again</button>
+      </div>
     </div>
   </div>
 </template>
 
-
 <script setup>
 import { ref, computed } from 'vue';
 
-// Game data
 const slangList = [
   { word: 'aussie', meaning: 'Australian' },
   { word: 'mate', meaning: 'Friend' },
@@ -73,12 +68,10 @@ const slangList = [
   { word: 'straya', meaning: 'Australia' },
 ];
 
-// Constants
 const GAME_DURATION = 60;
 const FALL_LIMIT = 350;
 const FALL_SPEED = 0.7;
 
-// Game state
 const gameStarted = ref(false);
 const shuffledSlang = ref([]);
 const activeMeanings = ref([]);
@@ -95,16 +88,13 @@ const feedbackType = ref(null);
 const isRestarting = ref(false);
 const correctlyAnswered = ref([]);
 
-// Timers
 let fallingInterval = null;
 let countdown = null;
 
-// Sound effects
 const correctSound = new Audio('https://www.soundjay.com/buttons/sounds/button-3.mp3');
 const wrongSound = new Audio('https://www.soundjay.com/buttons/sounds/button-10.mp3');
 const finishSound = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3');
 
-// Final message based on performance
 const resultMessage = computed(() => {
   const percent = score.value / slangList.length;
   if (percent === 1) return '🏆 Perfect score! You are a true Aussie expert!';
@@ -112,14 +102,12 @@ const resultMessage = computed(() => {
   return '🤝 Keep practicing and make more Aussie friends!';
 });
 
-// Shuffle options
 function shuffleMeanings() {
   const allMeanings = slangList.map(s => s.meaning);
   const shuffled = [...allMeanings].sort(() => 0.5 - Math.random());
   activeMeanings.value = shuffled;
 }
 
-// Handle answer selection
 function handleSelection(selected, index) {
   if (!currentSlang.value) return;
 
@@ -129,8 +117,6 @@ function handleSelection(selected, index) {
     feedbackType.value = 'correct';
     correctlyAnswered.value.push(selected);
     activeMeanings.value.splice(activeMeanings.value.indexOf(selected), 1);
-
-    // Move to next word faster after correct
     setTimeout(() => {
       feedbackIndex.value = null;
       feedbackType.value = null;
@@ -140,8 +126,6 @@ function handleSelection(selected, index) {
     wrongSound.play();
     feedbackType.value = 'wrong';
     feedbackIndex.value = index;
-
-    // Slight delay after wrong selection
     setTimeout(() => {
       feedbackIndex.value = null;
       feedbackType.value = null;
@@ -150,28 +134,23 @@ function handleSelection(selected, index) {
   }
 }
 
-// Move to next word
 function nextWord() {
   clearInterval(fallingInterval);
   position.value = 0;
   currentIndex.value++;
-
   if (currentIndex.value >= shuffledSlang.value.length || timer.value <= 0) {
     endGame();
     return;
   }
-
   currentSlang.value = shuffledSlang.value[currentIndex.value];
   startFalling();
 }
 
-// Start falling animation
 function startFalling() {
   clearInterval(fallingInterval);
   position.value = 0;
   const randomLeft = Math.floor(Math.random() * 60) + 20;
   leftPosition.value = `${randomLeft}%`;
-
   fallingInterval = setInterval(() => {
     position.value += FALL_SPEED;
     if (position.value > FALL_LIMIT) {
@@ -181,7 +160,6 @@ function startFalling() {
   }, 20);
 }
 
-// Start countdown timer
 function startCountdown() {
   clearInterval(countdown);
   countdown = setInterval(() => {
@@ -194,26 +172,22 @@ function startCountdown() {
   }, 1000);
 }
 
-// End the game
 function endGame() {
   clearInterval(fallingInterval);
   clearInterval(countdown);
   gameOver.value = true;
   finishSound.play();
-
   if (score.value > bestScore.value) {
     bestScore.value = score.value;
     localStorage.setItem('bestScore', bestScore.value.toString());
   }
 }
 
-// Start the game
 function startGame() {
   gameStarted.value = true;
   restartGame();
 }
 
-// Restart everything
 function restartGame() {
   isRestarting.value = true;
   setTimeout(() => {
@@ -228,19 +202,19 @@ function restartGame() {
     shuffleMeanings();
     currentSlang.value = shuffledSlang.value[0];
     isRestarting.value = false;
-
     startFalling();
     startCountdown();
   }, 500);
 }
 </script>
 
-
 <style scoped>
-/* Main layout */
+
 .game-container, .start-screen {
-  max-width: 700px;
+  position: relative;
+  max-width: 1000px;
   margin: auto;
+  margin-top: 15px;
   text-align: center;
   font-family: 'Poppins', 'Arial', sans-serif;
   padding: 30px;
@@ -250,14 +224,12 @@ function restartGame() {
   transition: opacity 0.5s ease;
 }
 
-/* Game title */
 .game-title {
   color: #1565c0;
   margin-bottom: 20px;
   font-size: 2.5rem;
 }
 
-/* Status bar */
 .status-bar {
   display: flex;
   justify-content: space-around;
@@ -266,7 +238,6 @@ function restartGame() {
   color: #333;
 }
 
-/* Falling area */
 .falling-zone {
   height: 300px;
   position: relative;
@@ -277,7 +248,6 @@ function restartGame() {
   border-radius: 12px;
 }
 
-/* Falling slang word */
 .falling-slang {
   position: absolute;
   font-size: 38px;
@@ -290,7 +260,6 @@ function restartGame() {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Falling animation */
 @keyframes sway {
   0% { transform: translateX(0) rotate(0deg); }
   25% { transform: translateX(20px) rotate(10deg); }
@@ -299,7 +268,6 @@ function restartGame() {
   100% { transform: translateX(0) rotate(0deg); }
 }
 
-/* Option buttons area */
 .options {
   display: flex;
   flex-wrap: wrap;
@@ -308,7 +276,6 @@ function restartGame() {
   margin-bottom: 20px;
 }
 
-/* All buttons */
 button {
   padding: 16px 24px;
   font-size: 18px;
@@ -322,13 +289,11 @@ button {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
-/* Button hover effect */
 button:hover {
   background: linear-gradient(135deg, #42a5f5, #1e88e5);
   transform: translateY(-4px);
 }
 
-/* Correct / Wrong answer buttons */
 button.correct {
   background: #66bb6a !important;
 }
@@ -337,14 +302,6 @@ button.wrong {
   background: #ef5350 !important;
 }
 
-/* Result text */
-.result {
-  font-size: 22px;
-  margin-top: 30px;
-  color: #333;
-}
-
-/* Start / Restart buttons */
 .restart-button, .start-button {
   padding: 14px 30px;
   font-size: 20px;
@@ -362,7 +319,32 @@ button.wrong {
   transform: translateY(-3px);
 }
 
-/* Button fade-in animation */
+.result {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  font-size: 24px;
+  color: #333;
+  background: white;
+  padding: 30px 40px;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 5;
+  border-radius: 20px;
+}
+
 .fade-enter-active, .fade-leave-active {
   transition: all 0.4s ease;
 }
