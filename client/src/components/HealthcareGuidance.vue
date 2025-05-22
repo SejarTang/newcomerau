@@ -1,13 +1,10 @@
 <template>
   <div class="healthcare-page">
     <div class="healthcare-container">
-
-      <!-- Left side: Image section -->
       <div class="image-section">
         <img src="@/assets/health.jpg" alt="Healthcare" />
       </div>
 
-      <!-- Right side: Content section -->
       <div class="content-section">
         <h1>Healthcare Guidance</h1>
         <p class="subtitle">
@@ -17,11 +14,8 @@
 
         <transition name="fade" mode="out-in">
           <div class="content" :key="currentStepKey">
-
-            <!-- Dynamic question or description -->
             <p class="description" v-html="currentStep.text"></p>
 
-            <!-- If remedies exist, show home care suggestions -->
             <div v-if="currentStep.remedies" class="remedies">
               <h3>Common Home Care Suggestions:</h3>
               <ul>
@@ -29,7 +23,6 @@
               </ul>
             </div>
 
-            <!-- Yes / No options -->
             <div class="buttons">
               <button
                 v-for="(option, index) in sortedOptions"
@@ -40,17 +33,20 @@
                 {{ option.label }}
               </button>
 
-              <!-- Go back button -->
-              <button v-if="history.length" class="back-button" @click="goBack">
-                Back
+              <button v-if="history.length" class="back-button" @click="goBack">Back</button>
+
+              <button
+                v-if="currentStepKey === 'finish'"
+                class="option-button yes"
+                @click="restartFromStart"
+              >
+                Restart Guide
               </button>
             </div>
 
-            <!-- External helpful links -->
             <div v-if="currentStep.link" class="link-section">
               <a :href="currentStep.link.url" target="_blank">{{ currentStep.link.text }}</a>
             </div>
-
           </div>
         </transition>
       </div>
@@ -61,7 +57,6 @@
 <script setup>
 import { ref, computed } from 'vue'
 
-// Define conversation steps
 const steps = {
   start: {
     text: "Welcome to the Healthcare Service Guide!\n\nIn Australia, different health conditions require different treatments, such as self-care, seeing a doctor, or calling an ambulance.<br><span class='question-highlight'>Do you currently have any health concerns?</span>",
@@ -180,38 +175,36 @@ const steps = {
     text: "Private insurance can reimburse your visit costs. Keep all receipts and medical summaries for claim.",
     options: [{ label: "Finish", next: "finish" }],
   },
-  // ⭐ NEW: Final page
   finish: {
     text: "You have completed the healthcare guidance!\n\nTake care and stay healthy. If you ever need assistance again, feel free to revisit this guide!",
     options: [],
   },
 }
 
-
-// State management
 const currentStepKey = ref('start')
 const currentStep = ref(steps.start)
 const history = ref([])
 const selectedOptionIndex = ref(null)
 
-// Sort options to make "Yes" button always appear first
 const sortedOptions = computed(() => {
   if (!currentStep.value.options) return []
   return [...currentStep.value.options].sort((a) => (a.label === 'Yes' ? -1 : 1))
 })
 
-// Handle clicking an option
 function handleOptionClick(index, nextKey) {
   selectedOptionIndex.value = index
   setTimeout(() => {
-    history.value.push(currentStepKey.value)
+    if (currentStepKey.value === 'finish' && nextKey === 'start') {
+      history.value = []
+    } else {
+      history.value.push(currentStepKey.value)
+    }
     currentStepKey.value = nextKey
     currentStep.value = steps[nextKey]
     selectedOptionIndex.value = null
   }, 300)
 }
 
-// Handle going back to previous step
 function goBack() {
   const prevStep = history.value.pop()
   if (prevStep) {
@@ -219,6 +212,13 @@ function goBack() {
     currentStep.value = steps[prevStep]
     selectedOptionIndex.value = null
   }
+}
+
+function restartFromStart() {
+  history.value = []
+  currentStepKey.value = 'start'
+  currentStep.value = steps.start
+  selectedOptionIndex.value = null
 }
 </script>
 
