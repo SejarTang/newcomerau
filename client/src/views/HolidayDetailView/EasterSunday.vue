@@ -61,7 +61,7 @@ and victory over death. The celebration dates back to the early Christian church
   <!-- Back button to navigate to Holiday Culture overview -->
   <div class="back-button-wrapper">
     <router-link to="/integration/history" class="back-button">
-      <span class="back-button-text">← Back to Holiday Culture</span>
+      <span class="back-button-text">Back</span>
     </router-link>
   </div>
 </template>
@@ -171,18 +171,18 @@ li {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 4rem;
+  margin-top: -5rem;
   padding-bottom: 4rem;
   background-color: transparent;
 }
 
 .back-button {
-  width: 530px;
-  height: 530px;
+  width: 70px;
+  height:65px;
   border-radius: 50%;
   background-color: #3a91e7;
   color: white;
-  font-size: 2.5rem;
+  font-size: 1.2rem;
   font-weight: 700;
   text-decoration: none;
   display: flex;
@@ -191,7 +191,7 @@ li {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
   transition: background-color 0.3s ease;
 }
-
+.back-button-wrapper
 .back-button:hover {
   background-color: #2c6ecf;
 }
@@ -215,3 +215,4 @@ li {
   }
 }
 </style>
+
