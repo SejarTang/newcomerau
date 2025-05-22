@@ -321,7 +321,7 @@ export default {
 .welcome-message {
   font-size: 28px;
   margin-bottom: 20px;
-  color: #0055a5;
+  color: #080808;
 }
 
 .image-container {
