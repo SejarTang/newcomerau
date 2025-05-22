@@ -9,7 +9,6 @@
           class="image"
           :src="originImg"
           alt="Origin of Good Friday"
-          @click="openPreview(originImg)"
         />
       </div>
       <div class="column">
@@ -17,7 +16,6 @@
           class="image"
           :src="celebrationImg"
           alt="Celebrations in Australia"
-          @click="openPreview(celebrationImg)"
         />
       </div>
     </div>

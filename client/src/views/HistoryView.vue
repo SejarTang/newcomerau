@@ -80,7 +80,7 @@ const featuredHoliday = {
 /* Introductory paragraph style */
 .page-description {
   font-size: 1.5rem;
-  color: #333;
+  color: #0b0a0a;
   margin-bottom: 32px;
   line-height: 1.6;
   font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
