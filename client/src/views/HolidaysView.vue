@@ -1,6 +1,6 @@
 <template>
   <!-- Fullscreen canvas for fireworks effect -->
-  <canvas ref="canvasRef" class="global-fireworks"></canvas>
+  <!-- <canvas ref="canvasRef" class="global-fireworks"></canvas> -->
 
   <!-- Main content container for public holiday information -->
   <div class="holiday-container" ref="containerRef">
@@ -52,7 +52,7 @@
   <!-- Calendar download section -->
   <div class="holiday-download-section">
     <p class="download-text">
-      Add Victoria's 2025 public holiday dates to your device:
+      Add Victoria's 2025 public holiday dates to your device:  Click the button below to download a calendar file (.ics). You can import this file into calendar apps like Google Calendar, Apple Calendar, or Microsoft Outlook to automatically display the public holidays.
     </p>
     <a
       href="https://www.vic.gov.au/sites/default/files/2025-04/Victorian-public-holiday-dates.ics"
@@ -104,10 +104,10 @@ const containerRef = ref(null);
 const canvasRef = ref(null);
 
 // Global variables for fireworks animation
-let ctx;
-let particles = [];
-let animationId;
-const MAX_PARTICLES = 300;
+// let ctx;
+// let particles = [];
+// let animationId;
+// const MAX_PARTICLES = 300;
 
 // Parses a human-readable holiday string into a Date object
 const parseHolidayDate = (dateStr, year) => {
@@ -145,29 +145,29 @@ const calculateNextHoliday = () => {
 };
 
 // Fireworks particle class
-class Particle {
-  constructor(x, y) {
-    this.x = x;
-    this.y = y;
-    this.size = Math.random() * 4 + 1;
-    this.speedX = (Math.random() - 0.5) * 4;
-    this.speedY = (Math.random() - 0.5) * 4;
-    this.color = `hsla(${Math.random() * 360}, 100%, 60%, 0.9)`;
-  }
+// class Particle {
+//   constructor(x, y) {
+//     this.x = x;
+//     this.y = y;
+//     this.size = Math.random() * 4 + 1;
+//     this.speedX = (Math.random() - 0.5) * 4;
+//     this.speedY = (Math.random() - 0.5) * 4;
+//     this.color = `hsla(${Math.random() * 360}, 100%, 60%, 0.9)`;
+//   }
 
-  update() {
-    this.x += this.speedX;
-    this.y += this.speedY;
-    this.size *= 0.95;
-  }
+//   update() {
+//     this.x += this.speedX;
+//     this.y += this.speedY;
+//     this.size *= 0.95;
+//   }
 
-  draw() {
-    ctx.fillStyle = this.color;
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-    ctx.fill();
-  }
-}
+//   draw() {
+//     ctx.fillStyle = this.color;
+//     ctx.beginPath();
+//     ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+//     ctx.fill();
+//   }
+// }
 
 // Handle mouse movement and spawn particles
 const handleMouseMove = (e) => {
@@ -182,42 +182,42 @@ const handleMouseMove = (e) => {
 };
 
 // Animate and render all particles
-const animate = () => {
-  ctx.clearRect(0, 0, canvasRef.value.width, canvasRef.value.height);
+// const animate = () => {
+//   ctx.clearRect(0, 0, canvasRef.value.width, canvasRef.value.height);
 
-  for (let i = particles.length - 1; i >= 0; i--) {
-    const p = particles[i];
-    p.update();
-    p.draw();
-    if (p.size < 0.5) particles.splice(i, 1);
-  }
+//   for (let i = particles.length - 1; i >= 0; i--) {
+//     const p = particles[i];
+//     p.update();
+//     p.draw();
+//     if (p.size < 0.5) particles.splice(i, 1);
+//   }
 
-  animationId = requestAnimationFrame(animate);
-};
+//   animationId = requestAnimationFrame(animate);
+// };
 
 // Setup canvas and start animations on mount
 onMounted(() => {
-  const canvas = canvasRef.value;
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-  ctx = canvas.getContext('2d');
+  // const canvas = canvasRef.value;
+  // canvas.width = window.innerWidth;
+  // canvas.height = window.innerHeight;
+  // ctx = canvas.getContext('2d');
 
-  window.addEventListener('mousemove', handleMouseMove);
+  // window.addEventListener('mousemove', handleMouseMove);
 
-  animate();
+  // animate();
   calculateNextHoliday();
 });
 
 // Clean up when the component is unmounted
 onBeforeUnmount(() => {
-  cancelAnimationFrame(animationId);
-  window.removeEventListener('mousemove', handleMouseMove);
+  // cancelAnimationFrame(animationId);
+  // window.removeEventListener('mousemove', handleMouseMove);
 });
 </script>
 
 <style scoped>
 /* Fullscreen canvas for fireworks */
-.global-fireworks {
+/* .global-fireworks {
   position: fixed;
   top: 0;
   left: 0;
@@ -226,7 +226,7 @@ onBeforeUnmount(() => {
   pointer-events: none;
   z-index: 9999;
   background: transparent;
-}
+} */
 
 /* Container for all holiday-related content */
 .holiday-container {
@@ -240,10 +240,11 @@ onBeforeUnmount(() => {
 /* Banner image at top of section */
 .holiday-banner {
   display: block;
+  margin-top: 110px;
   margin-left: auto;
   margin-right: auto;
   width: auto;
-  max-width: 100%;
+  max-width: 60%;
   height: auto;
   object-fit: contain;
 }
@@ -252,7 +253,7 @@ onBeforeUnmount(() => {
 .holiday-title {
   text-align: center;
   font-size: 2.5em;
-  color: #3a91e7;
+  color: #090a0a;
   margin-bottom: 10px;
   font-family: -apple-system;
   font-weight: bold;
@@ -262,7 +263,7 @@ onBeforeUnmount(() => {
 .next-holiday-info {
   text-align: center;
   font-size: 2em;
-  color: #3a91e7;
+  color: #070707;
   margin-bottom: 10px;
   animation: pop 1.5s ease infinite alternate;
   font-family: -apple-system;
@@ -276,11 +277,11 @@ onBeforeUnmount(() => {
 /* Descriptive paragraph about the purpose of the table */
 .holiday-description {
   font-size: 1.5rem;
-  color: #3a91e7;
+  color: #0c0c0c;
   text-align: center;
   font-weight: 500;
   line-height: 1.8;
-  margin: 0 auto 30px auto;
+  margin: 20px auto 30px auto;
   max-width: 1300px;
   font-family: -apple-system;
 }
@@ -324,7 +325,7 @@ onBeforeUnmount(() => {
   margin-top: 24px;
   font-family: -apple-system;
   font-size: 1.6em;
-  color: #3a91e7;
+  color: #0f0f0f;
   line-height: 1.6;
   text-align: center;
 }
@@ -348,9 +349,9 @@ onBeforeUnmount(() => {
 }
 
 .download-text {
-  font-size: 2em;
+  font-size: 1.5em;
   font-weight: 600;
-  color: #1c3c72;
+  color: #0b0b0c;
   margin-bottom: 12px;
   font-family: -apple-system;
 }
