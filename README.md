@@ -40,18 +40,3 @@ npm run test:unit
 npm run lint
 ```
 # Test commit for deployment3
-
-# ocr part:
-```sh
-python --version
-npm install express multer
-pip install opencv-python
-pip install requests
-
-
-```
-
-# prediction 2:
-```sh
-pip install prophet pandas psycopg2-binary
-```
