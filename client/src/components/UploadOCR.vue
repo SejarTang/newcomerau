@@ -77,18 +77,18 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import axios from 'axios';
+import { ref } from 'vue'
+import axios from 'axios'
 
-// Reactive states
-const selectedImage = ref(null);
-const previewUrl = ref('');
-const words = ref([]);
-const loading = ref(false);
-const progress = ref(0);
-let timerId = null;
+// Reactive state variables
+const selectedImage = ref(null)
+const previewUrl     = ref('')
+const words         = ref([])
+const loading       = ref(false)
+const progress      = ref(0)
+let timerId         = null
 
-// Local preset images
+// Local preset images array
 const presetImages = [
   new URL('@/assets/ocr/ocrtest1.png', import.meta.url).href,
   new URL('@/assets/ocr/ocrtest2.png', import.meta.url).href,
@@ -96,110 +96,133 @@ const presetImages = [
   new URL('@/assets/ocr/ocrtest4.jpg', import.meta.url).href,
   new URL('@/assets/ocr/ocrtest5.png', import.meta.url).href,
   new URL('@/assets/ocr/ocrtest6.png', import.meta.url).href,
-];
+]
 
-// Extract valid words from a line of text
+/**
+ * Split a line of text into valid English words (letters only, length ≥2).
+ */
 function extractValidWords(line) {
   return line
-    .split(/[^a-zA-Z]+/)                 // Split on non-letter characters
+    .split(/[^a-zA-Z]+/)             // split on non-letters
     .map(w => w.trim())
-    .filter(w => /^[a-zA-Z]{2,}$/.test(w));  // Keep 2+ letter pure words only
+    .filter(w => /^[a-zA-Z]{2,}$/.test(w))
 }
 
-// Query dictionary API for definition, example, audio, etc.
+/**
+ * Fetch dictionary info for a word.
+ * Populates phonetic, meaning, example and audio fields on the wordObj.
+ */
 async function fetchDictionaryInfo(wordObj) {
   try {
-    const res = await axios.get(`https://api.dictionaryapi.dev/api/v2/entries/en/${wordObj.word}`);
-    const entry = res.data[0];
-    wordObj.phonetic = entry.phonetic || '';
-    wordObj.meaning = entry.meanings?.[0]?.definitions?.[0]?.definition || '';
-    wordObj.example = entry.meanings?.[0]?.definitions?.[0]?.example || '';
-    wordObj.audio = entry.phonetics?.find(p => p.audio)?.audio || '';
+    const res = await axios.get(`https://api.dictionaryapi.dev/api/v2/entries/en/${wordObj.word}`)
+    const entry = res.data[0]
+    wordObj.phonetic = entry.phonetic || ''
+    wordObj.meaning  = entry.meanings?.[0]?.definitions?.[0]?.definition || ''
+    wordObj.example  = entry.meanings?.[0]?.definitions?.[0]?.example    || ''
+    wordObj.audio    = entry.phonetics?.find(p => p.audio)?.audio        || ''
   // eslint-disable-next-line no-unused-vars
   } catch (err) {
-    console.warn(`No dictionary entry for: ${wordObj.word}`);
+    // No dictionary entry found; we'll filter these out later
+    console.warn(`No dictionary entry for: ${wordObj.word}`)
   }
 }
 
-// Process the OCR and dictionary lookup
+/**
+ * Handle image upload, OCR parsing, dictionary lookups,
+ * and then filter out words without a definition.
+ */
 async function uploadImage() {
   if (!selectedImage.value) {
-    alert('Please select an image first!');
-    return;
+    alert('Please select an image first!')
+    return
   }
 
-  loading.value = true;
-  progress.value = 0;
-  words.value = [];
+  loading.value = true
+  progress.value = 0
+  words.value    = []
 
-  if (timerId) clearInterval(timerId);
+  // Simulate progress until final
+  if (timerId) clearInterval(timerId)
   timerId = setInterval(() => {
-    if (progress.value < 90) progress.value += Math.random() * 10;
-  }, 300);
+    if (progress.value < 90) {
+      progress.value += Math.random() * 10
+    }
+  }, 300)
 
-  const formData = new FormData();
-  formData.append('apikey', 'K87654478888957');
-  formData.append('language', 'eng');
-  formData.append('isOverlayRequired', 'false');
-  formData.append('file', selectedImage.value);
+  const formData = new FormData()
+  formData.append('apikey', 'K87654478888957')
+  formData.append('language', 'eng')
+  formData.append('isOverlayRequired', 'false')
+  formData.append('file', selectedImage.value)
 
   try {
-    const response = await axios.post('https://api.ocr.space/parse/image', formData, {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    });
+    // Send to OCR.space
+    const response = await axios.post(
+      'https://api.ocr.space/parse/image',
+      formData,
+      { headers: { 'Content-Type': 'multipart/form-data' } }
+    )
 
-    const rawText = response.data?.ParsedResults?.[0]?.ParsedText || '';
-    const lines = rawText.split('\n');
+    // Extract raw text and split into lines
+    const rawText = response.data?.ParsedResults?.[0]?.ParsedText || ''
+    const lines   = rawText.split('\n')
 
-    const allWords = [];
-
+    // Collect unique lowercase words
+    const allWords = []
     for (const line of lines) {
-      const validWords = extractValidWords(line);
-      for (const w of validWords) {
-        const lowercase = w.toLowerCase();
-        if (!allWords.find(item => item.word === lowercase)) {
-          allWords.push({
-            word: lowercase,
-            original: w
-          });
+      const validWords = extractValidWords(line)
+      validWords.forEach(w => {
+        const lower = w.toLowerCase()
+        if (!allWords.find(item => item.word === lower)) {
+          allWords.push({ word: lower, original: w })
         }
-      }
+      })
     }
 
-    words.value = allWords;
-    await Promise.all(words.value.map(fetchDictionaryInfo));
+    // Assign initial list and fetch definitions
+    words.value = allWords
+    await Promise.all(words.value.map(fetchDictionaryInfo))
+
+    // Filter out entries that did not get a definition
+    words.value = words.value.filter(item => item.meaning && item.meaning.length > 0)
 
   } catch (err) {
-    console.error('OCR or dictionary lookup failed:', err);
-    alert('Image analysis failed. Please try again later.');
+    console.error('OCR or dictionary lookup failed:', err)
+    alert('Image analysis failed. Please try again later.')
   } finally {
-    progress.value = 100;
-    clearInterval(timerId);
+    // Finalize progress and clear interval
+    progress.value = 100
+    clearInterval(timerId)
     setTimeout(() => {
-      loading.value = false;
-      progress.value = 0;
-    }, 500);
+      loading.value = false
+      progress.value = 0
+    }, 500)
   }
 }
 
-// Upload and process a preset image
+/**
+ * Load a preset image, convert to File, preview and process.
+ */
 function selectPreset(imageUrl) {
   fetch(imageUrl)
     .then(res => res.blob())
     .then(blob => {
-      selectedImage.value = new File([blob], 'preset.png', { type: blob.type });
-      previewUrl.value = URL.createObjectURL(blob);
-      uploadImage();
+      selectedImage.value = new File([blob], 'preset.png', { type: blob.type })
+      previewUrl.value    = URL.createObjectURL(blob)
+      uploadImage()
     })
-    .catch(err => console.error('Failed to load preset image:', err));
+    .catch(err => console.error('Failed to load preset image:', err))
 }
 
-// Handle user file selection
+/**
+ * Handle user file selection for upload.
+ */
 function handleFileChange(event) {
-  selectedImage.value = event.target.files[0];
-  previewUrl.value = URL.createObjectURL(selectedImage.value);
+  selectedImage.value = event.target.files[0]
+  previewUrl.value    = URL.createObjectURL(selectedImage.value)
 }
 </script>
+
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Open+Sans:wght@300;400&display=swap');
